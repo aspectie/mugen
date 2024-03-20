@@ -5,8 +5,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import './main.css';
-import {Header} from "~/components/header/Header";
+import './main.scss';
+import {Header} from "./components/header/Header";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
