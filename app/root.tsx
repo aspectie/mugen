@@ -1,20 +1,24 @@
+import '@/styles/main.scss'
+
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration,
-} from '@remix-run/react';
+  ScrollRestoration
+} from '@remix-run/react'
 
-import './main.scss';
-import { Header } from './components/header/Header';
+import Header from '@/components/header/Header'
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
         <Meta />
         <Links />
       </head>
@@ -25,9 +29,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  );
+  )
 }
 
 export default function App() {
-  return <Outlet />;
+  return <Outlet />
 }
