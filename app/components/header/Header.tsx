@@ -1,33 +1,21 @@
-import style from './header.module.scss'
-import logo from '/logo.svg'
+import style from './header.module.scss';
+import {Link} from "@remix-run/react";
+import logo from '../../../public/logo.svg';
+import Menu from '../menu/Menu'
 
-export function Header() {
-  const links: Array<any> = []
+const Header = () => {
   return (
     <header className={style.header}>
       <div className={style.header__wrapper}>
         {/* TODO: replace with "a" remix link component */}
-        <a href="/#">
-          <img
-            src={logo}
-            alt="logo"
-            className={style.header__logo}
-          />
-        </a>
+        <Link to="/">
+          <img src={logo} alt="logo" className={style.header__logo} />
+        </Link>
         {/* TODO: create menu component */}
-        <nav className={style.nav}>
-          <ul className={style.nav__list}>
-            {links.map((link) => (
-              <li
-                key={link.id}
-                className={style['nav__list-item']}
-              >
-                <a href={link.link}>{link.title}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <Menu />
       </div>
     </header>
-  )
-}
+  );
+};
+
+export default Header;

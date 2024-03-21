@@ -18,20 +18,3 @@
         height: $space-2xl;
     }
 }
-
-.nav {
-    &__list {
-        display: flex;
-        list-style-type: none;
-        gap: $space-l;
-
-        &-item {
-            font-size: $h5-size;
-            color: $white;
-
-            &:hover {
-                color: $accent-100;
-            }
-        }
-    }
-}
