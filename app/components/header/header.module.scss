@@ -7,15 +7,15 @@
         display: flex;
         margin: auto;
         align-items: center;
-        gap: $space40;
-        padding-inline: $space48;
-        padding-block: $space8;
+        gap: $space-2xl;
+        padding-inline: $space-3xl;
+        padding-block: $space-s;
     }
 
     &__logo {
         display: block;
         width: 118px;
-        height: 40px;
+        height: $space-2xl;
     }
 }
 
@@ -23,14 +23,14 @@
     &__list {
         display: flex;
         list-style-type: none;
-        gap: $space24;
+        gap: $space-l;
 
         &-item {
-            font-size: $heading5--size;
+            font-size: $h5-size;
             color: $white;
 
             &:hover {
-                color: $accent-color-100;
+                color: $accent-100;
             }
         }
     }
