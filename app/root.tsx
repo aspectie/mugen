@@ -8,7 +8,7 @@ import {
   ScrollRestoration
 } from '@remix-run/react'
 
-import Header from './components/header/Header'
+import Header from '@/components/header/Header'
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

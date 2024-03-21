@@ -1,7 +1,8 @@
-import style from './header.module.scss';
+import style from '@/components/header/header.module.scss';
 import { Link } from '@remix-run/react';
-import logo from '../../../public/logo.svg';
-import Menu from '../menu/Menu';
+// eslint-disable-next-line import/no-unresolved
+import logo from '@public/logo.svg';
+import Menu from '@/components/menu/Menu';
 
 const Header = () => {
   const links = [
