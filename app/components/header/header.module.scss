@@ -1,12 +1,8 @@
-@import '../../public/variables/colors.scss';
-@import '../../public/variables/typography.scss';
-@import '../../public/variables/spaces.scss';
-
 .header {
     width: 100%;
     background-color: $black-100;
 
-    &--wrapper {
+    &__wrapper {
         max-inline-size: 1440px;
         display: flex;
         margin: auto;
@@ -16,14 +12,15 @@
         padding-block: $space8;
     }
 
-    .logo {
+    &__logo {
         display: block;
         width: 118px;
         height: 40px;
     }
+}
 
-    .nav__list {
-        font-family: "Montserrat", sans-serif;
+.nav {
+    &__list {
         display: flex;
         list-style-type: none;
         gap: $space24;

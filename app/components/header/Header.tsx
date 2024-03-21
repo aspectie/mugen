@@ -1,27 +1,33 @@
-import './Header.scss';
-import '../../public/fonts/fonts.scss'
-
-import logo from "../../public/logo.svg";
+import style from './header.module.scss'
+import logo from '/logo.svg'
 
 export function Header() {
-    const links = [
-        {id: 1,title: 'Аниме', link: '#'},
-    ]
-    return (
-        <header className="header">
-            <div className='header--wrapper'>
-                <a href="/#">
-                    <img src={logo} alt="logo" className='logo'/>
-                </a>
-                <nav className="nav">
-                    <ul className="nav__list">
-                        {links.map(link => (
-                            <li key={link.id} className="nav__list-item">
-                                <a href={link.link}>{link.title}</a>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-            </div>
-        </header>)
+  const links: Array<any> = []
+  return (
+    <header className={style.header}>
+      <div className={style.header__wrapper}>
+        {/* TODO: replace with "a" remix link component */}
+        <a href="/#">
+          <img
+            src={logo}
+            alt="logo"
+            className={style.header__logo}
+          />
+        </a>
+        {/* TODO: create menu component */}
+        <nav className={style.nav}>
+          <ul className={style.nav__list}>
+            {links.map((link) => (
+              <li
+                key={link.id}
+                className={style['nav__list-item']}
+              >
+                <a href={link.link}>{link.title}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+  )
 }
