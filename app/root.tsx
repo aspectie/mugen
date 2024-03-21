@@ -4,7 +4,10 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
+} from '@remix-run/react';
+
+import './main.scss';
+import { Header } from './components/header/Header';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -16,6 +19,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <Header />
         {children}
         <ScrollRestoration />
         <Scripts />
