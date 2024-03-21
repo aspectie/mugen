@@ -1,4 +1,4 @@
-import style from '@/components/header/header.module.scss';
+import style from './header.module.scss';
 import { Link } from '@remix-run/react';
 // eslint-disable-next-line import/no-unresolved
 import logo from '@public/logo.svg';
