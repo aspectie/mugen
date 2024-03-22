@@ -6,7 +6,9 @@
 
     &-item {
       font-size: $h5-size;
+      line-height: 24px;
       color: $white;
+      padding-block: $space-m;
 
       &:hover {
         color: $accent-100;

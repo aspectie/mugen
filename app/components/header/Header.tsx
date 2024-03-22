@@ -11,6 +11,16 @@ const Header = () => {
       title: 'Аниме',
       link: '/anime',
     },
+    {
+      id: 2,
+      title: 'Манга',
+      link: '/manga',
+    },
+    {
+      id: 3,
+      title: 'Сообщество',
+      link: '/community',
+    }
   ];
 
   return (

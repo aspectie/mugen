@@ -1,0 +1,38 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-s;
+  width: 149px;
+  cursor: pointer;
+
+  &__img--wrapper {
+    width: 149px;
+    height: 226px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25); ;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: $space-s;
+  }
+
+  &__title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    max-height: $space-3xl;
+    color: $white;
+    font-size: $h5-size;
+    font-weight: $regular;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+}
+
