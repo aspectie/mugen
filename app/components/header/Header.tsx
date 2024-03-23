@@ -1,12 +1,11 @@
-import Menu from '@/components/menu/Menu';
 import { Link } from '@remix-run/react';
-// eslint-disable-next-line import/no-unresolved
-import logo from '@public/logo.svg';
+
+import Menu, { TLink } from '@/components/menu/Menu';
+import logo from '@/icons/logo.svg';
 import style from './header.module.scss';
 
 const Header = () => {
-  const links = [
-  ];
+  const links: TLink[] = [];
 
   return (
     <header className={style.header}>
@@ -14,7 +13,7 @@ const Header = () => {
         <Link to="/">
           <img src={logo} alt="logo" className={style.header__logo} />
         </Link>
-        <Menu links = {links}  />
+        <Menu links={links} />
       </div>
     </header>
   );
