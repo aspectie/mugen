@@ -4,17 +4,19 @@ import {Link} from "@remix-run/react";
 export type TCard = {
     id: number
     russian: string
+    description: string,
     image: {
         original: string
     }
     url: string
+    episodes: number
 }
 
 const Card = ({card} : {card : TCard}) => {
     const imageUrl = `${window.ENV.SHIKI_URL}/${card.image.original}`;
-    
+
     return (
-        <Link to='#'>
+        <Link to={`anime/${card.id}`}>
             <div className={[style['card__list-item'], style.card].join(' ')}>
                 <div className={style['card__img-wrapper']}>
                     <img className={style.card__img}
