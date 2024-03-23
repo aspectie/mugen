@@ -37,9 +37,7 @@
     overflow: hidden;
     max-height: $space-3xl;
     color: $white;
-    font-size: $h5-size;
-    font-weight: $regular;
-    line-height: $space-l;
+    @include h5;
     text-overflow: ellipsis;
     text-align: center;
   }

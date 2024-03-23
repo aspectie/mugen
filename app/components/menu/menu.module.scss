@@ -5,6 +5,7 @@
     gap: $space-l;
 
     &-item {
+      padding-block: $space-m;
       @include h5;
         color: $gray-40;
 
