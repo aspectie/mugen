@@ -5,8 +5,8 @@
     gap: $space-l;
 
     &-item {
-      font-size: $h5-size;
-      color: $white;
+      @include h5;
+        color: $gray-40;
 
       &:hover {
         color: $accent-100;
