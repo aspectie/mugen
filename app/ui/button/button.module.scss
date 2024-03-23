@@ -1,0 +1,41 @@
+.button {
+  outline: 0;
+  border: 0;
+  border-radius: $space-s;
+  color: $gray-40;
+  cursor: pointer;
+  text-transform: capitalize;
+
+  //Sizes
+  &--small {
+    padding: $space-xs $space-s;
+    @include p
+  }
+
+  &--medium {
+    padding: $space-s $space-m;
+    @include h5
+  }
+
+  &--large {
+    padding: $space-m $space-l;
+    @include h4
+  }
+
+  //Types
+  &--primary {
+    background-color: $accent-80;
+
+    &:hover {
+      background-color: $accent-100;
+    }
+
+    &:active {
+      background-color: $accent-120;
+    }
+  }
+
+  &--disabled {
+    background-color: $black-60 !important;
+  }
+}
