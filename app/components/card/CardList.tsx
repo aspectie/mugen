@@ -5,7 +5,7 @@ import style from "./card.module.scss";
 const CardList = () => {
     const [cards, setCards] = useState<TCard[]>([]);
     useEffect(() => {
-        fetch(`${window.ENV.SHIKI_URL}/api/animes?&limit=5`)
+        fetch(`${window.ENV.SHIKI_URL}/api/animes?order=ranked&limit=5`)
             .then(response => response.json())
             .then(json => setCards(json))
     }, [])
