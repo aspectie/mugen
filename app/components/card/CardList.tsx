@@ -1,7 +1,6 @@
-import style from './card-list.module.scss';
 import {useEffect, useState} from "react";
 import Card from '@/components/card/Card'
-
+import style from "./card.module.scss";
 const CardList = () => {
     const [cards, setCards] = useState(null);
     useEffect(() => {
@@ -11,7 +10,9 @@ const CardList = () => {
     }, [])
 
     return (
-        cards && <ul className={style.card__list}>{cards.map(card => (<Card key={card.id} card={card}/>))}</ul>
+        cards && <ul className={style.card__list}>{cards.map(card => (
+            <li key={card.id}><Card card={card}/></li>
+        ))}</ul>
     )
 }
 
