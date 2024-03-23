@@ -3,18 +3,20 @@
     background-color: $black-100;
 
     &__wrapper {
-        max-inline-size: 1440px;
+        max-inline-size: 1296px;
         display: flex;
         margin: auto;
         align-items: center;
-        gap: $space-2xl;
-        padding-inline: $space-3xl;
-        padding-block: $space-s;
+        gap: $space-xl;
+        padding-inline: $space-l;
     }
 
     &__logo {
         display: block;
         width: 118px;
         height: $space-2xl;
+        margin-block-start: $space-xs;
+        //Size from Figma for align Logo position
+        margin-block-end: 12px;
     }
 }

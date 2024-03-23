@@ -1,17 +1,11 @@
-import style from './header.module.scss';
 import { Link } from '@remix-run/react';
-// eslint-disable-next-line import/no-unresolved
-import logo from '@public/logo.svg';
-import Menu from '@/components/menu/Menu';
+
+import Menu, { TLink } from '@/components/menu/Menu';
+import logo from '@/icons/logo.svg';
+import style from './header.module.scss';
 
 const Header = () => {
-  const links = [
-    {
-      id: 1,
-      title: 'Аниме',
-      link: '/anime',
-    },
-  ];
+  const links: TLink[] = [];
 
   return (
     <header className={style.header}>

@@ -1,16 +1,31 @@
-import '@/styles/main.scss'
-
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
+  useLoaderData
 } from '@remix-run/react'
-
+import { json } from "@remix-run/node";
 import Header from '@/components/header/Header'
+import '@/styles/main.scss';
+
+declare global {
+  interface Window {
+    ENV: Record<string, string>;
+  }
+}
+
+export async function loader() {
+  return json({
+    ENV: {
+      SHIKI_URL: process.env.SHIKI_URL
+    },
+  });
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData<typeof loader>();
   return (
     <html lang="en">
       <head>
@@ -23,15 +38,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Header />
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+      <Header/>
+      {children}
+      <ScrollRestoration/>
+      <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(
+                data.ENV
+            )}`,
+          }}
+      />
+      <Scripts/>
       </body>
     </html>
   )
 }
 
 export default function App() {
-  return <Outlet />
+  return <Outlet/>
 }
