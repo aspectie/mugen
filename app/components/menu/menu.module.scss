@@ -1,12 +1,11 @@
 .nav {
   &__list {
     display: flex;
-    list-style-type: none;
     gap: $space-l;
 
     &-item {
       font-size: $h5-size;
-      line-height: 24px;
+      line-height: $space-l;
       color: $white;
       padding-block: $space-m;
 

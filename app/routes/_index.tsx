@@ -10,7 +10,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div style={{maxInlineSize: '1296px', margin: 'auto', paddingInline: '24px'}}>
+    <div style={{maxInlineSize: '1296px', margin: 'auto', paddingInline: '24px', display: 'grid', gridTemplateColumns: "948px 300px", gridColumnGap: "24px"}}>
       <h1>Home page</h1>
       <CardList/>
     </div>

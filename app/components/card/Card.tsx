@@ -13,7 +13,7 @@ const Card = ({card} : {card : TCard}) => {
     return (
         <Link to='#'>
             <div className={[style['card__list-item'], style.card].join(' ')}>
-                <div className={style['card__img--wrapper']}>
+                <div className={style['card__img-wrapper']}>
                     <img className={style.card__img} src={`${window.ENV.SHIKI_URL}/${card.image.original}`}
                          alt={`Постер аниме ${card.russian}`}/>
                 </div>
