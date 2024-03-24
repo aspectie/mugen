@@ -1,19 +1,11 @@
-import style from "./card.module.scss";
 import {Link} from "@remix-run/react";
 
-export type TCard = {
-    id: number
-    russian: string
-    description: string,
-    image: {
-        original: string
-    }
-    url: string
-    episodes: number
-}
+import { TAnime } from "@/types/api/shiki/TAnime";
 
-const Card = ({card} : {card : TCard}) => {
-    const imageUrl = `${window.ENV.SHIKI_URL}/${card.image.original}`;
+import style from "./card.module.scss";
+
+const Card = ({card} : {card : Partial<TAnime>}) => {
+    const imageUrl = `${import.meta.env.VITE_SHIKI_URL}/${card.image?.original}`;
 
     return (
         <Link to={`anime/${card.id}`}>
