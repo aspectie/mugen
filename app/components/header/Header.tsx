@@ -1,7 +1,7 @@
 import { Link } from '@remix-run/react';
 
 import Menu, { TLink } from '@/components/menu/Menu';
-import logo from '@/icons/logo.svg';
+import logo from '@/assets/icons/logo.svg';
 import style from './header.module.scss';
 
 const Header = () => {
