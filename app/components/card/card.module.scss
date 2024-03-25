@@ -1,7 +1,7 @@
 .card {
   &__img-wrapper {
     width: 100%;
-    box-shadow: 0 0 $space-xs rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 $space-xs rgb(0 0 0 / 0.25);
   }
 
   &__img {
@@ -21,7 +21,9 @@
     color: $white;
     word-wrap: break-word;
     padding-inline: $space-s;
+
     @include h5;
+    
     text-align: center;
   }
 }
