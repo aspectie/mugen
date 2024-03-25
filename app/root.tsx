@@ -8,12 +8,6 @@ import {
 import Header from '@/components/header/Header'
 import '@/styles/main.scss';
 
-declare global {
-  interface Window {
-    ENV: Record<string, string>;
-  }
-}
-
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
