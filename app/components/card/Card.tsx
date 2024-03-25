@@ -10,7 +10,8 @@ const Card = ({card} : {card : Partial<TAnime>}) => {
     return (
         <Link to={`anime/${card.id}`}>
             <div className={style.card}>
-                <div className={style['card__img-wrapper']}>
+                {/* TODO: adjust heights */}
+                <div className={`${style['card__img-wrapper']} xl:h-[200px] lg:h-[170px] sm:h-[150px]`}>
                     <img className={style.card__img}
                         src={imageUrl}
                         alt={`Постер аниме ${card.russian}`}

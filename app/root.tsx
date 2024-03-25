@@ -20,7 +20,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
       </head>
       <body>
-      <Header className='container'/>
+      <Header />
       {children}
       <ScrollRestoration/>
       <Scripts/>
