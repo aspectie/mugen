@@ -1,15 +1,13 @@
-import styles from './button.module.scss'
-
 import classNames from 'classnames'
 
+import { TFieldSize } from '@/types/ui'
+import styles from './button.module.scss'
+
 type TButtonType = 'primary'
-type TButtonShape = 'primary'
-type TButtonSize = 'small' | 'medium' | 'large'
 
 type TButton = {
   type?: TButtonType
-  shape?: TButtonShape
-  size?: TButtonSize
+  size?: TFieldSize
   disabled?: boolean
   children?: React.ReactNode
   style?: React.CSSProperties

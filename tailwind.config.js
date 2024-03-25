@@ -26,6 +26,22 @@ export default {
       '3xl': '48px',
       '4xl': '64px',
     },
+    colors: {
+      'black': {
+        100: '#202020',
+        80: '#4A4A4A',
+        60: '#757575',
+        40: '#A0A0A0',
+        20: '#CACACA',
+      },
+      'gray': {
+        100: '#C3C3C3',
+        80: '#D9D9D9',
+        60: '#EAEAEA',
+        40: '#F5F5F5',
+        20: '#FAFAFA',
+      }
+    },
     extend: {},
   },
   plugins: [],

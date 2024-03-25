@@ -1,6 +1,8 @@
 .header {
   background-color: $black-100;
   padding-block: $space-s;
+  width: 100%;
+  position: fixed;
 
   &__wrapper {
     display: flex;
