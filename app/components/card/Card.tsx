@@ -9,7 +9,7 @@ const Card = ({card} : {card : Partial<TAnime>}) => {
 
     return (
         <Link to={`anime/${card.id}`}>
-            <div className={[style['card__list-item'], style.card].join(' ')}>
+            <div className={style.card}>
                 <div className={style['card__img-wrapper']}>
                     <img className={style.card__img}
                         src={imageUrl}
