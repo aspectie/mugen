@@ -1,14 +1,11 @@
 .header {
-    width: 100%;
     background-color: $black-100;
 
     &__wrapper {
-        max-inline-size: 1296px;
         display: flex;
         margin: auto;
         align-items: center;
         gap: $space-xl;
-        padding-inline: $space-l;
     }
 
     &__logo {

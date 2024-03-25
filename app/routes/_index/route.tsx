@@ -27,8 +27,8 @@ export default function Index() {
     <div className="container mx-auto">
       <h1>Home page</h1>
       <div className="grid grid-cols-12">
-        <div className="col-span-8 bg-neutral-800 p-4">
-          <CardList cards={data} className="grid grid-cols-5 gap-x-4"/>
+        <div className="col-span-8 bg-neutral-800 p-m">
+          <CardList cards={data} className="columns-5"/>
         </div>
       </div>
     </div>
