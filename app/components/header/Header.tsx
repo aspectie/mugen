@@ -5,7 +5,17 @@ import logo from '@/assets/icons/logo.svg';
 import style from './header.module.scss';
 
 const Header = () => {
-  const links: TLink[] = [];
+  const links: TLink[] = [
+    {
+      id: 1,
+      title: 'Аниме',
+      route: '123'
+    }, {
+      id: 2,
+      title: 'Манга',
+      route: '123'
+    }
+  ];
 
   return (
     <header className={style.header}>
@@ -13,7 +23,9 @@ const Header = () => {
         <Link to="/">
           <img src={logo} alt="logo" className={style.header__logo} />
         </Link>
-        <Menu links={links} />
+        {links.length > 0 && <div className='ml-xl'>
+          <Menu links={links} />
+        </div>}
       </div>
     </header>
   );
