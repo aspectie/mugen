@@ -6,23 +6,26 @@
   cursor: pointer;
   text-transform: capitalize;
 
-  //Sizes
+  /* Sizes */
   &--small {
     padding: $space-xs $space-s;
+
     @include p
   }
 
   &--medium {
     padding: $space-s $space-m;
+
     @include h5
   }
 
   &--large {
     padding: $space-m $space-l;
+
     @include h4
   }
 
-  //Types
+  /* Types */
   &--primary {
     background-color: $accent-80;
 

@@ -1,0 +1,12 @@
+{ 
+  "extends": ["stylelint-config-standard"],
+  "defaultSeverity": "warning",
+  "fix": true,
+  "rules": {
+    "import-notation": "string",
+    "alpha-value-notation": "number",
+    "color-hex-length": "long",
+    "at-rule-no-unknown": null,
+    "font-family-no-missing-generic-family-keyword": null
+  }
+}

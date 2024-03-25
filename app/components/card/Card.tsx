@@ -1,22 +1,17 @@
-import style from "./card.module.scss";
 import {Link} from "@remix-run/react";
 
-export type TCard = {
-    id: number
-    russian: string
-    image: {
-        original: string
-    }
-    url: string
-}
+import { TAnime } from "@/types/api/shiki/TAnime";
 
-const Card = ({card} : {card : TCard}) => {
-    const imageUrl = `${window.ENV.SHIKI_URL}/${card.image.original}`;
-    
+import style from "./card.module.scss";
+
+const Card = ({card} : {card : Partial<TAnime>}) => {
+    const imageUrl = `${import.meta.env.VITE_SHIKI_URL}/${card.image?.original}`;
+
     return (
-        <Link to='#'>
-            <div className={[style['card__list-item'], style.card].join(' ')}>
-                <div className={style['card__img-wrapper']}>
+        <Link to={`anime/${card.id}`}>
+            <div className={style.card}>
+                {/* TODO: adjust heights */}
+                <div className={`${style['card__img-wrapper']} xl:h-[200px] lg:h-[170px] sm:h-[150px]`}>
                     <img className={style.card__img}
                         src={imageUrl}
                         alt={`Постер аниме ${card.russian}`}

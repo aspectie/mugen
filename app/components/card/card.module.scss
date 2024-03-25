@@ -1,25 +1,7 @@
 .card {
-  display: flex;
-  flex-direction: column;
-  gap: $space-s;
-  width: 168px;
-
-  &__list {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-    display: flex;
-    // need fix sizing padding and spaces in Figma
-    justify-content: space-between;
-    background-color: $black-100;
-    padding-block: $space-m;
-    padding-inline: $space-l;
-  }
-
   &__img-wrapper {
-    //fix-Height anime's cover
     width: 100%;
-    height: 237px;
-    box-shadow: 0 0 $space-xs rgba(0, 0, 0, 0.25); ;
+    box-shadow: 0 0 $space-xs rgb(0 0 0 / 0.25);
   }
 
   &__img {
@@ -39,8 +21,9 @@
     color: $white;
     word-wrap: break-word;
     padding-inline: $space-s;
+
     @include h5;
+    
     text-align: center;
   }
 }
-

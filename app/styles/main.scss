@@ -1,6 +1,9 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 @import "fonts.scss";
 @import "normalize.scss";
 
 * {
-  font-family: "Montserrat";
+  font-family: Montserrat;
 }

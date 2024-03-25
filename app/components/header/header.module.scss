@@ -1,22 +1,15 @@
 .header {
-    width: 100%;
-    background-color: $black-100;
+  background-color: $black-100;
+  padding-block: $space-s;
 
-    &__wrapper {
-        max-inline-size: 1296px;
-        display: flex;
-        margin: auto;
-        align-items: center;
-        gap: $space-xl;
-        padding-inline: $space-l;
-    }
+  &__wrapper {
+    display: flex;
+    margin: auto;
+    align-items: center;
+  }
 
-    &__logo {
-        display: block;
-        width: 118px;
-        height: $space-2xl;
-        margin-block-start: $space-xs;
-        //Size from Figma for align Logo position
-        margin-block-end: 12px;
-    }
+  &__logo {
+    display: block;
+    margin-top: -$space-s;
+  }
 }
