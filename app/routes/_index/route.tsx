@@ -16,7 +16,7 @@ export const loader = async () => {
   const seasonData = await getAnime({
     limit: 5,
     order: 'random',
-    score: 7
+    score: 8
   });
 
   return json(seasonData);
