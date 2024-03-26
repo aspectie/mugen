@@ -34,7 +34,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
         },
         {
             title: 'жанры',
-            value: data.rawData.genres.map((el) => el.russian).toString()
+            value: data.rawData.genres.reduce((acc, el) =>  acc + el.russian + ' ', '')
         },
         {
             title: 'рейтинг',
@@ -42,7 +42,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
         },
         {
             title: 'студия',
-            value: data.rawData.studios.map(el => el.name).toString()
+            value: data.rawData.studios.reduce((acc, el) =>  acc + el.name + ' ', '')
         }
     ]
 
@@ -83,7 +83,7 @@ export default function AnimePage() {
             <div className="flex flex-col justify-between col-start-3 col-end-10 px-l">
                 <div>
                     <div className="flex flex-wrap items-start justify-between">
-                        <h1 className="w-5/6 font-bold">{anime.rawData.russian}</h1>
+                        <h1 className="w-5/6 text-2xl font-bold">{anime.rawData.russian}</h1>
                         <div className="flex h-fit items-center mt-xs">
                             <img className="w-xl h-xl" src={star} alt=""/>
                             <span className="text-2xl font-bold ml-s">{anime.rawData.score}</span>
