@@ -4,20 +4,22 @@ import { useLoaderData } from "@remix-run/react";
 import { getAnime } from "../anime/anime.server";
 import CardList from "@/components/card/CardList";
 
+
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Mugen' },
+    { title: 'Mugen - Главная' },
     { name: 'description', content: 'The best anime project' }
   ]
 }
 
 export const loader = async () => {
-  const data = await getAnime({
+  const seasonData = await getAnime({
     limit: 5,
-    order: 'ranked'
+    order: 'random',
+    score: 8
   });
 
-  return json(data);
+  return json(seasonData);
 };
 
 export default function Index() {
@@ -25,11 +27,16 @@ export default function Index() {
 
   return (
     <div className="container mx-auto">
-      <h1>Home page</h1>
       <div className="grid grid-cols-12">
-        <div className="col-span-8 bg-neutral-800 p-m">
+        <h2 className="font-bold text-l row-start-1 col-span-4 mt-xl">Зимний сезон</h2>
+        <div className="col-span-8 bg-neutral-800 p-m row-start-2">
           <CardList cards={data} className="columns-5"/>
         </div>
+        <h2 className="font-bold text-l row-start-3 col-span-4 mt-m">Популярное</h2>
+        <div className="col-span-8 p-m row-start-4">
+          <CardList cards={data} className="columns-5"/>
+        </div>
+        <div className="col-start-10 col-end-13 row-start-2 row-end-5 bg-gray-300"></div>
       </div>
     </div>
   )
