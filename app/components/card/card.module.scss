@@ -1,6 +1,7 @@
 .card {
   &__img-wrapper {
     width: 100%;
+    min-height: 228px;
     box-shadow: 0 0 $space-xs rgb(0 0 0 / 0.25);
   }
 
