@@ -10,6 +10,9 @@ type TInput = {
   size?: TFieldSize
   disabled?: boolean
   placeholder?: string
+  value?: string
+  name?: string
+  onChange?: any
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: TInput) => {
@@ -18,6 +21,9 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: 
     size = 'medium',
     disabled = false,
     placeholder = 'Default placeholder',
+    value,
+    name,
+    onChange,
     ...rest
   } = props
 
@@ -31,6 +37,9 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: 
       className={classes}
       disabled={disabled}
       placeholder={placeholder}
+      value={value}
+      name={name}
+      onChange={onChange}
     />
   )
 }

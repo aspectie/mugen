@@ -12,7 +12,7 @@ type TButton = {
   children?: React.ReactNode
   style?: React.CSSProperties
   text?: string
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 const Button: React.ForwardRefRenderFunction<
