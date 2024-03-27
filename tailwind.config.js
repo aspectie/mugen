@@ -6,6 +6,7 @@ export default {
       'md': '768px',
       'lg': '1024px',
       'xl': '1272px',
+      "2xl": '1440px'
     },
     container: {
       padding: {
@@ -50,6 +51,15 @@ export default {
         20: '#FAFAFA',
       },
       'white': '#FFFFFF'
+    },
+    fontSize: {
+      'xs': ["14px", "22px"],
+      's': ["16px", "24px"],
+      'm': ["20px", "28px"],
+      'l': ["24px", "32px"],
+      'xl': ["24px", "32px"],
+      '2xl': ["28px", "36px"],
+      '3xl': ["32px", "40px"],
     },
     extend: {},
   },
