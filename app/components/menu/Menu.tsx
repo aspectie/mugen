@@ -2,9 +2,8 @@ import { Link } from '@remix-run/react';
 import style from './menu.module.scss';
 
 export type TLink = {
-  id: number,
-  title: string,
-  route: string,
+  title: string
+  route: string
 };
 
 const Menu = ({ links } : { links: TLink[]}) => {
@@ -12,7 +11,7 @@ const Menu = ({ links } : { links: TLink[]}) => {
     <nav className={style.nav}>
       <ul className={style.nav__list}>
         {links.map((link) => (
-          <li key={link.id} className={style['nav__list-item']}>
+          <li key={link.route} className={style['nav__list-item']}>
             <Link to={link.route}>{link.title}</Link>
           </li>
         ))}

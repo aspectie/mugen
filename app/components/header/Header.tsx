@@ -2,30 +2,33 @@ import { Link } from '@remix-run/react';
 
 import Menu, { TLink } from '@/components/menu/Menu';
 import logo from '@/assets/icons/logo.svg';
-import style from './header.module.scss';
 
 const Header = () => {
   const links: TLink[] = [
     {
-      id: 1,
       title: 'Аниме',
-      route: '123'
+      route: '/anime'
     }, {
-      id: 2,
       title: 'Манга',
-      route: '123'
+      route: '/manga'
     }
   ];
 
   return (
-    <header className={style.header}>
-      <div className={`container ${style.header__wrapper}`}>
-        <Link to="/">
-          <img src={logo} alt="logo" className={style.header__logo} />
-        </Link>
-        {links.length > 0 && <div className='ml-xl'>
-          <Menu links={links} />
-        </div>}
+    <header className="fixed w-full py-s bg-black-100">
+      <div className="container flex m-auto items-center justify-between">
+        <div className="flex items-center">
+          <Link to="/" className="-mt-s">
+            <img src={logo} alt="Логотип"/>
+          </Link>
+          {links.length > 0 &&
+            <div className='ml-xl'>
+              <Menu links={links} />
+            </div>}
+        </div>
+        <div>
+          <Link to="/login"><p className="text-white font-bold hover:text-accent-100">Войти</p></Link>
+        </div>
       </div>
     </header>
   );
