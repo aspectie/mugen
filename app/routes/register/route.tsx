@@ -31,20 +31,19 @@ export const action = async ({
     return validationError(result.error);
   }
 
+  // TODO: check if email exists 
+
   return redirect("/");
 };
 
-export default function LoginPage() {
-    // TODO: pass to notification
-    const data = useActionData<typeof action>();
-
+export default function RegisterPage() {
     return (
       <div className="container mx-auto h-screen flex items-center justify-center">
         <div className="p-l bg-gray-20 xl:w-3/5 rounded-lg shadow-md">
           <div className="flex justify-between items-end mb-2xl">
-            <h1 className="font-bold text-black-80">Вход</h1>
-            <Link to="/register">
-              <h5>Регистрация</h5>
+            <h1 className="font-bold text-black-80">Регистрация</h1>
+            <Link to="/login">
+              <h5>Войти</h5>
             </Link>
           </div>
           <ValidatedForm validator={validator} method="post">
@@ -58,10 +57,9 @@ export default function LoginPage() {
                 <Input placeholder="Пароль"/>
               </FormField>
             </div>
-            <div className="w-full flex justify-between">
-              <Link to="/forgot">Забыл пароль</Link>
-              <div className="w-1/5">
-                <Button text="Вход" />
+            <div className="w-full flex justify-center">
+              <div>
+                <Button text="Зарегистрироваться" />
               </div>
             </div>
           </ValidatedForm>
