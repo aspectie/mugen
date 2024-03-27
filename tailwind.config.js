@@ -27,6 +27,14 @@ export default {
       '4xl': '64px',
     },
     colors: {
+      'accent': {
+        120: '#F27317',
+        100: '#FE8127',
+        80: '#FC9850',
+        60: '#FAB079',
+        40: '#F9C7A3',
+        20: '#F7DECC',
+      },
       'black': {
         100: '#202020',
         80: '#4A4A4A',
@@ -40,7 +48,8 @@ export default {
         60: '#EAEAEA',
         40: '#F5F5F5',
         20: '#FAFAFA',
-      }
+      },
+      'white': '#FFFFFF'
     },
     extend: {},
   },

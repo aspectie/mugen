@@ -43,7 +43,7 @@ export default function RegisterPage() {
           <div className="flex justify-between items-end mb-2xl">
             <h1 className="font-bold text-black-80">Регистрация</h1>
             <Link to="/login">
-              <h5>Войти</h5>
+              <h5 className="hover:text-accent-100">Войти</h5>
             </Link>
           </div>
           <ValidatedForm validator={validator} method="post">

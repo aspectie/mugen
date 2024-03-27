@@ -44,7 +44,7 @@ export default function LoginPage() {
           <div className="flex justify-between items-end mb-2xl">
             <h1 className="font-bold text-black-80">Вход</h1>
             <Link to="/register">
-              <h5>Регистрация</h5>
+              <h5 className="hover:text-accent-100">Регистрация</h5>
             </Link>
           </div>
           <ValidatedForm validator={validator} method="post">
@@ -59,7 +59,7 @@ export default function LoginPage() {
               </FormField>
             </div>
             <div className="w-full flex justify-between">
-              <Link to="/forgot">Забыл пароль</Link>
+              <Link to="/forgot" className="hover:text-accent-100">Забыл пароль</Link>
               <div className="w-1/5">
                 <Button text="Вход" />
               </div>
