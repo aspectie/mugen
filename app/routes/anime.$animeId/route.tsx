@@ -13,7 +13,9 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     data.rawData = await getAnime(params.animeId);
     data.rawData.description_html = clearHTML(data.rawData.description_html)
     const screenShots = await getAnime(`${params.animeId}/screenshots`);
-    data.screenshots = screenShots.slice(0, 5).map((item) => `${import.meta.env.VITE_SHIKI_URL}${item.original}`);
+    data.screenshots = screenShots.slice(0, 4).map((item) => `${import.meta.env.VITE_SHIKI_URL}${item.original}`);
+    const rawVideos = await getAnime(`${params.animeId}/videos`);
+    data.videos = rawVideos.slice(0, 2).map(item => item.player_url)
     data.imageUrl = `${import.meta.env.VITE_SHIKI_URL}${data.rawData.image?.original}`;
     data.info = [
         {
@@ -58,6 +60,11 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
 
 export default function AnimePage() {
     const anime = useLoaderData<typeof loader>();
+    const scrollToVideo = () => {
+        const player = document.getElementById("player");
+        player.scrollIntoView({behavior: "smooth"});
+    }
+
     return (
         anime &&
         <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">
@@ -89,12 +96,12 @@ export default function AnimePage() {
                             <span className="text-2xl font-bold ml-s">{anime.rawData.score}</span>
                         </div>
                     </div>
-                    <h2 className="text-s px-xs mt-xs">{anime.rawData.name}</h2>
+                    <h2 className="text-s mt-xs">{anime.rawData.name}</h2>
                     <div className="w-1/6 mt-m">
-                        <Button text={'Смотреть'} style={{width: "100%"}} size={"medium"}/>
+                        <Button text={'Смотреть'} style={{width: "100%"}} size={"medium"} onClick={scrollToVideo}/>
                     </div>
                 </div>
-                <div className="about mt-l w-4/5 text-xs">
+                <div className="about mt-l w-3/5 text-xs">
                     <h3 className="text-m font-bold">Информация</h3>
                     <ul className="about-list mt-m flex flex-col gap-s"> {
                          anime.info.map((el, index) => {
@@ -116,11 +123,15 @@ export default function AnimePage() {
                 <h3 className="font-bold text-m">Кадры</h3>
                 <div className="flex mt-m">{
                     anime.screenshots.map((item) => (
-                        <div className="w-3/6 pr-s h-min" key={item}>
-                            <img className={"object-cover object-center"} src={item} alt={`Кадр из ${anime.rawData.russian}`}/>
+                        <div className="px-s w-2/6 h-[142px]" key={item}>
+                            <img className={"w-full h-full"} src={item} alt={`Кадр из ${anime.rawData.russian}`}/>
                         </div>
                     ))}
                 </div>
+            </div>
+            <div id="player" className="col-start-1 col-end-10 self-end mt-l">
+                <h2 className="font-bold text-m">Трейлер</h2>
+                <iframe className="mt-m" key='12' title={`Трейлер ${anime.info.russian}`} src={anime.videos} width="100%" height="468px" allowFullScreen></iframe>
             </div>
         </div>
     )
