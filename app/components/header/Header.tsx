@@ -15,7 +15,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="fixed w-full py-s bg-black-100">
+    <header className="sticky top-[0] w-full py-s bg-black-100">
       <div className="container flex m-auto items-center justify-between">
         <div className="flex items-center">
           <Link to="/" className="-mt-s">
