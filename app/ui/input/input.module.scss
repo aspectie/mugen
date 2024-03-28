@@ -1,14 +1,13 @@
-.button {
+.input {
   width: 100%;
   outline: 0;
-  border: 0;
+  border: 1px solid $gray-80;
   border-radius: $space-s;
-  color: $gray-40;
-  cursor: pointer;
+  color: $black-100;
   text-transform: capitalize;
 
   /* Sizes */
-  &--small {
+   &--small {
     @include field--small
   }
 
