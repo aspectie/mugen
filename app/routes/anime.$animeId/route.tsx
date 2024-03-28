@@ -1,7 +1,7 @@
 import {useLoaderData} from "@remix-run/react";
 import {json, LoaderFunctionArgs, type MetaFunction} from "@remix-run/node";
 import { getAnime } from "../anime/anime.server";
-import Button from "@/ui/button/button";
+import Button from "@/ui/button/Button";
 import {clearHTML} from "@/utils/utils";
 import star from "@/assets/icons/star.svg";
 
