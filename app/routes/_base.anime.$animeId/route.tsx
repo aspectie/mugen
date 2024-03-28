@@ -97,9 +97,9 @@ export default function AnimePage() {
                 </div>
                 <div className="mt-m">
                     <div className="flex flex-col gap-s">
-                        <Button text='Добавить в список' style={{width: "100%"}} size="small"/>
-                        <Button text='Оставить отзыв' style={{width: "100%"}} size="small"/>
-                        <Button text='В избранное' style={{width: "100%"}} size="small"/>
+                        <Button text="Добавить в список" style={{width: "100%"}} size="small"/>
+                        <Button text="Оставить отзыв" style={{width: "100%"}} size="small"/>
+                        <Button text="В избранное" style={{width: "100%"}} size="small"/>
                     </div>
                     {/* TODO: create rating component */}
                     <div className="flex gap-s justify-center p-l">
