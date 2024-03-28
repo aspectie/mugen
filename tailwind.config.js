@@ -43,6 +43,9 @@ export default {
         40: '#A0A0A0',
         20: '#CACACA',
       },
+      'blue': {
+        60: '#BEE0FF',
+      },
       'gray': {
         100: '#C3C3C3',
         80: '#D9D9D9',
