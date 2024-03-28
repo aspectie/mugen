@@ -1,0 +1,50 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  display: none;
+}
+
+label {
+  span {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    border: 2px solid $black-40;
+  }
+}
+
+input[type="checkbox"]:checked {
+  + span {
+    border: none;
+    background-color: $accent-80;
+  }
+}
+
+input[type="checkbox"]:hover {
+  + span {
+    background-color: $accent-100;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+input[type="checkbox"]:active {
+  + span {
+    background-color: $accent-100;
+  }
+}
+
+
