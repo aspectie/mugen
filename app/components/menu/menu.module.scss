@@ -6,10 +6,12 @@
 
     &-item {
       @include h5;
-        color: $gray-40;
+
+      color: $gray-40;
 
       &:hover {
         color: $accent-100;
+
       }
     }
   }

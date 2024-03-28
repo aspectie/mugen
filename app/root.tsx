@@ -1,5 +1,3 @@
-import '@/styles/main.scss'
-
 import {
   Links,
   Meta,
@@ -7,8 +5,8 @@ import {
   Scripts,
   ScrollRestoration
 } from '@remix-run/react'
-
 import Header from '@/components/header/Header'
+import '@/styles/main.scss';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -20,18 +18,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
           content="width=device-width, initial-scale=1"
         />
         <Meta />
-        <Links />
       </head>
       <body>
-        <Header />
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+      <Header />
+      {children}
+      <ScrollRestoration/>
+      <Scripts/>
       </body>
     </html>
   )
 }
 
 export default function App() {
-  return <Outlet />
+  return <Outlet/>
 }

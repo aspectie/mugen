@@ -1,25 +1,34 @@
-import style from './header.module.scss';
 import { Link } from '@remix-run/react';
-// eslint-disable-next-line import/no-unresolved
-import logo from '@public/logo.svg';
-import Menu from '@/components/menu/Menu';
+
+import Menu, { TLink } from '@/components/menu/Menu';
+import logo from '@/assets/icons/logo.svg';
 
 const Header = () => {
-  const links = [
+  const links: TLink[] = [
     {
-      id: 1,
       title: 'Аниме',
-      link: '/anime',
-    },
+      route: '/anime'
+    }, {
+      title: 'Манга',
+      route: '/manga'
+    }
   ];
 
   return (
-    <header className={style.header}>
-      <div className={style.header__wrapper}>
-        <Link to="/">
-          <img src={logo} alt="logo" className={style.header__logo} />
-        </Link>
-        <Menu links={links} />
+    <header className="fixed w-full py-s bg-black-100">
+      <div className="container flex m-auto items-center justify-between">
+        <div className="flex items-center">
+          <Link to="/" className="-mt-s">
+            <img src={logo} alt="Логотип"/>
+          </Link>
+          {links.length > 0 &&
+            <div className='ml-xl'>
+              <Menu links={links} />
+            </div>}
+        </div>
+        <div>
+          <Link to="/login"><p className="text-white font-bold hover:text-accent-100">Войти</p></Link>
+        </div>
       </div>
     </header>
   );
