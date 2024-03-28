@@ -2,6 +2,7 @@
   &__img-wrapper {
     width: 100%;
     box-shadow: 0 0 $space-xs rgb(0 0 0 / 0.25);
+    border-radius: $space-s;
   }
 
   &__img {
@@ -10,7 +11,7 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
-    border-radius: $space-s;
+    border-radius: inherit;
   }
 
   &__title {

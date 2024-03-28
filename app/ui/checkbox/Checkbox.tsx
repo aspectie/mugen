@@ -1,11 +1,12 @@
 import style from "./checkbox.module.scss"
 
-const Checkbox = ({text} : {text : string}) => {
+const Checkbox = ({text, id, onChange} : {text : string, id: string, onChange: any}) => {
 
     return (
-        <label htmlFor="genre" className={style.label}>
-            <input className={style["checkbox"]} type="checkbox" id="genre" name="genre"></input>
+        <label htmlFor={id} className={style.label}>
+            <input className={style["checkbox"]} type="checkbox" id={id} name={id}></input>
             {text}
+            OnChange={onChange}
         </label>
     )
 }
