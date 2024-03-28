@@ -1,45 +1,30 @@
 .label {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1em auto;
   align-items: center;
-  span {
-    display: inline-block;
-    margin-right: 5px;
-    vertical-align: middle;
-    width: 16px;
-    height: 16px;
-    border: 2px solid $black-40;
-  }
+  gap: $space-s;
 }
 
 .checkbox {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  clip-path: inset(50%);
-  overflow: hidden;
-  display: none;
-}
+  appearance: none;
+  background-color: $white;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: $space-m;
+  height: $space-m;
+  border: 2px solid $black-40;
 
-.checkbox:checked {
-  + span {
+  &:checked {
     border: none;
     background-color: $accent-80;
   }
-}
-
-.checkbox:hover {
-  + span {
+  &:hover {
     background-color: $accent-100;
     border: none;
     cursor: pointer;
   }
-}
-
-.checkbox:active {
-  + span {
+  :active {
     background-color: $accent-100;
   }
 }
