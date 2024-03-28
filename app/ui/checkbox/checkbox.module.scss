@@ -1,0 +1,33 @@
+.label {
+  display: grid;
+  grid-template-columns: 1em auto;
+  align-items: center;
+  gap: $space-s;
+  cursor: pointer;
+}
+
+.checkbox {
+  appearance: none;
+  background-color: $white;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: $space-m;
+  height: $space-m;
+  border: 2px solid $black-40;
+  cursor: pointer;
+
+  &:checked {
+    border: none;
+    background-color: $accent-80;
+  }
+  &:hover {
+    background-color: $accent-100;
+    border: none;
+  }
+  :active {
+    background-color: $accent-100;
+  }
+}
+
+
