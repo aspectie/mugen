@@ -111,10 +111,10 @@ export default function AnimePage() {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between flex-col col-span-7 px-l">
+            <div className="flex flex-col col-span-7 px-l">
                 <div className="mb-2xl">
                     <div className="flex items-start">
-                        <h1 className="font-bold">{anime.rawData.russian}</h1>
+                        <h1 className="font-bold w-5/6">{anime.rawData.russian}</h1>
                         <div className="flex items-center ml-l">
                             <img className="w-xl h-xl" src={star} alt=""/>
                             <h2 className="font-bold text-black-80 ml-s">{anime.rawData.score}</h2>
