@@ -5,65 +5,69 @@ import { getAnime } from "../anime/anime.server";
 import Button from "@/ui/button/Button";
 import {clearHTML} from "@/utils/utils";
 import star from "@/assets/icons/star.svg";
-import {TAnime, TAnimeScreenshots} from "@/types/api/shiki/TAnime";
-
-
+import {TAnime, TAnimeScreenshots, TAnimeVideo} from "@/types/api/shiki/TAnime";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
     const data: {
         rawData?: TAnime;
         screenshots?: string[];
         imageUrl?: string;
-        videos?: string
+        videos?: string[]
         info?: Record<string, string>[]
     } = {};
 
     data.rawData = await getAnime(params.animeId)
-    
-    const screenShots : TAnimeScreenshots[] = await getAnime(`${params.animeId}/screenshots`)
-    data.screenshots = screenShots
-        .slice(0, 4)
-        .map((item : TAnimeScreenshots) => import.meta.env.VITE_SHIKI_URL + item.original)
 
-    const rawVideos = await getAnime(`${params.animeId}/videos`)
-    data.videos = rawVideos
-        .slice(0, 1)
-        .map((item: { player_url: string; }) => item.player_url)
-
-    if (data.rawData) {
-        data.rawData.description_html = clearHTML(data.rawData.description_html)
-        data.imageUrl = import.meta.env.VITE_SHIKI_URL + data.rawData.image?.original
-        data.info = [
-            {
-                title: "тип",
-                value: data.rawData.kind
-            },
-            {
-                title: 'эпизоды',
-                value: data.rawData.episodes
-            },
-            {
-                title: 'дата выхода',
-                value: data.rawData.aired_on
-            },
-            {
-                title: 'cтатус',
-                value: data.rawData.status
-            },
-            {
-                title: 'жанры',
-                value: data.rawData.genres.reduce((acc, el) =>  acc + el.russian + ' ', '')
-            },
-            {
-                title: 'рейтинг',
-                value: data.rawData.rating
-            },
-            {
-                title: 'студия',
-                value: data.rawData.studios.reduce((acc, el) =>  acc + el.name + ' ', '')
-            }
-        ]
+    if (!data.rawData) {
+        throw new Response('Not Found', { status: 404 });
     }
+    
+    const screenShots: TAnimeScreenshots[] = await getAnime(`${params.animeId}/screenshots`)
+    if (screenShots instanceof Array) {
+        data.screenshots = screenShots
+            .slice(0, 4)
+            .map((item) => import.meta.env.VITE_SHIKI_URL + item.original)
+    }
+
+    const rawVideos: TAnimeVideo[] = await getAnime(`${params.animeId}/videos`)
+    if (rawVideos instanceof Array) {
+        data.videos = rawVideos
+            .slice(0, 1)
+            .map((item) => item.player_url)
+    }
+
+    data.rawData.description_html = data.rawData.description_html ? clearHTML(data.rawData.description_html) : ''
+    data.imageUrl = import.meta.env.VITE_SHIKI_URL + data.rawData.image?.original
+    data.info = [
+        {
+            title: "тип",
+            value: data.rawData.kind
+        },
+        {
+            title: 'эпизоды',
+            value: data.rawData.episodes
+        },
+        {
+            title: 'дата выхода',
+            value: data.rawData.aired_on
+        },
+        {
+            title: 'cтатус',
+            value: data.rawData.status
+        },
+        {
+            title: 'жанры',
+            value: data.rawData.genres?.reduce((acc, el) =>  acc + el.russian + ' ', '')
+        },
+        {
+            title: 'рейтинг',
+            value: data.rawData.rating
+        },
+        {
+            title: 'студия',
+            value: data.rawData.studios?.reduce((acc, el) =>  acc + el.name + ' ', '')
+        }
+    ]
 
     return json(data);
 };
@@ -84,7 +88,7 @@ export default function AnimePage() {
             playerRef.current.scrollIntoView({behavior: "smooth"})
         }
     }
-
+    console.log(anime)
     return (
         anime && anime.rawData &&
         <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">

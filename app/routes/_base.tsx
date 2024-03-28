@@ -26,12 +26,26 @@ export function ErrorBoundary() {
   const error = useRouteError();
 
   if (isRouteErrorResponse(error)) {
-      if (error.status === 404) {
-          return <NotFound />;
-      }
-
-      throw new Error(`${error.status} ${error.statusText}`);
+    if (error.status === 404) {
+      return <NotFound />;
+    }
+    return (
+      <div>
+        <h1>
+          {error.status} {error.statusText}
+        </h1>
+        <p>{error.data}</p>
+      </div>
+    )
+  } else if (error instanceof Error) {
+    return (
+      <div>
+        <h1>Error</h1>
+        <p>{error.message}</p>
+        <p>The stack trace is:</p>
+        <pre>{error.stack}</pre>
+      </div>
+    )
   }
-
-  throw new Error(error instanceof Error ? error.message : 'Unknown Error');
+  return <h1>Unknown Error</h1>;
 }

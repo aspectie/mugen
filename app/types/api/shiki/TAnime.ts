@@ -34,6 +34,16 @@ export type TAnimeStudio = {
   image: string
 }
 
+export type TAnimeVideo = {
+  id: number
+  url: string
+  image_url: string
+  player_url: string
+  name?: string
+  kind: string
+  hosting: string
+}
+
 export type TAnimeScreenshots = {
   original: string
   preview: string
