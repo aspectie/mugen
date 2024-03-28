@@ -75,7 +75,7 @@ export default function AnimePage() {
 
     return (
         anime &&
-        <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">
+        <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl text-black-100">
             <div className="col-start-1 col-end-3">
                 <div className="rounded-s">
                     <img className="rounded block w-full object-center object-cover" src={anime.imageUrl} alt={`Постер аниме ${anime.rawData.russian}`}/>
@@ -101,7 +101,7 @@ export default function AnimePage() {
                         <h1 className="w-5/6 text-2xl font-bold">{anime.rawData.russian}</h1>
                         <div className="flex h-fit items-center">
                             <img className="w-xl h-xl" src={star} alt=""/>
-                            <span className="text-2xl font-bold ml-s">{anime.rawData.score}</span>
+                            <span className="text-2xl font-bold text-black-80 ml-s">{anime.rawData.score}</span>
                         </div>
                     </div>
                     <h2 className="text-s mt-xs w-5/6">{anime.rawData.name}</h2>
@@ -115,8 +115,8 @@ export default function AnimePage() {
                          anime.info.map((el, index) => {
                             return (
                                 <li key={index} className="flex">
-                                    <span className="w-2/6 mr-xs bg-gray-100 py-xs px-s capitalize">{el.title}</span>
-                                    <span className="w-full mr-xs bg-gray-100 py-xs px-s capitalize">{el.value}</span>
+                                    <span className="w-2/6 mr-xs bg-gray-40 py-xs px-s capitalize">{el.title}</span>
+                                    <span className="w-full mr-xs bg-gray-40 py-xs px-s capitalize">{el.value}</span>
                                 </li>
                          )})}
                     </ul>
