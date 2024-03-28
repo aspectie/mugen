@@ -1,4 +1,5 @@
 import {useLoaderData} from "@remix-run/react";
+import {useRef} from "react";
 import {json, LoaderFunctionArgs, type MetaFunction} from "@remix-run/node";
 import { getAnime } from "../anime/anime.server";
 import Button from "@/ui/button/Button";
@@ -76,10 +77,12 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
 
 export default function AnimePage() {
     const anime = useLoaderData<typeof loader>();
-    const scrollToVideo = () => {
-        // TODO: use useRef
-        const player = document.getElementById("player");
-        player.scrollIntoView({behavior: "smooth"})
+    const playerRef = useRef(null)
+
+    const scrollToPlayer = () => {
+        if (playerRef.current) {
+            playerRef.current.scrollIntoView({behavior: "smooth"})
+        }
     }
 
     return (
@@ -94,10 +97,9 @@ export default function AnimePage() {
                 </div>
                 <div className="mt-m">
                     <div className="flex flex-col gap-s">
-                        {/* TODO: remove unneccesary {} when passing string */}
-                        <Button text={'Добавить в список'} style={{width: "100%"}} size={"small"}/>
-                        <Button text={'Оставить отзыв'} style={{width: "100%"}} size={"small"}/>
-                        <Button text={'В избранное'} style={{width: "100%"}} size={"small"}/>
+                        <Button text='Добавить в список' style={{width: "100%"}} size="small"/>
+                        <Button text='Оставить отзыв' style={{width: "100%"}} size="small"/>
+                        <Button text='В избранное' style={{width: "100%"}} size="small"/>
                     </div>
                     {/* TODO: create rating component */}
                     <div className="flex gap-s justify-center p-l">
@@ -120,7 +122,7 @@ export default function AnimePage() {
                     </div>
                     <h5 className="mt-xs">{anime.rawData.name}</h5>
                     <div className="w-1/6 mt-m">
-                        <Button text={'Смотреть'} style={{width: "100%"}} onClick={scrollToVideo}/>
+                        <Button text={'Смотреть'} style={{width: "100%"}} onClick={scrollToPlayer}/>
                     </div>
                 </div>
                 <h4 className="font-bold mb-m">Информация</h4>
@@ -142,7 +144,7 @@ export default function AnimePage() {
                 <div className="flex mt-m">{
                     anime.screenshots && anime.screenshots.map((item) => (
                         <div className="px-s w-2/6 h-[142px]" key={item}>
-                            <img className={"w-full h-full"}
+                            <img className="w-full h-full"
                                 src={item}
                                 alt={`Кадр из ${anime.rawData?.russian}`}
                             />
@@ -150,9 +152,14 @@ export default function AnimePage() {
                     ))}
                 </div>
             </div>
-            <div id="player" className="col-start-1 col-end-10 self-end mt-l">
+            <div id="player"
+                 ref={playerRef}
+                 className="col-start-1 col-end-10 self-end mt-l">
                 <h4 className="font-bold">Трейлер</h4>
-                <iframe className="mt-m" key='12' src="//kodik.info/season/84066/0372efad8c745626a261699d3b24400e/720p" width="100%" height="588px" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"  referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                <iframe className="mt-m" key='12' src="//kodik.info/season/84066/0372efad8c745626a261699d3b24400e/720p"
+                        width="100%" height="588px" title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
             </div>
         </div>
     )
