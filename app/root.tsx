@@ -1,11 +1,9 @@
 import {
-  Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration
 } from '@remix-run/react'
-import Header from '@/components/header/Header'
 import '@/styles/main.scss';
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -20,7 +18,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
       </head>
       <body>
-      <Header />
       {children}
       <ScrollRestoration/>
       <Scripts/>
