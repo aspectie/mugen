@@ -1,9 +1,17 @@
-.checkbox {
+.label {
   display: flex;
   align-items: center;
+  span {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    border: 2px solid $black-40;
+  }
 }
 
-.visually-hidden {
+.checkbox {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -15,25 +23,14 @@
   display: none;
 }
 
-label {
-  span {
-    display: inline-block;
-    margin-right: 5px;
-    vertical-align: middle;
-    width: 16px;
-    height: 16px;
-    border: 2px solid $black-40;
-  }
-}
-
-input[type="checkbox"]:checked {
+.checkbox:checked {
   + span {
     border: none;
     background-color: $accent-80;
   }
 }
 
-input[type="checkbox"]:hover {
+.checkbox:hover {
   + span {
     background-color: $accent-100;
     border: none;
@@ -41,7 +38,7 @@ input[type="checkbox"]:hover {
   }
 }
 
-input[type="checkbox"]:active {
+.checkbox:active {
   + span {
     background-color: $accent-100;
   }
