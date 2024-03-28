@@ -5,7 +5,7 @@ import { withZod } from "@remix-validated-form/with-zod";
 import { z } from "zod";
 
 import {FormField} from "@/ui/form/Field";
-import Button from "@/ui/button/button";
+import Button from "@/ui/button/Button";
 import Input from "@/ui/input/Input";
 
 export const validator = withZod(
