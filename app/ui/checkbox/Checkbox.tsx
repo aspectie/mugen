@@ -4,9 +4,8 @@ const Checkbox = ({text, id, onChange} : {text : string, id: string, onChange: a
 
     return (
         <label htmlFor={id} className={style.label}>
-            <input className={style.checkbox} type="checkbox" id={id} name={id}/>
+            <input className={style.checkbox} type="checkbox" id={id} name={id} onChange={onChange}/>
             {text}
-            OnChange={onChange}
         </label>
     )
 }
