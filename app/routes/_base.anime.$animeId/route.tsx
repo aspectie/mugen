@@ -81,7 +81,7 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
 
 export default function AnimePage() {
     const anime = useLoaderData<typeof loader>();
-    const playerRef = useRef(null)
+    const playerRef = useRef<HTMLDivElement>(null)
 
     const scrollToPlayer = () => {
         if (playerRef.current) {
@@ -101,9 +101,9 @@ export default function AnimePage() {
                 </div>
                 <div className="mt-m">
                     <div className="flex flex-col gap-s">
-                        <Button text="Добавить в список" style={{width: "100%"}} size="small"/>
-                        <Button text="Оставить отзыв" style={{width: "100%"}} size="small"/>
-                        <Button text="В избранное" style={{width: "100%"}} size="small"/>
+                        <Button text="Добавить в список" type="secondary" size="small"/>
+                        <Button text="Оставить отзыв" type="secondary" size="small"/>
+                        <Button text="В избранное" size="small"/>
                     </div>
                     {/* TODO: create rating component */}
                     <div className="flex gap-s justify-center p-l">
@@ -126,7 +126,7 @@ export default function AnimePage() {
                     </div>
                     <h5 className="mt-xs">{anime.rawData.name}</h5>
                     <div className="w-1/6 mt-m">
-                        <Button text={'Смотреть'} style={{width: "100%"}} onClick={scrollToPlayer}/>
+                        <Button text="Смотреть" onClick={scrollToPlayer}/>
                     </div>
                 </div>
                 <h4 className="font-bold mb-m">Информация</h4>
@@ -157,13 +157,20 @@ export default function AnimePage() {
                 </div>
             </div>
             <div id="player"
-                 ref={playerRef}
-                 className="col-start-1 col-end-10 self-end mt-l">
+                ref={playerRef}
+                className="col-start-1 col-end-10 self-end mt-l"
+            >
                 <h4 className="font-bold">Трейлер</h4>
-                <iframe className="mt-m" key='12' src="//kodik.info/season/84066/0372efad8c745626a261699d3b24400e/720p"
-                        width="100%" height="588px" title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                <iframe className="mt-m"
+                    key='12'
+                    src="//kodik.info/season/84066/0372efad8c745626a261699d3b24400e/720p"
+                    width="100%"
+                    height="588px"
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                ></iframe>
             </div>
         </div>
     )

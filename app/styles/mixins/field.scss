@@ -1,7 +1,7 @@
 @mixin field--small {
   padding: $space-xs $space-s;
 
-  @include p
+  @include h5
 }
 
 @mixin field--medium {
@@ -13,5 +13,5 @@
 @mixin field--large {
   padding: $space-m $space-l;
 
-  @include h4
+  @include h5
 }
