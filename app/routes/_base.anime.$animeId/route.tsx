@@ -84,10 +84,13 @@ export default function AnimePage() {
 
     return (
         anime && anime.rawData &&
-        <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl text-black-100">
-            <div className="col-start-1 col-end-3">
+        <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">
+            <div className="col-span-2">
                 <div className="rounded-s">
-                    <img className="rounded block w-full object-center object-cover" src={anime.imageUrl} alt={`Постер аниме ${anime.rawData.russian}`}/>
+                    <img className="rounded block w-full object-center object-cover"
+                        src={anime.imageUrl}
+                        alt={`Постер аниме ${anime.rawData.russian}`}
+                    />
                 </div>
                 <div className="mt-m">
                     <div className="flex flex-col gap-s">
@@ -96,6 +99,7 @@ export default function AnimePage() {
                         <Button text={'Оставить отзыв'} style={{width: "100%"}} size={"small"}/>
                         <Button text={'В избранное'} style={{width: "100%"}} size={"small"}/>
                     </div>
+                    {/* TODO: create rating component */}
                     <div className="flex gap-s justify-center p-l">
                         <span><img src={star} alt=""/></span>
                         <span><img src={star} alt=""/></span>
@@ -105,49 +109,49 @@ export default function AnimePage() {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col col-start-3 col-end-10 px-l">
-                <div>
-                    <div className="flex flex-wrap items-start justify-between">
-                        <h1 className="w-5/6 text-2xl font-bold">{anime.rawData.russian}</h1>
-                        <div className="flex h-fit items-center">
+            <div className="flex justify-between flex-col col-span-7 px-l">
+                <div className="mb-2xl">
+                    <div className="flex items-start">
+                        <h1 className="font-bold">{anime.rawData.russian}</h1>
+                        <div className="flex items-center ml-l">
                             <img className="w-xl h-xl" src={star} alt=""/>
-                            <span className="text-2xl font-bold text-black-80 ml-s">{anime.rawData.score}</span>
+                            <h2 className="font-bold text-black-80 ml-s">{anime.rawData.score}</h2>
                         </div>
                     </div>
-                    <h2 className="text-s mt-xs w-5/6">{anime.rawData.name}</h2>
+                    <h5 className="mt-xs">{anime.rawData.name}</h5>
                     <div className="w-1/6 mt-m">
-                        <Button text={'Смотреть'} style={{width: "100%"}} size={"medium"} onClick={scrollToVideo}/>
+                        <Button text={'Смотреть'} style={{width: "100%"}} onClick={scrollToVideo}/>
                     </div>
                 </div>
-                <div className="about mt-2xl w-3/5 text-xs">
-                    <h3 className="text-m font-bold">Информация</h3>
-                    <ul className="about-list mt-m flex flex-col gap-s"> {
-                        anime.info && anime.info.map((el, index) => (
-                            <li key={index} className="flex">
-                                <span className="w-2/6 mr-xs bg-gray-40 py-xs px-s capitalize">{el.title}</span>
-                                <span className="w-full mr-xs bg-gray-40 py-xs px-s capitalize">{el.value}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
+                <h4 className="font-bold mb-m">Информация</h4>
+                <ul> {
+                    anime.info && anime.info.map((el, index) => (
+                        <li key={index} className="flex mb-s">
+                            <span className="w-2/6 mr-xs bg-gray-40 py-xs px-s capitalize">{el.title}</span>
+                            <span className="w-full mr-xs bg-gray-40 py-xs px-s capitalize">{el.value}</span>
+                        </li>
+                    ))}
+                </ul>
             </div>
             <div className="mt-l col-span-9">
-                <h3 className="text-m font-bold">Описание</h3>
+                <h4 className="font-bold">Описание</h4>
                 <p className="mt-m">{anime.rawData.description_html}</p>
             </div>
-            <div className="mt-l col-start-1 col-end-10">
-                <h3 className="font-bold text-m">Кадры</h3>
+            <div className="mt-l col-span-9">
+                <h4 className="font-bold">Кадры</h4>
                 <div className="flex mt-m">{
                     anime.screenshots && anime.screenshots.map((item) => (
                         <div className="px-s w-2/6 h-[142px]" key={item}>
-                            <img className={"w-full h-full"} src={item} alt={`Кадр из ${anime.rawData?.russian}`}/>
+                            <img className={"w-full h-full"}
+                                src={item}
+                                alt={`Кадр из ${anime.rawData?.russian}`}
+                            />
                         </div>
                     ))}
                 </div>
             </div>
             <div id="player" className="col-start-1 col-end-10 self-end mt-l">
-                <h2 className="font-bold text-m">Трейлер</h2>
+                <h4 className="font-bold">Трейлер</h4>
                 <iframe className="mt-m" key='12' src="//kodik.info/season/84066/0372efad8c745626a261699d3b24400e/720p" width="100%" height="588px" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"  referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
             </div>
         </div>
