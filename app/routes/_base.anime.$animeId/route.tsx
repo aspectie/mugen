@@ -123,7 +123,7 @@ export default function AnimePage() {
                         <div className="flex items-center ml-l">
                             {/* <img className="w-xl h-xl" src={star} alt=""/> */}
                             <StarIcon className="w-l h-l"/>
-                            <h3 className="font-bold text-black-80 ml-s">{anime.rawData.score}</h3>
+                            <h1 className="font-bold text-black-80 ml-s">{anime.rawData.score}</h1>
                         </div>
                     </div>
                     <h5 className="mt-xs">{anime.rawData.name}</h5>
