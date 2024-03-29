@@ -81,7 +81,8 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
 
 export default function AnimePage() {
     const anime = useLoaderData<typeof loader>();
-    const playerRef = useRef<HTMLDivElement>(null)
+    const playerRef = useRef<null | HTMLDivElement>(null)
+
 
     const scrollToPlayer = () => {
         if (playerRef.current) {
