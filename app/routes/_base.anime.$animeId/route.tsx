@@ -89,7 +89,7 @@ export default function AnimePage() {
             playerRef.current.scrollIntoView({behavior: "smooth"})
         }
     }
-    console.log(anime)
+
     return (
         anime && anime.rawData &&
         <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">
