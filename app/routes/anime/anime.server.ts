@@ -13,7 +13,6 @@ export async function getAnime(params: any) {
   }
 
   const res = await fetch(url)
-  const data = await res.json()
 
-  return data
+  return res.ok ? await res.json() : null
 }

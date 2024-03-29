@@ -2,10 +2,9 @@
   width: 100%;
   outline: 0;
   border: 0;
-  border-radius: $space-s;
+  border-radius: $space-xs;
   color: $gray-40;
   cursor: pointer;
-  text-transform: capitalize;
 
   /* Sizes */
   &--small {
@@ -30,6 +29,23 @@
 
     &:active {
       background-color: $accent-120;
+    }
+  }
+
+  &--secondary { 
+    box-shadow:0px 0px 0px 2px $black-40 inset;
+    color: $black-80;
+
+    &:hover {
+      box-shadow: 0px 0px 0px 2px $accent-100 inset;
+      background-color: $accent-100;
+      color: $gray-40;
+    }
+
+    &:active {
+      box-shadow: 0px 0px 0px 2px $accent-120 inset;
+      background-color: $accent-120;
+      color: $gray-40;
     }
   }
 
