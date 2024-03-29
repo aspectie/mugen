@@ -1,29 +1,27 @@
 @mixin h1 {
   font-size: $h1-size;
-  line-height: calc($h1-size + $space-s);
+  line-height: normal;
 }
 
 @mixin h2 {
   font-size: $h2-size;
-  line-height: calc($h2-size + $space-s);
+  line-height: normal;
 }
 
 @mixin h3 {
   font-size: $h3-size;
-  line-height: calc($h3-size + $space-s);
+  line-height: normal;
 }
 
 @mixin h4 {
   font-size: $h4-size;
-  line-height: calc($h4-size + $space-s);
+  line-height: normal;
 }
 
 @mixin h5 {
   font-size: $h5-size;
-  line-height: calc($h5-size + $space-s);
 }
 
 @mixin p {
   font-size: $p-size;
-  line-height: calc($p-size + $space-s);
 }

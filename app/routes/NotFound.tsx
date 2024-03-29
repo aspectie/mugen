@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react"
-import NotFoundImage from '@/assets/icons/404.svg'
+import {NotFoundIcon} from '@/assets/icons'
 
 export default function NotFound() {
   return (
@@ -13,10 +13,7 @@ export default function NotFound() {
       </div>
       <div className="bg-blue-60 h-2/5 relative">
         <div className="absolute top-[-120px] w-full ">
-        <img src={NotFoundImage}
-          alt="404"
-          className="m-auto"
-        />
+          <NotFoundIcon  className="m-auto"/>
         </div>
       </div>
     </div>

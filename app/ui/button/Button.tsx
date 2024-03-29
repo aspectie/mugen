@@ -1,10 +1,13 @@
 import classNames from 'classnames'
 
-import { TFieldSize } from '@/types/ui'
+import { FieldSize, TFieldSize } from '@/types/ui'
 import styles from './button.module.scss'
 
-type TButtonType = 'primary' | 'secondary'
-
+const enum ButtonType {
+  primary = 'primary',
+  secondary = 'secondary'
+}
+type TButtonType = keyof typeof ButtonType
 type TButton = {
   type?: TButtonType
   size?: TFieldSize
@@ -20,8 +23,8 @@ const Button: React.ForwardRefRenderFunction<
   TButton
 > = (props) => {
   const {
-    type = 'primary',
-    size = 'medium',
+    type = ButtonType.primary,
+    size = FieldSize.medium,
     disabled = false,
     text = 'Default text',
     style,
