@@ -1,11 +1,12 @@
-import { ChangeEventHandler } from "react"
 import style from "./checkbox.module.scss"
 
-const Checkbox = ({text, id, onChange} : {
+const Checkbox = ({text, id, onChange, isChecked} : {
     text: string
     id: string
-    onChange: ChangeEventHandler
+    onChange: () => void
+    isChecked: boolean
 }) => {
+
     return (
         <label htmlFor={id} className={style.label}>
             <input className={style.checkbox}
@@ -13,6 +14,7 @@ const Checkbox = ({text, id, onChange} : {
                 id={id}
                 name={id}
                 onChange={onChange}
+                checked={isChecked}
             />
             {text}
         </label>

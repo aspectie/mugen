@@ -6,8 +6,11 @@ import styles from './button.module.scss'
 const enum ButtonType {
   primary = 'primary',
   secondary = 'secondary'
+  select = 'select'  
 }
+
 type TButtonType = keyof typeof ButtonType
+
 type TButton = {
   type?: TButtonType
   size?: TFieldSize
