@@ -5,7 +5,7 @@ import styles from './button.module.scss'
 
 const enum ButtonType {
   primary = 'primary',
-  secondary = 'secondary'
+  secondary = 'secondary',
   select = 'select'  
 }
 
