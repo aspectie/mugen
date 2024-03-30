@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { TFieldSize } from '@/types/ui'
 import styles from './button.module.scss'
 
-type TButtonType = 'primary' | 'secondary'
+type TButtonType = 'primary' | 'secondary' | 'select'
 
 type TButton = {
   type?: TButtonType

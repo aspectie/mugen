@@ -49,6 +49,11 @@
     }
   }
 
+  &--select {
+    background-color: $gray-40;
+    color: $black-100;
+  }
+
   &--disabled {
     background-color: $black-60 !important;
   }

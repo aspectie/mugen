@@ -3,6 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 
 import { getAnime } from "../anime/anime.server";
 import CardList from "@/components/card/CardList";
+import Select from "@/ui/select/Select";
 
 
 export const meta: MetaFunction = () => {
@@ -22,6 +23,27 @@ export const loader = async () => {
   return json(seasonData);
 };
 
+const genre = [
+  {label: "Ужасы", value: 'опция 1'},
+  {label: "Триллер", value: 'опция 1'},
+  {label: "Сёнен", value: 'опция 1'},
+  {label: "Сейнен", value: 'опция 1'},
+  {label: "Приключения", value: 'опция 1'},
+  {label: "Драки", value: 'опция 1'},
+]
+
+const type = [
+  {label: "ТВ-Сериал", value: 'опция 1'},
+  {label: "OVA", value: 'опция 1'},
+  {label: "ONA", value: 'опция 1'},
+  {label: "Фильм", value: 'опция 1'},
+]
+
+const year = [
+  {label: "10-е", value: 'опция 1'},
+  {label: "20-е", value: 'опция 1'}
+]
+
 export default function Index() {
   const data = useLoaderData<typeof loader>();
 
@@ -36,7 +58,11 @@ export default function Index() {
         <div className="col-span-8 p-m row-start-4 mt-s">
           <CardList cards={data} className="columns-5"/>
         </div>
-        <div className="col-start-10 col-end-13 row-start-2 row-end-5 bg-gray-300"></div>
+        <div className="col-start-10 col-end-13 row-start-2 row-end-5 bg-gray-300 flex justify-between">
+          <Select placeholder={'Жанр'} options={genre} withCheckBox={true}/>
+          <Select placeholder={'Тип'} options={type}/>
+          <Select placeholder={'Год Выхода'} options={year}/>
+        </div>
       </div>
     </div>
   )
