@@ -1,11 +1,11 @@
-.custom-select {
+.select {
   position: relative;
   background-color: $gray-40;
-  width: max-content;
   height: min-content;
 }
 
-.options-list {
+.options {
+  z-index: 999;
   position: absolute;
   min-width: 100%;
   width: max-content;
@@ -18,18 +18,15 @@
   gap: $space-s;
   border-top: 2px solid $gray-60;
   background-color: inherit;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .option {
   cursor: pointer;
+
   &:hover {
-    color: $accent-100
+    color: $accent-100;
   }
   &:active {
-    color: $accent-100
+    color: $accent-120;
   }
 }
-

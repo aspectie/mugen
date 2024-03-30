@@ -1,100 +1,109 @@
-import Button from "@/ui/button/Button";
-import React, {useEffect, useRef, useState} from "react";
-import Checkbox from "@/ui/checkbox/Checkbox";
-import {TFieldSize} from "@/types/ui";
+import Button from '@/ui/button/Button';
+import React, { ChangeEventHandler, useEffect, useRef, useState } from 'react';
+import Checkbox from '@/ui/checkbox/Checkbox';
+import { TFieldSize } from '@/types/ui';
 
-import classNames from 'classnames'
-import styles from "./select.module.scss";
+import styles from './select.module.scss';
 
-type TSelectType = "select" | "multiselect"
-
+type TOption = {
+  label: string;
+  value: string;
+};
 type TSelect = {
-    options: {
-        label: string;
-        value: string;
-    }[]
-    type? : TSelectType
-    size? : TFieldSize
-    disabled?: boolean
-    children?: React.ReactNode
-    style?: React.CSSProperties
-    placeholder?: string
-    withCheckBox?: boolean
-    onClick?: (event: React.MouseEvent<HTMLSelectElement>) => void
-}
+  options: TOption[];
+  isMulti?: boolean;
+  size?: TFieldSize;
+  disabled?: boolean;
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
+  placeholder?: string;
+};
+const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
+  props: TSelect
+) => {
+  const {
+    options,
+    isMulti = false,
+    size = 'medium',
+    disabled = false,
+    placeholder = 'Default text',
+  } = props;
 
-const Select: React.ForwardRefRenderFunction<
-    HTMLSelectElement, TSelect
-> = (props: TSelect)  => {
-    const {
-        options,
-        type = "select",
-        size = "medium",
-        disabled = false,
-        placeholder = "Default text",
-        withCheckBox = false,
-        style,
-        onClick,
-        ...rest
-    } = props
+  const [isOpened, setIsOpened] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [placeholderText, setPlaceholderText] = useState(placeholder);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const toggleDropdown = () => {
+    setIsOpened(!isOpened);
+  };
 
-    const [isOpened, setisOpened] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(null);
-    const dropdownRef = useRef<HTMLDivElement>(null);
+  const updateOptions = (value: string) => {
+    if (selectedOptions.includes(value)) {
+      const options = selectedOptions.filter((item) => item !== value);
+      setSelectedOptions([...options]);
+    } else {
+      setSelectedOptions([...selectedOptions, value]);
+    }
+  };
 
-     const toggleDropdown = () => {
-         setisOpened(!isOpened);
-     }
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsOpened(false);
+    }
+  };
 
-     const handleOptionClick = (option : {label: string, value: string}) => {
-         if (selectedOption === option.label) {
-             setSelectedOption(null)
-         } else {
-            setSelectedOption(option.label);
-         }
-         setisOpened(false);
-     }
+  const onOptionClick = (option: TOption) => {
+    updateOptions(option.value);
+    setPlaceholderText(option.label);
+    toggleDropdown();
+  };
 
-     const handleClickOutside = (event) => {
-         if (dropdownRef.current && !dropdownRef.current.contains(event.target))
-             setisOpened(false)
-     }
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
-     useEffect(() => {
-         document.addEventListener("click", handleClickOutside);
-         return () => {
-             document.removeEventListener("click", handleClickOutside);
-         }
-     }, [])
+  return (
+    <div className={styles.select} ref={dropdownRef}>
+      <Button
+        type="select"
+        size={size}
+        text={placeholderText}
+        disabled={disabled}
+        onClick={toggleDropdown}
+      />
+      {isOpened && (
+        <ul className={styles.options}>
+          {options.map((option) =>
+            isMulti ? (
+              <li className={styles.option} key={option.value}>
+                <Checkbox
+                  id={option.value}
+                  text={option.label}
+                  onChange={() => updateOptions(option.value)}
+                  isChecked={selectedOptions.includes(option.value)}
+                />
+              </li>
+            ) : (
+              <li
+                className={styles.option}
+                key={option.value}
+                onClick={() => onOptionClick(option)}
+              >
+                {option.label}
+              </li>
+            )
+          )}
+        </ul>
+      )}
+    </div>
+  );
+};
 
-
-    return (
-        <div className={styles[`custom-select`]} ref={dropdownRef}>
-            <Button
-            style={{width: "120px"}}
-            type="select"
-            size="small"
-            text={selectedOption ? selectedOption : placeholder}
-            onClick={toggleDropdown}/>
-            {isOpened && (
-                <ul className={styles["options-list"]}>
-                    {options.map((option : object) => (
-                        <li className={styles["option"]}
-                            key={option.value}
-                            onClick={() => handleOptionClick(option)}
-                            >
-                            {withCheckBox && <Checkbox
-                                id={option.value}
-                                text={option.label}
-                                checked={selectedOption === option.label}/>}
-                            {!withCheckBox && option.label}
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
-    )
-}
-
-export default Select
+export default Select;
