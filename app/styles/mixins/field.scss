@@ -1,6 +1,12 @@
+@mixin field--extra-small {
+  padding: $space-xs $space-s;
+  
+  @include p
+}
+
 @mixin field--small {
   padding: $space-xs $space-s;
-
+  
   @include h5
 }
 
@@ -12,6 +18,6 @@
 
 @mixin field--large {
   padding: $space-m $space-l;
-
+  
   @include h5
 }

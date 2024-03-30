@@ -1,7 +1,7 @@
 import { Link } from '@remix-run/react';
 
 import Menu, { TLink } from '@/components/menu/Menu';
-import logo from '@/assets/icons/logo.svg';
+import {LogoIcon} from '@/assets/icons';
 
 const Header = () => {
   const links: TLink[] = [
@@ -19,7 +19,7 @@ const Header = () => {
       <div className="container flex m-auto items-center justify-between">
         <div className="flex items-center">
           <Link to="/" className="-mt-s">
-            <img src={logo} alt="Логотип"/>
+            <LogoIcon />
           </Link>
           {links.length > 0 &&
             <div className='ml-xl'>

@@ -1,0 +1,32 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  box-shadow:0px 0px 0px 1px $gray-100 inset;
+  border-radius: $space-s;
+
+  &--small {
+    @include field--extra-small
+  }
+
+  &--medium {
+    @include field--medium
+  }
+
+  &--large {
+    @include field--large
+  }
+
+  &__text {
+    margin-left: $space-xs;
+  }
+
+  &__close {
+    stroke: $black-100;
+    width: $space-m;
+    height: $space-m;
+    cursor: pointer;
+    &:hover {
+      stroke: $red-100;
+    }
+  }
+}

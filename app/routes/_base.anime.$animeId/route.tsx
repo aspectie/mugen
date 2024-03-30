@@ -4,7 +4,7 @@ import {json, LoaderFunctionArgs, type MetaFunction} from "@remix-run/node";
 import { getAnime } from "../anime/anime.server";
 import Button from "@/ui/button/Button";
 import {clearHTML} from "@/utils/utils";
-import star from "@/assets/icons/star.svg";
+import {StarIcon} from "@/assets/icons";
 import {TAnime, TAnimeScreenshots, TAnimeVideo} from "@/types/api/shiki/TAnime";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -89,7 +89,7 @@ export default function AnimePage() {
             playerRef.current.scrollIntoView({behavior: "smooth"})
         }
     }
-    console.log(anime)
+
     return (
         anime && anime.rawData &&
         <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">
@@ -108,11 +108,11 @@ export default function AnimePage() {
                     </div>
                     {/* TODO: create rating component */}
                     <div className="flex gap-s justify-center p-l">
-                        <span><img src={star} alt=""/></span>
-                        <span><img src={star} alt=""/></span>
-                        <span><img src={star} alt=""/></span>
-                        <span><img src={star} alt=""/></span>
-                        <span><img src={star} alt=""/></span>
+                        <StarIcon />
+                        <StarIcon />
+                        <StarIcon />
+                        <StarIcon />
+                        <StarIcon />
                     </div>
                 </div>
             </div>
@@ -121,8 +121,8 @@ export default function AnimePage() {
                     <div className="flex items-start">
                         <h1 className="font-bold w-5/6">{anime.rawData.russian}</h1>
                         <div className="flex items-center ml-l">
-                            <img className="w-xl h-xl" src={star} alt=""/>
-                            <h2 className="font-bold text-black-80 ml-s">{anime.rawData.score}</h2>
+                            <StarIcon className="w-l h-l"/>
+                            <h1 className="font-bold text-black-80 ml-s">{anime.rawData.score}</h1>
                         </div>
                     </div>
                     <h5 className="mt-xs">{anime.rawData.name}</h5>
