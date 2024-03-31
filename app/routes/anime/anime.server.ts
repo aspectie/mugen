@@ -1,4 +1,9 @@
-export async function getAnime(params: any) {
+
+
+import { TAnime, TAnimeRelation, TAnimeScreenshot, TAnimeVideo, TManga } from "@/types/api/shiki/TAnime";
+import { groupBy } from "@/utils/utils";
+
+export async function getAnime(params: string | Record<string, string | number>): Promise<TAnime[] | TAnime | null> {
   let url = `${process.env.VITE_SHIKI_URL}/api/animes`;
 
   if (params) {
@@ -15,4 +20,65 @@ export async function getAnime(params: any) {
   const res = await fetch(url)
 
   return res.ok ? await res.json() : null
+}
+
+export async function getAnimeNestedRoute({
+  id,
+  route
+}: {
+  id: string,
+  route: string
+}) {
+  let url = `${process.env.VITE_SHIKI_URL}/api/animes/${id}/${route}`;
+
+  const res = await fetch(url)
+
+  if (!res.ok) {
+    return null;
+  }
+
+  return await res.json()
+}
+
+export async function getAnimeScreenshots(id: string): Promise<TAnimeScreenshot[] | null> {
+  return await getAnimeNestedRoute({id, route: 'screenshots'})
+}
+
+export async function getAnimeVideos(id: string): Promise<TAnimeVideo[] | null> {
+  return await getAnimeNestedRoute({id, route: 'videos'}); 
+}
+
+export async function getAnimeRelated(id: string): Promise<TAnimeRelation[] | null> {
+  return await getAnimeNestedRoute({id, route: 'related'}); 
+}
+
+export async function getAnimeGroupedRelations(id: string, limit?: number) {
+  let data = await getAnimeRelated(id);
+  if (data && limit) {
+    data = data.slice(0, limit)
+  }
+  const groupedData: Record<string, {animes: TAnime[]} | {mangas: TManga[]}> = groupBy(data, "relation");
+  let result = {};
+  {/* TODO: fix types */}
+  Object.keys(groupedData).map((key) => {
+    result[key] = {}
+    result[key].mangas = []
+    result[key].animes = []
+
+    groupedData[key].map(item => {
+      if (item.manga) {
+          result[key].mangas.push(item.manga)
+      } else {
+          result[key].animes.push(item.anime)
+      }
+    })
+    if (result[key].mangas.length === 0) {
+      delete result[key].mangas
+    }
+    if (result[key].animes.length === 0) {
+      delete result[key].animes
+    }
+  })
+
+  return result;
 }

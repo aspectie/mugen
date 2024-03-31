@@ -1,16 +1,40 @@
-import { TAnime } from "@/types/api/shiki/TAnime";
+import { TCardData, TCardPreferences } from "@/types/ui";
 
-import Card from './Card'
-import style from "./card.module.scss";
 import classNames from "classnames";
 
-const CardList = ({cards, className}: {cards: TAnime[], className: string}) => {
-    const classes = classNames([
-        style.card__list,
-        className
-    ])
-    return (cards.length > 0 && <ul className={classes}>
-        {cards.map(card => (<li key={card.id}><Card card={card}/></li>))}
+import Card from './Card'
+
+const CardList = (props: {
+    cards: TCardData[],
+    className?: string
+} & TCardPreferences) => {
+    const {
+        cards,
+        className,
+        type = 'vertical',
+        size = 'medium',
+        isHighlight = false
+    } = props;
+
+    const classes = classNames({
+        '[&:not(:last-child)]:mb-l': type === 'horizontal'
+    })
+        
+    return (cards.length > 0 && <ul className={className}>
+        {cards.map(item => (
+            <li key={item.id} className={classes}>
+                <Card
+                    type={type}
+                    size={size}
+                    isHighlight={isHighlight}
+                    id={item.id}
+                    url={item.url}
+                    imageUrl={item.imageUrl}
+                    title={item.title}
+                    date={item.date}
+                />
+            </li>
+        ))}
     </ul>)
 }
 
