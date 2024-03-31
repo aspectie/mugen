@@ -28,7 +28,8 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: 
   } = props
 
   const classes = classNames(styles.input, {
-    [styles[`input--${size}`]]: size
+    [styles[`input--${size}`]]: size,
+    [styles[`input--${type}`]]: type
   })
 
   return (
