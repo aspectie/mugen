@@ -1,11 +1,13 @@
-import {useLoaderData} from "@remix-run/react";
+import {Link, useLoaderData} from "@remix-run/react";
 import {useRef} from "react";
 import {json, LoaderFunctionArgs, type MetaFunction} from "@remix-run/node";
-import { getAnime } from "../anime/anime.server";
+import { getAnime, getAnimeGroupedRelations, getAnimeScreenshots, getAnimeVideos } from "../anime/anime.server";
 import Button from "@/ui/button/Button";
 import {clearHTML} from "@/utils/utils";
 import {StarIcon} from "@/assets/icons";
-import {TAnime, TAnimeScreenshots, TAnimeVideo} from "@/types/api/shiki/TAnime";
+import {TAnime} from "@/types/api/shiki/TAnime";
+import CardList from "@/components/card/CardList";
+import { prepareCardData } from "@/utils/card";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
     const data: {
@@ -14,26 +16,36 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
         imageUrl?: string;
         videos?: string[]
         info?: Record<string, string>[]
+        related?: {}
     } = {};
 
-    data.rawData = await getAnime(params.animeId)
+    if (!params.animeId) {
+        throw new Response('Not Found', { status: 404 });
+    }
+
+    data.rawData = await getAnime(params.animeId) as TAnime
 
     if (!data.rawData) {
         throw new Response('Not Found', { status: 404 });
     }
     
-    const screenShots: TAnimeScreenshots[] = await getAnime(`${params.animeId}/screenshots`)
+    const screenShots = await getAnimeScreenshots(params.animeId)
     if (screenShots instanceof Array) {
         data.screenshots = screenShots
             .slice(0, 4)
             .map((item) => import.meta.env.VITE_SHIKI_URL + item.original)
     }
 
-    const rawVideos: TAnimeVideo[] = await getAnime(`${params.animeId}/videos`)
+    const rawVideos = await getAnimeVideos(params.animeId)
     if (rawVideos instanceof Array) {
         data.videos = rawVideos
             .slice(0, 1)
             .map((item) => item.player_url)
+    }
+
+    const related = await getAnimeGroupedRelations(params.animeId, 3)
+    if (related) {
+        data.related = related
     }
 
     data.rawData.description_html = data.rawData.description_html ? clearHTML(data.rawData.description_html) : ''
@@ -82,8 +94,6 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
 export default function AnimePage() {
     const anime = useLoaderData<typeof loader>();
     const playerRef = useRef<null | HTMLDivElement>(null)
-
-
     const scrollToPlayer = () => {
         if (playerRef.current) {
             playerRef.current.scrollIntoView({behavior: "smooth"})
@@ -102,50 +112,66 @@ export default function AnimePage() {
                 </div>
                 <div className="mt-m">
                     <div className="flex flex-col gap-s">
+                        <Button text="Смотреть" onClick={scrollToPlayer} size="small"/>
+                        <Button text="В избранное" type="secondary" size="small"/>
                         <Button text="Добавить в список" type="secondary" size="small"/>
-                        <Button text="Оставить отзыв" type="secondary" size="small"/>
-                        <Button text="В избранное" size="small"/>
-                    </div>
-                    {/* TODO: create rating component */}
-                    <div className="flex gap-s justify-center p-l">
-                        <StarIcon />
-                        <StarIcon />
-                        <StarIcon />
-                        <StarIcon />
-                        <StarIcon />
                     </div>
                 </div>
             </div>
             <div className="flex flex-col col-span-7 px-l">
                 <div className="mb-2xl">
                     <div className="flex items-start">
-                        <h1 className="font-bold w-5/6">{anime.rawData.russian}</h1>
+                        <h1 className="font-bold w-5/6 text-black-100">{anime.rawData.russian}</h1>
                         <div className="flex items-center ml-l">
                             <StarIcon className="w-l h-l"/>
                             <h1 className="font-bold text-black-80 ml-s">{anime.rawData.score}</h1>
                         </div>
                     </div>
-                    <h5 className="mt-xs">{anime.rawData.name}</h5>
-                    <div className="w-1/6 mt-m">
+                    <h5 className="mt-xs text-black-80">{anime.rawData.name}</h5>
+                    {/* <div className="w-1/6 mt-m">
                         <Button text="Смотреть" onClick={scrollToPlayer}/>
-                    </div>
+                    </div> */}
                 </div>
-                <h4 className="font-bold mb-m">Информация</h4>
+                <h4 className="font-bold mb-m text-black-80">Информация</h4>
                 <ul> {
                     anime.info && anime.info.map((el, index) => (
-                        <li key={index} className="flex mb-s">
-                            <span className="w-2/6 mr-xs bg-gray-40 py-xs px-s capitalize">{el.title}</span>
+                        <li key={index} className="flex mb-s ">
+                            <span className="w-2/6 mr-xs bg-gray-40 py-xs px-s capitalize ">{el.title}</span>
                             <span className="w-full mr-xs bg-gray-40 py-xs px-s capitalize">{el.value}</span>
                         </li>
                     ))}
                 </ul>
             </div>
-            <div className="mt-l col-span-9">
-                <h4 className="font-bold">Описание</h4>
-                <p className="mt-m">{anime.rawData.description_html}</p>
+            {/* TODO: move out of this container because sections on the left are affected */}
+            <div className="col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
+                <div>
+                    {/* TODO: fix types */}
+                    {anime && anime.related && Object.keys(anime.related).map(relation => (
+                        Object.keys(anime.related[relation]).map(type => (
+                            <div key={relation} className="[&:not(:last-child)]:mb-l ">
+                                <h4 className="font-bold mb-l">{relation}</h4>
+                                <CardList 
+                                    type="horizontal"
+                                    size="small"
+                                    isHighlight={true}
+                                    cards={prepareCardData(anime.related[relation][type])}
+                                />
+                            </div>
+                        ))
+                    ))}
+                </div>
+                <div className="flex justify-end">
+                    <Link to={`/anime/${anime.rawData.id}/related`}>
+                        <h5 className="text-black-200 hover:text-accent-120">Смотреть все</h5>
+                    </Link>
+                </div>
             </div>
             <div className="mt-l col-span-9">
-                <h4 className="font-bold">Кадры</h4>
+                <h4 className="font-bold text-black-80">Описание</h4>
+                <p className="mt-m text-black-80">{anime.rawData.description_html}</p>
+            </div>
+            <div className="mt-l col-span-9">
+                <h4 className="font-bold text-black-80">Кадры</h4>
                 <div className="flex mt-m">{
                     anime.screenshots && anime.screenshots.map((item) => (
                         <div className="px-s w-2/6 h-[142px]" key={item}>
@@ -161,7 +187,7 @@ export default function AnimePage() {
                 ref={playerRef}
                 className="col-start-1 col-end-10 self-end mt-l"
             >
-                <h4 className="font-bold">Трейлер</h4>
+                <h4 className="font-bold text-black-80">Трейлер</h4>
                 <iframe className="mt-m"
                     key='12'
                     src="//kodik.info/season/84066/0372efad8c745626a261699d3b24400e/720p"
