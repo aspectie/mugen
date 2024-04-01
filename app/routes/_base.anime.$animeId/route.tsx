@@ -153,7 +153,7 @@ export default function AnimePage() {
                 </ul>
             </div>
             {/* TODO: move out of this container because sections on the left are affected */}
-            <div className="col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
+            <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
                 <div>
                     {anime && anime.related && Object.keys(anime.related).map((relation) => (
                         Object.keys(anime.related[relation]).map(type => (
@@ -175,7 +175,7 @@ export default function AnimePage() {
                     </Link>
                 </div>
             </div>
-            <div className="mt-l col-span-9">
+            <div className="mt-l col-span-9 pr-l">
                 <h4 className="font-bold text-black-80">Описание</h4>
                 <p className="mt-m text-black-80">{anime.rawData.description_html}</p>
             </div>
