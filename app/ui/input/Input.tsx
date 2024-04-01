@@ -1,40 +1,48 @@
-import { HTMLInputTypeAttribute } from 'react'
 import classNames from 'classnames'
 
-import { TFieldSize } from '@/types/ui'
+import {FieldSize, TFieldSize} from '@/types/ui'
 
 import styles from './input.module.scss'
 
+const enum InputType {
+  transparent = 'transparent'
+}
+
+type TInputType  = keyof typeof InputType
+
 type TInput = {
-  type?: HTMLInputTypeAttribute
+  inputType?: "text"
   size?: TFieldSize
   disabled?: boolean
   placeholder?: string
   value?: string
   name?: string
-  onChange?: any
+  onChange?: () => void
+  type?: TInputType
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: TInput) => {
   const {
-    type = 'text',
-    size = 'medium',
+    inputType = "text",
+    size = FieldSize.medium,
     disabled = false,
     placeholder = 'Default placeholder',
     value,
     name,
     onChange,
+    type,
     ...rest
   } = props
 
   const classes = classNames(styles.input, {
     [styles[`input--${size}`]]: size,
-    [styles[`input--${type}`]]: type
+    [styles[`input--${type}`]]: type,
+    [styles[`input--disabled`]]: disabled,
   })
 
   return (
     <input
-      type={type}
+      type={inputType}
       className={classes}
       disabled={disabled}
       placeholder={placeholder}

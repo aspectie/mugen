@@ -7,38 +7,21 @@
   text-transform: capitalize;
 
   /* Sizes */
-   &--small {
+  &--small {
     @include field--small
   }
-
   &--medium {
     @include field--medium
   }
-
   &--large {
     @include field--large
   }
 
   /* Types */
-  &--primary {
-    background-color: $accent-80;
-
-    &:hover {
-      background-color: $accent-100;
-    }
-
-    &:active {
-      background-color: $accent-120;
-    }
-  }
-
   &--transparent {
-  background-color: transparent;
-  border: none;
-}
-
-
-
+    background-color: transparent;
+    border: none;
+  }
   &--disabled {
     background-color: $black-60 !important;
   }

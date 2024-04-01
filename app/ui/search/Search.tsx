@@ -1,6 +1,5 @@
 import Input from "@/ui/input/Input";
 import {TFieldSize} from "@/types/ui";
-import {placeholder} from "@babel/types";
 import {SearchIcon} from "@/assets/icons";
 import styles from "./search.module.scss"
 
@@ -24,7 +23,13 @@ const Search = (props:TSearch) => {
     } = props
     return (
         <div className={styles.search}>
-            <Input size={size} type='transparent' placeholder={placeholder}></Input>
+            <Input size={size}
+                   placeholder={placeholder}
+                   value={value}
+                   name={name}
+                   disabled={disabled}>
+
+            </Input>
             <SearchIcon className={styles["search__icon"]} onClick={onChange}/>
         </div>
 
