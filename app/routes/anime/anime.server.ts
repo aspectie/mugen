@@ -1,6 +1,5 @@
-
-
 import { TAnime, TAnimeRelation, TAnimeScreenshot, TAnimeVideo, TManga } from "@/types/api/shiki/TAnime";
+import { LooseObject } from "@/types";
 import { groupBy } from "@/utils/utils";
 
 export async function getAnime(params: string | Record<string, string | number>): Promise<TAnime[] | TAnime | null> {
@@ -57,9 +56,10 @@ export async function getAnimeGroupedRelations(id: string, limit?: number) {
   if (data && limit) {
     data = data.slice(0, limit)
   }
-  const groupedData: Record<string, {animes: TAnime[]} | {mangas: TManga[]}> = groupBy(data, "relation");
-  let result = {};
-  {/* TODO: fix types */}
+
+  const groupedData: Record<string, TAnimeRelation[]> = groupBy(data, "relation");
+  const result: LooseObject = {};
+
   Object.keys(groupedData).map((key) => {
     result[key] = {}
     result[key].mangas = []

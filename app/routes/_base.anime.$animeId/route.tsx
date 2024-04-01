@@ -8,16 +8,20 @@ import {StarIcon} from "@/assets/icons";
 import {TAnime} from "@/types/api/shiki/TAnime";
 import CardList from "@/components/card/CardList";
 import { prepareCardData } from "@/utils/card";
+import { LooseObject } from "@/types";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
     const data: {
-        rawData?: TAnime;
+        rawData: Partial<TAnime>;
         screenshots?: string[];
         imageUrl?: string;
         videos?: string[]
         info?: Record<string, string>[]
-        related?: {}
-    } = {};
+        related: LooseObject
+    } = {
+        rawData: {},
+        related: {}
+    };
 
     if (!params.animeId) {
         throw new Response('Not Found', { status: 404 });
@@ -69,7 +73,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
         },
         {
             title: 'жанры',
-            value: data.rawData.genres?.reduce((acc, el) =>  acc + el.russian + ' ', '')
+            value: data.rawData.genres?.reduce((acc, el) => acc + el.russian + ' ', '')
         },
         {
             title: 'рейтинг',
@@ -77,7 +81,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
         },
         {
             title: 'студия',
-            value: data.rawData.studios?.reduce((acc, el) =>  acc + el.name + ' ', '')
+            value: data.rawData.studios?.reduce((acc, el) => acc + el.name + ' ', '')
         }
     ]
 
@@ -145,8 +149,7 @@ export default function AnimePage() {
             {/* TODO: move out of this container because sections on the left are affected */}
             <div className="col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
                 <div>
-                    {/* TODO: fix types */}
-                    {anime && anime.related && Object.keys(anime.related).map(relation => (
+                    {anime && anime.related && Object.keys(anime.related).map((relation) => (
                         Object.keys(anime.related[relation]).map(type => (
                             <div key={relation} className="[&:not(:last-child)]:mb-l ">
                                 <h4 className="font-bold mb-l">{relation}</h4>
