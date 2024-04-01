@@ -1,7 +1,7 @@
 import Button from '@/ui/button/Button';
 import React, { ChangeEventHandler, useEffect, useRef, useState } from 'react';
 import Checkbox from '@/ui/checkbox/Checkbox';
-import { TFieldSize } from '@/types/ui';
+import { ButtonType, FieldSize, TFieldSize } from '@/types/ui';
 
 import styles from './select.module.scss';
 
@@ -24,7 +24,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   const {
     options,
     isMulti = false,
-    size = 'medium',
+    size = FieldSize.medium,
     disabled = false,
     placeholder = 'Default text',
   } = props;
@@ -72,7 +72,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   return (
     <div className={styles.select} ref={dropdownRef}>
       <Button
-        type="select"
+        type={ButtonType.secondary}
         size={size}
         text={placeholderText}
         disabled={disabled}
