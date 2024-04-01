@@ -1,4 +1,5 @@
 import {
+  Links,
   Meta,
   Outlet,
   Scripts,
@@ -20,6 +21,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
       {children}
       <ScrollRestoration/>
+      <Links />
       <Scripts/>
       </body>
     </html>
