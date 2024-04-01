@@ -4,9 +4,8 @@ import {FieldSize, TFieldSize} from '@/types/ui'
 
 import styles from './input.module.scss'
 
-const enum InputType {
-  transparent = 'transparent'
-}
+import {InputType} from "@/types";
+
 
 type TInputType  = keyof typeof InputType
 
