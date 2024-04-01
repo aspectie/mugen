@@ -10,6 +10,7 @@ import CardList from "@/components/card/CardList";
 import { prepareCardData } from "@/utils/card";
 import { LooseObject } from "@/types";
 import Select from "@/ui/select/Select";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/carousel/Carousel";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
     const data: {
@@ -36,9 +37,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     
     const screenShots = await getAnimeScreenshots(params.animeId)
     if (screenShots instanceof Array) {
-        data.screenshots = screenShots
-            .slice(0, 4)
-            .map((item) => import.meta.env.VITE_SHIKI_URL + item.original)
+        data.screenshots = screenShots.map((item) => import.meta.env.VITE_SHIKI_URL + item.original)
     }
 
     const rawVideos = await getAnimeVideos(params.animeId)
@@ -181,15 +180,16 @@ export default function AnimePage() {
             </div>
             <div className="mt-l col-span-9">
                 <h4 className="font-bold text-black-80">Кадры</h4>
-                <div className="flex mt-m">{
-                    anime.screenshots && anime.screenshots.map((item) => (
-                        <div className="px-s w-2/6 h-[142px]" key={item}>
-                            <img className="w-full h-full"
-                                src={item}
-                                alt={`Кадр из ${anime.rawData?.russian}`}
-                            />
-                        </div>
-                    ))}
+                <div className="flex mt-m bg-gray-40 p-s rounded-[8px]">
+                    <Carousel>
+                        <CarouselContent>
+                            {anime.screenshots && anime.screenshots.map((item) => (
+                                <CarouselItem className="lg:basis-1/2 xl:basis-1/4" key={item}>
+                                    <img src={item} alt={`Кадр из ${anime.rawData?.russian}`} />
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                    </Carousel>
                 </div>
             </div>
             <div id="player"
