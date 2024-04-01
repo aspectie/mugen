@@ -19,6 +19,7 @@ type TInput = {
   name?: string
   onChange?: any
   type?: TInputType
+}
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: TInput) => {
   const {
