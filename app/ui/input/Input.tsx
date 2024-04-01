@@ -1,13 +1,8 @@
 import classNames from 'classnames'
 
-import {FieldSize, TFieldSize} from '@/types/ui'
+import {FieldSize, TFieldSize, TInputType} from '@/types/ui'
 
 import styles from './input.module.scss'
-
-import {InputType} from "@/types";
-
-
-type TInputType  = keyof typeof InputType
 
 type TInput = {
   inputType?: "text"
