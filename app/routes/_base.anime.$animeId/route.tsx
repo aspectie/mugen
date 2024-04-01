@@ -5,10 +5,11 @@ import { getAnime, getAnimeGroupedRelations, getAnimeScreenshots, getAnimeVideos
 import Button from "@/ui/button/Button";
 import {clearHTML} from "@/utils/utils";
 import {StarIcon} from "@/assets/icons";
-import {TAnime} from "@/types/api/shiki/TAnime";
+import {TAnime, UserRateStatus} from "@/types/api/shiki/TAnime";
 import CardList from "@/components/card/CardList";
 import { prepareCardData } from "@/utils/card";
 import { LooseObject } from "@/types";
+import Select from "@/ui/select/Select";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
     const data: {
@@ -118,7 +119,14 @@ export default function AnimePage() {
                     <div className="flex flex-col gap-s">
                         <Button text="Смотреть" onClick={scrollToPlayer} size="small"/>
                         <Button text="В избранное" type="secondary" size="small"/>
-                        <Button text="Добавить в список" type="secondary" size="small"/>
+                        <Select options={[
+                            {label: 'Просмотрено', value: UserRateStatus.completed},
+                            {label: 'Заброшено', value: UserRateStatus.dropped},
+                            {label: 'На паузе', value: UserRateStatus.on_hold},
+                            {label: 'Запланировано', value: UserRateStatus.planned},
+                            {label: 'Пересматриваю', value: UserRateStatus.rewatching},
+                            {label: 'Смотрю', value: UserRateStatus.watching}
+                        ]} placeholder="Добавить в список" size="small"/>
                     </div>
                 </div>
             </div>
