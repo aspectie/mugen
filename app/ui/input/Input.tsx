@@ -1,7 +1,7 @@
 import { HTMLInputTypeAttribute } from 'react'
 import classNames from 'classnames'
 
-import { TFieldSize } from '@/types/ui'
+import { FieldSize, TFieldSize } from '@/types/ui'
 
 import styles from './input.module.scss'
 
@@ -12,13 +12,13 @@ type TInput = {
   placeholder?: string
   value?: string
   name?: string
-  onChange?: any
+  onChange?: any  
 }
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: TInput) => {
   const {
     type = 'text',
-    size = 'medium',
+    size = FieldSize.medium,
     disabled = false,
     placeholder = 'Default placeholder',
     value,

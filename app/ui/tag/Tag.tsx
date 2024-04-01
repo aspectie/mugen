@@ -1,7 +1,9 @@
+import classNames from 'classnames';
+
+import { FieldSize, TFieldSize } from '@/types/ui';
+
 import { CloseIcon } from '@/assets/icons'
 import styles from './tag.module.scss'
-import classNames from 'classnames';
-import { TFieldSize } from '@/types/ui';
 
 const Tag = (props: {
   text: string,
@@ -10,7 +12,7 @@ const Tag = (props: {
 }) => {
   const {
     text = 'Default text',
-    size = 'small',
+    size = FieldSize.small,
     onClick
   } = props;
 

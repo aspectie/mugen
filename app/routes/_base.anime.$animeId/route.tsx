@@ -109,25 +109,23 @@ export default function AnimePage() {
         anime && anime.rawData &&
         <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">
             <div className="col-span-2">
-                <div className="rounded-s">
+                <div className="rounded-s mb-m">
                     <img className="rounded block w-full object-center object-cover"
                         src={anime.imageUrl}
                         alt={`Постер аниме ${anime.rawData.russian}`}
                     />
                 </div>
-                <div className="mt-m">
-                    <div className="flex flex-col gap-s">
-                        <Button text="Смотреть" onClick={scrollToPlayer} size="small"/>
-                        <Button text="В избранное" type="secondary" size="small"/>
-                        <Select options={[
-                            {label: 'Просмотрено', value: UserRateStatus.completed},
-                            {label: 'Заброшено', value: UserRateStatus.dropped},
-                            {label: 'На паузе', value: UserRateStatus.on_hold},
-                            {label: 'Запланировано', value: UserRateStatus.planned},
-                            {label: 'Пересматриваю', value: UserRateStatus.rewatching},
-                            {label: 'Смотрю', value: UserRateStatus.watching}
-                        ]} placeholder="Добавить в список" size="small"/>
-                    </div>
+                <div className="flex flex-col gap-s">
+                    <Button text="Смотреть" onClick={scrollToPlayer} size="small"/>
+                    <Button text="В избранное" type="ghost" size="small"/>
+                    <Select options={[
+                        {label: 'Просмотрено', value: UserRateStatus.completed},
+                        {label: 'Заброшено', value: UserRateStatus.dropped},
+                        {label: 'На паузе', value: UserRateStatus.on_hold},
+                        {label: 'Запланировано', value: UserRateStatus.planned},
+                        {label: 'Пересматриваю', value: UserRateStatus.rewatching},
+                        {label: 'Смотрю', value: UserRateStatus.watching}
+                    ]} placeholder="Добавить в список" size="small"/>
                 </div>
             </div>
             <div className="flex flex-col col-span-7 px-l">

@@ -23,3 +23,11 @@ export type TCardData = {
   title: string
   series?: string
 }
+
+export const enum ButtonType {
+  primary = 'primary',
+  secondary = 'secondary',
+  ghost = 'ghost'
+}
+
+export type TButtonType = keyof typeof ButtonType
