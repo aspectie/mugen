@@ -17,9 +17,8 @@ type TInput = {
   placeholder?: string
   value?: string
   name?: string
-  onChange?: () => void
+  onChange?: any
   type?: TInputType
-}
 
 const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: TInput) => {
   const {

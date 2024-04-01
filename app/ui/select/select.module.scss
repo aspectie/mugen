@@ -1,6 +1,5 @@
 .select {
   position: relative;
-  background-color: $gray-40;
   height: min-content;
 }
 
@@ -17,7 +16,7 @@
   padding-block: $space-s;
   gap: $space-s;
   border-top: 2px solid $gray-60;
-  background-color: inherit;
+  background-color: $gray-40;
 }
 
 .option {

@@ -1,15 +1,7 @@
 import classNames from 'classnames'
 
-import { FieldSize, TFieldSize } from '@/types/ui'
+import { ButtonType, FieldSize, TButtonType, TFieldSize } from '@/types/ui'
 import styles from './button.module.scss'
-
-const enum ButtonType {
-  primary = 'primary',
-  secondary = 'secondary',
-  select = 'select'  
-}
-
-type TButtonType = keyof typeof ButtonType
 
 type TButton = {
   type?: TButtonType
