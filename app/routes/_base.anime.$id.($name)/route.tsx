@@ -1,7 +1,7 @@
 import {Link, useLoaderData} from "@remix-run/react";
 import {useRef} from "react";
 import {json, LoaderFunctionArgs, type MetaFunction} from "@remix-run/node";
-import { getAnimeData } from '../.server/anime'
+import { getAnimeData } from '@/.server/anime'
 import Button from '@/ui/button/Button'
 import { StarIcon } from '@/assets/icons'
 import { UserRateStatus } from '@/types/api/shiki/TAnime'

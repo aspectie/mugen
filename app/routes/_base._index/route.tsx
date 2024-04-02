@@ -1,10 +1,12 @@
 import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-import { getAnime } from "../.server/anime";
-import CardList from "@/components/card/CardList";
-import { prepareCardData } from "@/utils/card";
-import { TAnime } from "@/types/api/shiki/TAnime";
+import { getAnime } from '@/lib/shiki'
+import { prepareCardData } from '@/utils/card'
+
+import { TAnime } from '@/types/api/shiki/TAnime'
+
+import CardList from '@/components/card/CardList'
 
 export const meta: MetaFunction = () => {
   return [
