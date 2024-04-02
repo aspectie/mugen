@@ -6,11 +6,13 @@ export function clearHTML(text: string): string {
 // @ts-ignore
 export function groupBy(array, key) {
   // @ts-ignore
-  return array.reduce((acc, value) => {
-    const keyValue = value[key];
-    (acc[keyValue] = acc[keyValue] || []).push(value);
-    return acc;
-  }, {});
+  return array && array instanceof Array
+    ? array.reduce((acc, value) => {
+        const keyValue = value[key]
+        ;(acc[keyValue] = acc[keyValue] || []).push(value)
+        return acc
+      }, {})
+    : array
 };
 
 export function convertToDashed(value: string): string {

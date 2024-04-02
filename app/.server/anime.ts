@@ -9,73 +9,80 @@ import {
 } from '@/lib/shiki'
 
 export async function getAnimeData(id: string) {
-  const data: {
-    rawData: Partial<TAnime>
+  let data: {
+    rawData?: Partial<TAnime>
     screenshots?: string[]
     imageUrl?: string
     videos?: string[]
     info?: Record<string, string>[]
-    related: LooseObject
-  } = {
-    rawData: {},
-    related: {}
-  }
+    related?: LooseObject
+  } = {}
 
-  data.rawData = (await getAnime(id)) as TAnime
+  await Promise.allSettled([
+    getAnime(id).then((res) => {
+      data.rawData = res as TAnime
+      data.rawData.description_html = data.rawData.description_html
+        ? clearHTML(data.rawData.description_html)
+        : ''
+      data.imageUrl = process.env.SHIKI_URL + data.rawData.image?.original
+      data.info = [
+        {
+          title: 'тип',
+          value: data.rawData.kind
+        },
+        {
+          title: 'эпизоды',
+          value: data.rawData.episodes
+        },
+        {
+          title: 'дата выхода',
+          value: data.rawData.aired_on
+        },
+        {
+          title: 'cтатус',
+          value: data.rawData.status
+        },
+        {
+          title: 'жанры',
+          value: data.rawData.genres?.reduce(
+            (acc, el) => acc + el.russian + ' ',
+            ''
+          )
+        },
+        {
+          title: 'рейтинг',
+          value: data.rawData.rating
+        },
+        {
+          title: 'студия',
+          value: data.rawData.studios?.reduce(
+            (acc, el) => acc + el.name + ' ',
+            ''
+          )
+        }
+      ]
+    }),
 
-  const screenShots = await getAnimeScreenshots(id)
-  if (screenShots instanceof Array) {
-    data.screenshots = screenShots.map(
-      (item) => import.meta.env.VITE_SHIKI_URL + item.original
-    )
-  }
+    getAnimeScreenshots(id).then((res) => {
+      if (res instanceof Array) {
+        data.screenshots = res.map(
+          (item) => process.env.SHIKI_URL + item.original
+        )
+      }
+    }),
 
-  const rawVideos = await getAnimeVideos(id)
-  if (rawVideos instanceof Array) {
-    data.videos = rawVideos.slice(0, 1).map((item) => item.player_url)
-  }
+    getAnimeVideos(id).then((res) => {
+      if (res instanceof Array) {
+        data.videos = res.slice(0, 1).map((item) => item.player_url)
+      }
+    }),
 
-  const related = await getAnimeGroupedRelations(id, 3)
-  if (related) {
-    data.related = related
-  }
+    getAnimeGroupedRelations(id, 3).then((res) => {
+      if (res) {
+        data.related = res
+      }
+    })
+  ])
 
-  data.rawData.description_html = data.rawData.description_html
-    ? clearHTML(data.rawData.description_html)
-    : ''
-  data.imageUrl = import.meta.env.VITE_SHIKI_URL + data.rawData.image?.original
-  data.info = [
-    {
-      title: 'тип',
-      value: data.rawData.kind
-    },
-    {
-      title: 'эпизоды',
-      value: data.rawData.episodes
-    },
-    {
-      title: 'дата выхода',
-      value: data.rawData.aired_on
-    },
-    {
-      title: 'cтатус',
-      value: data.rawData.status
-    },
-    {
-      title: 'жанры',
-      value: data.rawData.genres?.reduce(
-        (acc, el) => acc + el.russian + ' ',
-        ''
-      )
-    },
-    {
-      title: 'рейтинг',
-      value: data.rawData.rating
-    },
-    {
-      title: 'студия',
-      value: data.rawData.studios?.reduce((acc, el) => acc + el.name + ' ', '')
-    }
-  ]
-  return data
+  return data.rawData ? data : null
 }
