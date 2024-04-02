@@ -1,5 +1,6 @@
 import { TAnime, TManga } from "@/types/api/shiki/TAnime";
 import { TCardData } from "@/types/ui";
+import { convertToDashed } from "./utils";
 
 export function prepareCardData(data: TAnime[] | TManga[]) : TCardData[] {
   // TODO: get by endpoint
@@ -7,7 +8,8 @@ export function prepareCardData(data: TAnime[] | TManga[]) : TCardData[] {
   const animeTypes = ["tv", "movie", "ova", "ona", "special", "music"];
 
   return data.map(item => {
-    const url = animeTypes.includes(item.kind) ? `${import.meta.env.BASE_URL}anime/${item.id}` : `${import.meta.env.BASE_URL}manga/${item.id}`
+    const name = convertToDashed(item.name)
+    const url = animeTypes.includes(item.kind) ? `${import.meta.env.BASE_URL}anime/${item.id}/${name}` : `${import.meta.env.BASE_URL}manga/${item.id}/${name}`
     const imageUrl = `${import.meta.env.VITE_SHIKI_URL}/${item.image?.original}`;
 
     return {
