@@ -1,7 +1,7 @@
 import {Link, useLoaderData} from "@remix-run/react";
 import {useRef} from "react";
 import {json, LoaderFunctionArgs, type MetaFunction} from "@remix-run/node";
-import { getAnime, getAnimeGroupedRelations, getAnimeScreenshots, getAnimeVideos } from "../anime/anime.server";
+import { getAnime, getAnimeGroupedRelations, getAnimeScreenshots, getAnimeVideos } from "../.server/anime";
 import Button from "@/ui/button/Button";
 import {clearHTML} from "@/utils/utils";
 import {StarIcon} from "@/assets/icons";
@@ -25,29 +25,29 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
         related: {}
     };
 
-    if (!params.animeId) {
+    if (!params.id) {
         throw new Response('Not Found', { status: 404 });
     }
 
-    data.rawData = await getAnime(params.animeId) as TAnime
+    data.rawData = await getAnime(params.id) as TAnime
 
     if (!data.rawData) {
         throw new Response('Not Found', { status: 404 });
     }
     
-    const screenShots = await getAnimeScreenshots(params.animeId)
+    const screenShots = await getAnimeScreenshots(params.id)
     if (screenShots instanceof Array) {
         data.screenshots = screenShots.map((item) => import.meta.env.VITE_SHIKI_URL + item.original)
     }
 
-    const rawVideos = await getAnimeVideos(params.animeId)
+    const rawVideos = await getAnimeVideos(params.id)
     if (rawVideos instanceof Array) {
         data.videos = rawVideos
             .slice(0, 1)
             .map((item) => item.player_url)
     }
 
-    const related = await getAnimeGroupedRelations(params.animeId, 3)
+    const related = await getAnimeGroupedRelations(params.id, 3)
     if (related) {
         data.related = related
     }
