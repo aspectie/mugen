@@ -6,6 +6,24 @@
   color: $gray-40;
   cursor: pointer;
 
+
+  /* align */
+  &--center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .button__text {
+      flex-grow: 2;
+    }
+  }
+
+  &--between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   /* Sizes */
   &--small {
     @include field--small
@@ -53,4 +71,10 @@
   &--disabled {
     background-color: $black-60 !important;
   }
+
 }
+
+svg {
+  color: inherit;
+}
+
