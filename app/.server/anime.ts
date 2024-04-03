@@ -1,12 +1,8 @@
 import { TAnime } from '@/types/api/shiki/TAnime'
 import { LooseObject } from '@/types'
 import { clearHTML } from '@/utils/utils'
-import {
-  getAnime,
-  getAnimeGroupedRelations,
-  getAnimeScreenshots,
-  getAnimeVideos
-} from '@/lib/shiki'
+import { useApi } from '@/hooks/api'
+import { shikiApi } from '@/lib/shiki'
 
 export async function getAnimeData(id: string) {
   let data: {
@@ -17,6 +13,13 @@ export async function getAnimeData(id: string) {
     info?: Record<string, string>[]
     related?: LooseObject
   } = {}
+
+  const {
+    getAnime,
+    getAnimeGroupedRelations,
+    getAnimeScreenshots,
+    getAnimeVideos
+  } = useApi(shikiApi)
 
   await Promise.allSettled([
     getAnime(id).then((res) => {
