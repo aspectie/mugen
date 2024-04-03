@@ -5,6 +5,22 @@
   border-radius: $space-xs;
   color: $gray-40;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  /* align */
+  &--center {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    justify-content: end;
+
+  }
+
+  &--between {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    justify-items: start;
+  }
 
   /* Sizes */
   &--small {

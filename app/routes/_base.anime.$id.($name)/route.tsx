@@ -1,6 +1,6 @@
-import {Link, useLoaderData} from "@remix-run/react";
-import {useRef} from "react";
-import {json, LoaderFunctionArgs, type MetaFunction} from "@remix-run/node";
+import { Link, useLoaderData } from '@remix-run/react'
+import { useRef } from 'react'
+import { json, LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { getAnimeData } from '@/.server/anime'
 import Button from '@/ui/button/Button'
 import { StarIcon } from '@/assets/icons'
@@ -80,6 +80,7 @@ export default function AnimePage() {
               ]}
               placeholder="Добавить в список"
               size="small"
+              align="center"
             />
           </div>
         </div>
@@ -124,8 +125,8 @@ export default function AnimePage() {
           <div>
             {anime &&
               anime.related &&
-              Object.keys(anime.related).map((relation) =>
-                Object.keys(anime.related[relation]).map((type) => (
+              Object.keys(anime.related).map(relation =>
+                Object.keys(anime.related[relation]).map(type => (
                   <div
                     key={relation}
                     className="[&:not(:last-child)]:mb-l "
@@ -159,7 +160,7 @@ export default function AnimePage() {
             <Carousel>
               <CarouselContent>
                 {anime.screenshots &&
-                  anime.screenshots.map((item) => (
+                  anime.screenshots.map(item => (
                     <CarouselItem
                       className="lg:basis-1/2 xl:basis-1/4"
                       key={item}
