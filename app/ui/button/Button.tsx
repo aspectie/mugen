@@ -48,7 +48,7 @@ const Button: React.ForwardRefRenderFunction<
       onClick={onClick}
     >
       {prefix}
-      {text}
+      <span className={styles.button__text}>{text}</span>
       {suffix}
     </button>
   )

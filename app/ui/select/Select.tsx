@@ -1,8 +1,8 @@
 import Button from '@/ui/button/Button'
-import React, { ChangeEventHandler, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Checkbox from '@/ui/checkbox/Checkbox'
 import { ButtonType, FieldSize, TFieldSize } from '@/types/ui'
-import { KeyboardArrowDown, KeyboardArrowUp } from '@/assets/icons'
+import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
 
 import styles from './select.module.scss'
 
@@ -32,7 +32,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     placeholder = 'Default text'
   } = props
 
-  const [icon, setIcon] = useState(<KeyboardArrowDown />)
+  const [icon, setIcon] = useState(<ArrowDownIcon />)
   const [isOpened, setIsOpened] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [placeholderText, setPlaceholderText] = useState(placeholder)
@@ -40,7 +40,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
 
   const toggleDropdown = () => {
     setIsOpened(!isOpened)
-    setIcon(!isOpened ? <KeyboardArrowUp /> : <KeyboardArrowDown />)
+    setIcon(!isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
   }
 
   const updateOptions = (value: string) => {
@@ -58,7 +58,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
       !dropdownRef.current.contains(event.target as Node)
     ) {
       setIsOpened(false)
-      setIcon(isOpened ? <KeyboardArrowUp /> : <KeyboardArrowDown />)
+      setIcon(isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
     }
   }
 

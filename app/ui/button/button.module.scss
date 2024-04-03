@@ -5,21 +5,22 @@
   border-radius: $space-xs;
   color: $gray-40;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
+
 
   /* align */
   &--center {
-    display: grid;
-    grid-template-columns: 1fr min-content;
-    justify-content: end;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .button__text {
+      flex-grow: 2;
+    }
   }
 
   &--between {
-    display: grid;
-    grid-template-columns: 1fr min-content;
-    justify-items: start;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   /* Sizes */
@@ -69,4 +70,10 @@
   &--disabled {
     background-color: $black-60 !important;
   }
+
 }
+
+svg {
+  color: inherit;
+}
+
