@@ -1,7 +1,8 @@
 import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
-import { getAnime } from '@/lib/shiki'
+import { shikiApi } from '@/lib/shiki'
+import { useApi } from '@/hooks/api'
 import { prepareCardData } from '@/utils/card'
 
 import { TAnime } from '@/types/api/shiki/TAnime'
@@ -16,18 +17,20 @@ export const meta: MetaFunction = () => {
 }
 
 export const loader = async () => {
+  const { getAnime } = useApi(shikiApi)
+
   let data = await getAnime({
     limit: 5,
     order: 'random',
     score: 8
-  });
+  })
 
   if (!data) {
-    return null;
+    return null
   }
-  
-  return json(data);
-};
+
+  return json(data)
+}
 
 export default function Index() {
   const data = useLoaderData<typeof loader>() as TAnime[] | null;

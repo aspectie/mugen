@@ -125,21 +125,25 @@ export default function AnimePage() {
           <div>
             {anime &&
               anime.related &&
-              Object.keys(anime.related).map(relation =>
-                Object.keys(anime.related[relation]).map(type => (
-                  <div
-                    key={relation}
-                    className="[&:not(:last-child)]:mb-l "
-                  >
-                    <h4 className="font-bold mb-l">{relation}</h4>
-                    <CardList
-                      type="horizontal"
-                      size="small"
-                      isHighlight={true}
-                      cards={prepareCardData(anime.related[relation][type])}
-                    />
-                  </div>
-                ))
+              Object.keys(anime.related).map(
+                (relation) =>
+                  anime.related &&
+                  Object.keys(anime.related[relation]).map((type) => (
+                    <div
+                      key={relation}
+                      className="[&:not(:last-child)]:mb-l "
+                    >
+                      <h4 className="font-bold mb-l">{relation}</h4>
+                      <CardList
+                        type="horizontal"
+                        size="small"
+                        isHighlight={true}
+                        cards={prepareCardData(
+                          anime.related ? anime.related[relation][type] : []
+                        )}
+                      />
+                    </div>
+                  ))
               )}
           </div>
           <div className="flex justify-end">
@@ -160,7 +164,7 @@ export default function AnimePage() {
             <Carousel>
               <CarouselContent>
                 {anime.screenshots &&
-                  anime.screenshots.map(item => (
+                  anime.screenshots.map((item) => (
                     <CarouselItem
                       className="lg:basis-1/2 xl:basis-1/4"
                       key={item}
