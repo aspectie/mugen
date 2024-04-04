@@ -1,6 +1,6 @@
-import {Link, useLoaderData} from "@remix-run/react";
-import {useRef} from "react";
-import {json, LoaderFunctionArgs, type MetaFunction} from "@remix-run/node";
+import { Link, useLoaderData } from '@remix-run/react'
+import { useRef } from 'react'
+import { json, LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { getAnimeData } from '@/.server/anime'
 import Button from '@/ui/button/Button'
 import { StarIcon } from '@/assets/icons'
@@ -80,6 +80,7 @@ export default function AnimePage() {
               ]}
               placeholder="Добавить в список"
               size="small"
+              align="center"
             />
           </div>
         </div>

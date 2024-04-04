@@ -5,6 +5,8 @@ import StarIcon from './star.svg?react'
 import SearchIcon from './search.svg?react'
 import ArrowLeftIcon from './arrow-left.svg?react'
 import ArrowRightIcon from './arrow-right.svg?react'
+import ArrowDownIcon from './arrow-down.svg?react'
+import ArrowUpIcon from './arrow-up.svg?react'
 
 export {
   NotFoundIcon,
@@ -13,5 +15,7 @@ export {
   StarIcon,
   SearchIcon,
   ArrowLeftIcon,
-  ArrowRightIcon
+  ArrowRightIcon,
+  ArrowDownIcon,
+  ArrowUpIcon
 }
