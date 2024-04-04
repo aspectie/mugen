@@ -87,7 +87,12 @@ async function getAnimeRelated(id: string): Promise<TAnimeRelation[] | null> {
 
 async function getAnimeGroupedRelations(id: string, limit?: number) {
   let data = await getAnimeRelated(id)
-  if (data && limit) {
+
+  if (!data) {
+    return
+  }
+
+  if (limit) {
     data = data.slice(0, limit)
   }
 

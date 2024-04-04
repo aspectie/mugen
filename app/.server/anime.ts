@@ -27,6 +27,9 @@ export async function getAnimeData(id: string) {
       data.rawData.description_html = data.rawData.description_html
         ? clearHTML(data.rawData.description_html)
         : ''
+      if (!process.env.SHIKI_URL) {
+        throw new Error('Env var `SHIKI_URL` is not defined')
+      }
       data.imageUrl = process.env.SHIKI_URL + data.rawData.image?.original
       data.info = [
         {
