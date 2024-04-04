@@ -1,8 +1,11 @@
 import { TAnime } from '@/types/api/shiki/TAnime'
 import { LooseObject } from '@/types'
-import { clearHTML } from '@/utils/utils'
+import { clearHTML, convertObjectsArrayToList } from '@/utils/utils'
 import { useApi } from '@/hooks/api'
 import { shikiApi } from '@/lib/shiki'
+import { CONSTANTS } from '@/constants'
+
+const { COMMA } = CONSTANTS
 
 export async function getAnimeData(id: string) {
   let data: {
@@ -31,42 +34,45 @@ export async function getAnimeData(id: string) {
         throw new Error('Env var `SHIKI_URL` is not defined')
       }
       data.imageUrl = process.env.SHIKI_URL + data.rawData.image?.original
-      data.info = [
-        {
-          title: 'тип',
-          value: data.rawData.kind
-        },
-        {
-          title: 'эпизоды',
-          value: data.rawData.episodes
-        },
-        {
-          title: 'дата выхода',
-          value: data.rawData.aired_on
-        },
-        {
-          title: 'cтатус',
-          value: data.rawData.status
-        },
-        {
-          title: 'жанры',
-          value: data.rawData.genres?.reduce(
-            (acc, el) => acc + el.russian + ' ',
-            ''
-          )
-        },
-        {
-          title: 'рейтинг',
-          value: data.rawData.rating
-        },
-        {
-          title: 'студия',
-          value: data.rawData.studios?.reduce(
-            (acc, el) => acc + el.name + ' ',
-            ''
-          )
-        }
+
+      const textFields: Array<keyof TAnime> = [
+        'kind',
+        'episodes',
+        'aired_on',
+        'status',
+        'rating'
       ]
+      const arrayFields = [
+        { name: 'genres', value: 'russian' },
+        { name: 'studios', value: 'name' }
+      ]
+
+      textFields.map((field) => {
+        if (!data.info) {
+          data.info = []
+        }
+        if (!data.rawData) {
+          return
+        }
+        data.info.push({ title: field, value: data.rawData[field] })
+      })
+
+      arrayFields.map((field) => {
+        if (!data.info) {
+          data.info = []
+        }
+        if (!data.rawData) {
+          return
+        }
+        data.info.push({
+          title: field.name,
+          value: convertObjectsArrayToList(
+            data.rawData[field.name as keyof TAnime],
+            field.value,
+            COMMA
+          )
+        })
+      })
     }),
 
     getAnimeScreenshots(id).then((res) => {
