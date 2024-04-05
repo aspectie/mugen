@@ -8,7 +8,7 @@ import LanguageToggle from '@/components/language-toggle/LanguageToggle'
 import { useTranslation } from 'react-i18next'
 
 const Header = () => {
-  let { t } = useTranslation()
+  const { t } = useTranslation()
 
   const links: TLink[] = [
     {

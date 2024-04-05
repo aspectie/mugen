@@ -3,11 +3,11 @@ import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { ValidatedForm, validationError } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
 import { z } from "zod";
+import { useTranslation } from 'react-i18next'
 
-import {FormField} from "@/ui/form/Field";
-import Button from "@/ui/button/Button";
-import Input from "@/ui/input/Input";
-import { t } from 'i18next'
+import { FormField } from '@/ui/form/Field'
+import Button from '@/ui/button/Button'
+import Input from '@/ui/input/Input'
 
 export const validator = withZod(
   z.object({
@@ -32,6 +32,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function LoginPage() {
   // TODO: pass to notification
   const data = useActionData<typeof action>()
+  const { t } = useTranslation()
 
   return (
     <div className="container mx-auto h-screen flex items-center justify-center">
