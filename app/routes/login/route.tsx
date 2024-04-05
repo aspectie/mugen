@@ -52,7 +52,7 @@ export default function LoginPage() {
               name="email"
               type="email"
             >
-              <Input placeholder="E-mail" />
+              <Input placeholder={t('email')} />
             </FormField>
           </div>
           <div className="w-full mb-xl">

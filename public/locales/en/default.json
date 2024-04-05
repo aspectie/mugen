@@ -1,5 +1,6 @@
 {
 	"sign in": "Sign in",
+	"sign up": "Sign up",
   "header search placeholder": "Anime, manga, studio...",
 	"popular": "Popular",
 	"winter season": "Winter season",
@@ -7,6 +8,9 @@
 	"manga": "Manga",
 	"login": "Login",
 	"registration": "Registration",
+	"email": "E-mail",
 	"password": "Password",
-	"forgot password": "Forgot password"
+	"forgot password": "Forgot password",
+	"recover": "Recover",
+	"recover password": "Recover password"
 }
