@@ -5,6 +5,7 @@
   border-radius: $space-xs;
   color: $gray-40;
   cursor: pointer;
+  transition: all 0.2s ease;
 
 
   /* align */
@@ -39,7 +40,6 @@
   /* Types */
   &--primary {
     background-color: $accent-80;
-    transition: all 0.2s ease;
 
     &:hover {
       background-color: $accent-100;
@@ -62,7 +62,6 @@
   &--secondary { 
     background-color: $gray-40;
     color: $black-100;
-    transition: all 0.2s ease;
 
     &:hover {
       background-color: $gray-60;
