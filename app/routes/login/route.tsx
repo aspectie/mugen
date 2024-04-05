@@ -9,6 +9,8 @@ import { FormField } from '@/ui/form/Field'
 import Button from '@/ui/button/Button'
 import Input from '@/ui/input/Input'
 
+export const handle = { i18n: 'account' }
+
 export const validator = withZod(
   z.object({
     email: z
@@ -32,7 +34,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function LoginPage() {
   // TODO: pass to notification
   const data = useActionData<typeof action>()
-  const { t } = useTranslation()
+  const { t } = useTranslation('account')
 
   return (
     <div className="container mx-auto h-screen flex items-center justify-center">

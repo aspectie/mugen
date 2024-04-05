@@ -1,14 +1,13 @@
 import { Link } from '@remix-run/react';
+import { useTranslation } from 'react-i18next'
 
-import Menu, { TLink } from '@/components/menu/Menu';
-import {LogoIcon} from '@/assets/icons';
+import Menu, { TLink } from '@/components/menu/Menu'
+import { LogoIcon } from '@/assets/icons'
 import Search from '@/ui/search/Search'
 import LanguageToggle from '@/components/language-toggle/LanguageToggle'
 
-import { useTranslation } from 'react-i18next'
-
 const Header = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation(['default', 'account'])
 
   const links: TLink[] = [
     {
@@ -42,7 +41,7 @@ const Header = () => {
             <Search placeholder={t('header search placeholder')} />
             <Link to="/login">
               <p className="text-white font-bold hover:text-accent-100">
-                {t('sign in')}
+                {t('sign in', { ns: 'account' })}
               </p>
             </Link>
           </div>

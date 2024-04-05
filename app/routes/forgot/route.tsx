@@ -9,6 +9,8 @@ import Button from "@/ui/button/Button";
 import Input from "@/ui/input/Input";
 import { useTranslation } from 'react-i18next'
 
+export const handle = { i18n: 'account' }
+
 export const validator = withZod(
   z.object({
     email: z
@@ -30,7 +32,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 }
 
 export default function ForgotPage() {
-  const { t } = useTranslation()
+  const { t } = useTranslation('account')
 
   return (
     <div className="container mx-auto h-screen flex items-center justify-center">

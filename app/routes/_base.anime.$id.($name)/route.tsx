@@ -15,6 +15,8 @@ import {
   CarouselItem
 } from '@/components/carousel/Carousel'
 
+export const handle = { i18n: ['default', 'account'] }
+
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.id, 'Expected params.id')
 
@@ -121,7 +123,7 @@ export default function AnimePage() {
           )}
         </div>
         {/* TODO: move out of this container because sections on the left are affected */}
-        {anime && anime.related && (
+        {anime && anime.related && Object.keys(anime.related).length > 0 && (
           <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
             <div>
               {Object.keys(anime.related).map(

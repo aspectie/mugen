@@ -11,6 +11,8 @@ import { TAnime } from '@/types/api/shiki/TAnime'
 import CardList from '@/components/card/CardList'
 import i18n from '@/.server/i18n'
 
+export const handle = { i18n: ['default', 'account'] }
+
 export const loader = async ({
   request
 }: LoaderFunctionArgs): Promise<TypedResponse<TLoaderResponse> | null> => {
