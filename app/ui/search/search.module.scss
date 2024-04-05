@@ -1,13 +1,8 @@
 .search {
   display: flex;
   align-items: center;
-  padding-block: $space-s;
   padding-inline: $space-s;
   background-color: $gray-20;
-  gap: $space-xs;
-  border-radius: $space-s;
-  &__icon {
-    cursor: pointer;
-  }
+  border-radius: $space-xs;
 }
 

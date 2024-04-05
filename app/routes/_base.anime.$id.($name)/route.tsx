@@ -98,34 +98,33 @@ export default function AnimePage() {
               </div>
             </div>
             <h5 className="mt-xs text-black-80">{anime.rawData.name}</h5>
-            {/* <div className="w-1/6 mt-m">
-                <Button text="Смотреть" onClick={scrollToPlayer}/>
-            </div> */}
           </div>
-          <h4 className="font-bold mb-m text-black-80">Информация</h4>
-          <ul>
-            {anime.info &&
-              anime.info.map((el, index) => (
-                <li
-                  key={index}
-                  className="flex mb-s "
-                >
-                  <span className="w-2/6 mr-xs bg-gray-40 py-xs px-s capitalize ">
-                    {el.title}
-                  </span>
-                  <span className="w-full mr-xs bg-gray-40 py-xs px-s capitalize">
-                    {el.value}
-                  </span>
-                </li>
-              ))}
-          </ul>
+          {anime.info && (
+            <>
+              <h4 className="font-bold mb-m text-black-80">Информация</h4>
+              <ul>
+                {anime.info.map((el, index) => (
+                  <li
+                    key={index}
+                    className="flex mb-s "
+                  >
+                    <span className="w-2/6 mr-xs bg-gray-40 py-xs px-s capitalize ">
+                      {el.title}
+                    </span>
+                    <span className="w-full mr-xs bg-gray-40 py-xs px-s capitalize">
+                      {el.value}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
         {/* TODO: move out of this container because sections on the left are affected */}
-        <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
-          <div>
-            {anime &&
-              anime.related &&
-              Object.keys(anime.related).map(
+        {anime && anime.related && (
+          <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
+            <div>
+              {Object.keys(anime.related).map(
                 (relation) =>
                   anime.related &&
                   Object.keys(anime.related[relation]).map((type) => (
@@ -145,26 +144,31 @@ export default function AnimePage() {
                     </div>
                   ))
               )}
+            </div>
+            <div className="flex justify-end">
+              <Link to={`/anime/${anime.rawData.id}/related`}>
+                <h5 className="text-black-200 hover:text-accent-120">
+                  Смотреть все
+                </h5>
+              </Link>
+            </div>
           </div>
-          <div className="flex justify-end">
-            <Link to={`/anime/${anime.rawData.id}/related`}>
-              <h5 className="text-black-200 hover:text-accent-120">
-                Смотреть все
-              </h5>
-            </Link>
+        )}
+        {anime.rawData.description_html && (
+          <div className="mt-l col-span-9 pr-l">
+            <h4 className="font-bold text-black-80">Описание</h4>
+            <p className="mt-m text-black-80">
+              {anime.rawData.description_html}
+            </p>
           </div>
-        </div>
-        <div className="mt-l col-span-9 pr-l">
-          <h4 className="font-bold text-black-80">Описание</h4>
-          <p className="mt-m text-black-80">{anime.rawData.description_html}</p>
-        </div>
-        <div className="mt-l col-span-9">
-          <h4 className="font-bold text-black-80">Кадры</h4>
-          <div className="flex mt-m bg-gray-40 p-s rounded-[8px]">
-            <Carousel>
-              <CarouselContent>
-                {anime.screenshots &&
-                  anime.screenshots.map((item) => (
+        )}
+        {anime.screenshots && (
+          <div className="mt-l col-span-9">
+            <h4 className="font-bold text-black-80">Кадры</h4>
+            <div className="flex mt-m bg-gray-40 p-s rounded-[8px]">
+              <Carousel>
+                <CarouselContent>
+                  {anime.screenshots.map((item) => (
                     <CarouselItem
                       className="lg:basis-1/2 xl:basis-1/4"
                       key={item}
@@ -175,10 +179,11 @@ export default function AnimePage() {
                       />
                     </CarouselItem>
                   ))}
-              </CarouselContent>
-            </Carousel>
+                </CarouselContent>
+              </Carousel>
+            </div>
           </div>
-        </div>
+        )}
         <div
           id="player"
           ref={playerRef}
