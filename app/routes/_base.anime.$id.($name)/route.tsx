@@ -1,21 +1,25 @@
-import { Link, useLoaderData } from '@remix-run/react'
 import { useRef } from 'react'
+import { Link, useLoaderData } from '@remix-run/react'
 import { json, LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
+import { useTranslation } from 'react-i18next'
+import invariant from 'tiny-invariant'
 import { getAnimeData } from '@/.server/anime'
+
+import { UserRateStatus } from '@/types/api/shiki/TAnime'
+
+import { prepareCardData } from '@/utils/card'
 import Button from '@/ui/button/Button'
 import { StarIcon } from '@/assets/icons'
-import { UserRateStatus } from '@/types/api/shiki/TAnime'
 import CardList from '@/components/card/CardList'
-import { prepareCardData } from '@/utils/card'
 import Select from '@/ui/select/Select'
-import invariant from 'tiny-invariant'
 import {
   Carousel,
   CarouselContent,
   CarouselItem
 } from '@/components/carousel/Carousel'
+import { isRussianLang } from '@/utils/locale'
 
-export const handle = { i18n: ['default', 'account'] }
+export const handle = { i18n: ['default', 'account', 'anime', 'actions'] }
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.id, 'Expected params.id')
@@ -41,7 +45,9 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function AnimePage() {
   const anime = useLoaderData<typeof loader>()
+  const { t } = useTranslation(['anime', 'default', 'actions'])
   const playerRef = useRef<null | HTMLDivElement>(null)
+
   const scrollToPlayer = () => {
     if (playerRef.current) {
       playerRef.current.scrollIntoView({ behavior: 'smooth' })
@@ -57,30 +63,54 @@ export default function AnimePage() {
             <img
               className="rounded block w-full object-center object-cover"
               src={anime.imageUrl}
-              alt={`Постер аниме ${anime.rawData.russian}`}
+              alt={`${t('poster of', { ns: 'default' })} ${
+                isRussianLang() ? anime.rawData.russian : anime.rawData.name
+              }`}
             />
           </div>
           <div className="flex flex-col gap-s">
             <Button
-              text="Смотреть"
+              text={t('watch', { ns: 'actions' })}
               onClick={scrollToPlayer}
               size="small"
             />
             <Button
-              text="В избранное"
+              text={`${t('add to', { ns: 'actions' })} ${t('favourites', {
+                ns: 'default'
+              }).toLocaleLowerCase()}`}
               type="ghost"
               size="small"
             />
             <Select
+              placeholder={`${t('add to', { ns: 'actions' })} ${t('list', {
+                ns: 'default'
+              }).toLocaleLowerCase()}`}
               options={[
-                { label: 'Просмотрено', value: UserRateStatus.completed },
-                { label: 'Заброшено', value: UserRateStatus.dropped },
-                { label: 'На паузе', value: UserRateStatus.on_hold },
-                { label: 'Запланировано', value: UserRateStatus.planned },
-                { label: 'Пересматриваю', value: UserRateStatus.rewatching },
-                { label: 'Смотрю', value: UserRateStatus.watching }
+                {
+                  label: t('status.completed', { ns: 'anime' }),
+                  value: UserRateStatus.completed
+                },
+                {
+                  label: t('status.dropped', { ns: 'anime' }),
+                  value: UserRateStatus.dropped
+                },
+                {
+                  label: t('status.on hold', { ns: 'anime' }),
+                  value: UserRateStatus.on_hold
+                },
+                {
+                  label: t('status.planned', { ns: 'anime' }),
+                  value: UserRateStatus.planned
+                },
+                {
+                  label: t('status.rewatching', { ns: 'anime' }),
+                  value: UserRateStatus.rewatching
+                },
+                {
+                  label: t('status.watching', { ns: 'anime' }),
+                  value: UserRateStatus.watching
+                }
               ]}
-              placeholder="Добавить в список"
               size="small"
               align="center"
             />
@@ -90,7 +120,7 @@ export default function AnimePage() {
           <div className="mb-2xl">
             <div className="flex items-start">
               <h1 className="font-bold w-5/6 text-black-100">
-                {anime.rawData.russian}
+                {isRussianLang() ? anime.rawData.russian : anime.rawData.name}
               </h1>
               <div className="flex items-center ml-l">
                 <StarIcon className="w-l h-l" />
@@ -103,7 +133,9 @@ export default function AnimePage() {
           </div>
           {anime.info && (
             <>
-              <h4 className="font-bold mb-m text-black-80">Информация</h4>
+              <h4 className="font-bold mb-m text-black-80">
+                {t('info', { ns: 'default' })}
+              </h4>
               <ul>
                 {anime.info.map((el, index) => (
                   <li
@@ -158,7 +190,9 @@ export default function AnimePage() {
         )}
         {anime.rawData.description_html && (
           <div className="mt-l col-span-9 pr-l">
-            <h4 className="font-bold text-black-80">Описание</h4>
+            <h4 className="font-bold text-black-80">
+              {t('description', { ns: 'default' })}
+            </h4>
             <p className="mt-m text-black-80">
               {anime.rawData.description_html}
             </p>
@@ -166,7 +200,9 @@ export default function AnimePage() {
         )}
         {anime.screenshots && (
           <div className="mt-l col-span-9">
-            <h4 className="font-bold text-black-80">Кадры</h4>
+            <h4 className="font-bold text-black-80">
+              {t('screenshots', { ns: 'default' })}
+            </h4>
             <div className="flex mt-m bg-gray-40 p-s rounded-[8px]">
               <Carousel>
                 <CarouselContent>
@@ -191,7 +227,9 @@ export default function AnimePage() {
           ref={playerRef}
           className="col-start-1 col-end-10 self-end mt-l"
         >
-          <h4 className="font-bold text-black-80">Трейлер</h4>
+          <h4 className="font-bold text-black-80">
+            {t('trailer', { ns: 'default' })}
+          </h4>
           <iframe
             className="mt-m"
             key="12"
