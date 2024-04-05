@@ -6,7 +6,7 @@ import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
 
 import styles from './select.module.scss'
 
-type TOption = {
+export type TOption = {
   label: string
   value: string
 }

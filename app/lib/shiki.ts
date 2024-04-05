@@ -76,12 +76,12 @@ export async function getAnimeGroupedRelations(id: string, limit?: number) {
   )
   const result: LooseObject = {}
 
-  Object.keys(groupedData).map((key) => {
+  Object.keys(groupedData).map(key => {
     result[key] = {}
     result[key].mangas = []
     result[key].animes = []
 
-    groupedData[key].map((item) => {
+    groupedData[key].map(item => {
       if (item.manga) {
         result[key].mangas.push(item.manga)
       } else {
@@ -98,3 +98,98 @@ export async function getAnimeGroupedRelations(id: string, limit?: number) {
 
   return result
 }
+
+/*TODO: remove it when API will be create */
+export const filterSelects: Array<object> = [
+  {
+    name: 'Жанр',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  }
+]
