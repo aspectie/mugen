@@ -7,20 +7,19 @@ import LanguageToggle from '@/components/language-toggle/LanguageToggle'
 
 import { useTranslation } from 'react-i18next'
 
-export let handle = { i18n: 'ui' }
-
 const Header = () => {
+  let { t } = useTranslation()
+
   const links: TLink[] = [
     {
-      title: 'Аниме',
+      title: t('anime'),
       route: '/anime'
     },
     {
-      title: 'Манга',
+      title: t('manga'),
       route: '/manga'
     }
   ]
-  let { t } = useTranslation()
 
   return (
     <header className="sticky z-50 top-[0] w-full py-s bg-black-100">
