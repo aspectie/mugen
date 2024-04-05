@@ -20,7 +20,7 @@ const Header = () => {
       route: '/manga'
     }
   ]
-  let { t } = useTranslation('ui')
+  let { t } = useTranslation()
 
   return (
     <header className="sticky z-50 top-[0] w-full py-s bg-black-100">
