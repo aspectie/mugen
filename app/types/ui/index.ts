@@ -35,3 +35,8 @@ export const enum InputType {
   transparent = 'transparent'
 }
 export type TInputType = keyof typeof InputType
+
+export type TOption = {
+  label: string
+  value: string
+}
