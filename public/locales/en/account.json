@@ -1,0 +1,11 @@
+{
+  "sign in": "Sign in",
+	"sign up": "Sign up",
+  "login": "Login",
+	"registration": "Registration",
+	"email": "E-mail",
+	"password": "Password",
+	"forgot password": "Forgot password",
+	"recover": "Recover",
+	"recover password": "Recover password"
+}
