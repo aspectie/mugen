@@ -42,7 +42,7 @@ const Header = () => {
             <Search placeholder={t('header search placeholder')} />
             <Link to="/login">
               <p className="text-white font-bold hover:text-accent-100">
-                {t('login')}
+                {t('sign in')}
               </p>
             </Link>
           </div>

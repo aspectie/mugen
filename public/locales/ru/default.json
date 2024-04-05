@@ -1,8 +1,12 @@
 {
-	"login": "Войти",
+	"sign in": "Войти",
   "header search placeholder": "Аниме, манга, студия...",
 	"popular": "Популярное",
 	"winter season": "Зимний сезон",
 	"anime": "Аниме",
-	"manga": "Манга"
+	"manga": "Манга",
+	"login": "Вход",
+	"registration": "Регистрация",
+	"password": "Пароль",
+	"forgot password": "Забыл пароль"
 }

@@ -1,8 +1,12 @@
 {
-	"login": "Login",
+	"sign in": "Sign in",
   "header search placeholder": "Anime, manga, studio...",
 	"popular": "Popular",
 	"winter season": "Winter season",
 	"anime": "Anime",
-	"manga": "Manga"
+	"manga": "Manga",
+	"login": "Login",
+	"registration": "Registration",
+	"password": "Password",
+	"forgot password": "Forgot password"
 }
