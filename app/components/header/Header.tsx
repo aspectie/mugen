@@ -3,6 +3,11 @@ import { Link } from '@remix-run/react';
 import Menu, { TLink } from '@/components/menu/Menu';
 import {LogoIcon} from '@/assets/icons';
 import Search from '@/ui/search/Search'
+import LanguageToggle from '@/components/language-toggle/LanguageToggle'
+
+import { useTranslation } from 'react-i18next'
+
+export let handle = { i18n: 'ui' }
 
 const Header = () => {
   const links: TLink[] = [
@@ -15,6 +20,7 @@ const Header = () => {
       route: '/manga'
     }
   ]
+  let { t } = useTranslation('ui')
 
   return (
     <header className="sticky z-50 top-[0] w-full py-s bg-black-100">
@@ -32,11 +38,18 @@ const Header = () => {
             </div>
           )}
         </div>
-        <div className="flex gap-4xl items-center">
-          <Search placeholder="аниме, манга, студия..." />
-          <Link to="/login">
-            <p className="text-white font-bold hover:text-accent-100">Войти</p>
-          </Link>
+        <div className="flex">
+          <div className="flex gap-4xl items-center">
+            <Search placeholder={t('header search placeholder')} />
+            <Link to="/login">
+              <p className="text-white font-bold hover:text-accent-100">
+                {t('login')}
+              </p>
+            </Link>
+          </div>
+          <div className="ml-m">
+            <LanguageToggle />
+          </div>
         </div>
       </div>
     </header>
