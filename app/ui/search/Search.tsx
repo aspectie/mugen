@@ -1,5 +1,5 @@
-import Input from '@/ui/input/Input'
-import { TFieldSize } from '@/types/ui'
+import Input from "@/ui/input/Input";
+import { FieldSize, InputType, TFieldSize } from '@/types/ui'
 import { SearchIcon } from '@/assets/icons'
 import styles from './search.module.scss'
 
@@ -14,7 +14,8 @@ type TSearch = {
 
 const Search = (props: TSearch) => {
   const {
-    size = 'small',
+
+    size = FieldSize.small,
     placeholder = 'default placeholder',
     disabled = false,
     value,
@@ -35,6 +36,14 @@ const Search = (props: TSearch) => {
         className={styles['search__icon']}
         onClick={onChange}
       />
+        type={InputType.transparent}
+      />
+      <span className="px-s">
+        <SearchIcon
+          className="cursor-pointer w-m min-w-m h-m"
+          onClick={onChange}
+        />
+      </span>
     </div>
   )
 }

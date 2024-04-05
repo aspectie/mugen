@@ -7,7 +7,32 @@ import {
 } from '@/types/api/shiki/TAnime'
 import { groupBy } from '@/utils/utils'
 
-export async function getAnime(
+type TShikiApi = {
+  getAnime: (
+    params: Parameters<typeof getAnime>[0]
+  ) => ReturnType<typeof getAnime>
+  getAnimeScreenshots: (
+    id: Parameters<typeof getAnimeScreenshots>[0]
+  ) => ReturnType<typeof getAnimeScreenshots>
+  getAnimeVideos: (
+    id: Parameters<typeof getAnimeVideos>[0]
+  ) => ReturnType<typeof getAnimeVideos>
+  getAnimeGroupedRelations: (
+    id: Parameters<typeof getAnimeGroupedRelations>[0],
+    limit: Parameters<typeof getAnimeGroupedRelations>[1]
+  ) => ReturnType<typeof getAnimeGroupedRelations>
+}
+
+export function shikiApi(): TShikiApi {
+  return {
+    getAnime,
+    getAnimeScreenshots,
+    getAnimeVideos,
+    getAnimeGroupedRelations
+  }
+}
+
+async function getAnime(
   params: string | Record<string, string | number>
 ): Promise<TAnime[] | TAnime | null> {
   let url = `${process.env.VITE_SHIKI_URL}/api/animes`
@@ -28,7 +53,7 @@ export async function getAnime(
   return res.ok ? await res.json() : null
 }
 
-export async function getAnimeWithNestedRoute({
+async function getAnimeWithNestedRoute({
   id,
   route
 }: {
@@ -46,27 +71,28 @@ export async function getAnimeWithNestedRoute({
   return await res.json()
 }
 
-export async function getAnimeScreenshots(
+async function getAnimeScreenshots(
   id: string
 ): Promise<TAnimeScreenshot[] | null> {
   return await getAnimeWithNestedRoute({ id, route: 'screenshots' })
 }
 
-export async function getAnimeVideos(
-  id: string
-): Promise<TAnimeVideo[] | null> {
+async function getAnimeVideos(id: string): Promise<TAnimeVideo[] | null> {
   return await getAnimeWithNestedRoute({ id, route: 'videos' })
 }
 
-export async function getAnimeRelated(
-  id: string
-): Promise<TAnimeRelation[] | null> {
+async function getAnimeRelated(id: string): Promise<TAnimeRelation[] | null> {
   return await getAnimeWithNestedRoute({ id, route: 'related' })
 }
 
-export async function getAnimeGroupedRelations(id: string, limit?: number) {
+async function getAnimeGroupedRelations(id: string, limit?: number) {
   let data = await getAnimeRelated(id)
-  if (data && limit) {
+
+  if (!data) {
+    return
+  }
+
+  if (limit) {
     data = data.slice(0, limit)
   }
 
