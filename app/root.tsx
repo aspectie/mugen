@@ -10,7 +10,7 @@ import {
 import '@/styles/main.scss'
 import { useChangeLanguage } from 'remix-i18next/react'
 import { useTranslation } from 'react-i18next'
-import i18next from '@/.server/i18next'
+import i18next from '@/.server/i18n'
 import { LoaderFunctionArgs } from '@remix-run/node'
 
 export async function loader({ request }: LoaderFunctionArgs) {

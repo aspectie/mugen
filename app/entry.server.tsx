@@ -7,10 +7,10 @@ import { RemixServer } from '@remix-run/react'
 import { isbot } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
 import { createInstance } from 'i18next'
-import i18next from '@/.server/i18next'
+import i18next from '@/.server/i18n'
 import { I18nextProvider, initReactI18next } from 'react-i18next'
 import Backend from 'i18next-fs-backend'
-import i18n from './i18n'
+import i18n from '@/config/i18n'
 import { resolve } from 'node:path'
 
 const ABORT_DELAY = 5000
@@ -36,7 +36,7 @@ export default async function handleRequest(
       ...i18n, // spread the configuration
       lng, // The locale we detected above
       ns, // The namespaces the routes about to render wants to use
-      backend: { loadPath: resolve('./public/locales/{{lng}}/{{ns}}.json') }
+      backend: { loadPath: resolve('./app/locales/{{lng}}/{{ns}}.json') }
     })
 
   return new Promise((resolve, reject) => {

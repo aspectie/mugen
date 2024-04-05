@@ -1,5 +1,6 @@
 import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { useTranslation } from 'react-i18next'
 
 import { shikiApi } from '@/lib/shiki'
 import { useApi } from '@/hooks/api'
@@ -33,27 +34,34 @@ export const loader = async () => {
 }
 
 export default function Index() {
-  const data = useLoaderData<typeof loader>() as TAnime[] | null;
+  const data = useLoaderData<typeof loader>() as TAnime[] | null
+  let { t } = useTranslation()
 
   return (
     <div className="container mx-auto text-black-100">
       <div className="grid grid-cols-12 pt-xl">
-        {data && 
+        {data && (
           <div className="col-span-8">
             <div className="mb-l">
               <h2 className="font-bold mb-l">Зимний сезон</h2>
               <div className="p-m bg-black-100 border border-black-20">
-                <CardList cards={prepareCardData(data)} className="columns-5 text-white"/>
+                <CardList
+                  cards={prepareCardData(data)}
+                  className="columns-5 text-white"
+                />
               </div>
             </div>
             <div>
-              <h2 className="font-bold mb-l">Популярное</h2>
+              <h2 className="font-bold mb-l">{t('popular')}</h2>
               <div className="col-span-8 p-m">
-                <CardList cards={prepareCardData(data)} className="columns-5"/>
+                <CardList
+                  cards={prepareCardData(data)}
+                  className="columns-5"
+                />
               </div>
             </div>
-          </div> 
-        }    
+          </div>
+        )}
       </div>
     </div>
   )
