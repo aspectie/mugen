@@ -1,32 +1,28 @@
-import Button from '@/ui/button/Button'
-import { getLang, getToggledLangPath } from '@/utils/locale'
-import { Link, useLocation, useParams } from '@remix-run/react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
+import Button from '@/ui/button/Button'
 
 function LanguageToggle() {
-  const { pathname } = useLocation()
-  const params = useParams()
-
-  const [lang, setLang] = useState(getLang(params) || 'ru')
-
-  const newPath = getToggledLangPath(getLang(params), pathname)
+  const { i18n } = useTranslation()
+  const [lang, setLang] = useState(i18n.language)
 
   const toggleLanguage = () => {
     const toggledLang = lang === 'ru' ? 'en' : 'ru'
     setLang(toggledLang)
+    // TODO: delegate to search ?lng=
+    i18n.changeLanguage(toggledLang)
   }
 
   return (
-    <Link to={newPath}>
-      <Button
-        text={lang}
-        type="secondary"
-        size="small"
-        onClick={() => {
-          toggleLanguage()
-        }}
-      />
-    </Link>
+    <Button
+      text={lang}
+      type="secondary"
+      size="small"
+      onClick={() => {
+        toggleLanguage()
+      }}
+    />
   )
 }
 
