@@ -169,26 +169,20 @@ export default function AnimePage() {
         {anime && anime.related && Object.keys(anime.related).length > 0 && (
           <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
             <div>
-              {Object.keys(anime.related).map(
-                (relation) =>
-                  anime.related &&
-                  Object.keys(anime.related[relation]).map((type) => (
-                    <div
-                      key={relation}
-                      className="[&:not(:last-child)]:mb-l "
-                    >
-                      <h4 className="font-bold mb-l">{relation}</h4>
-                      <CardList
-                        type="horizontal"
-                        size="small"
-                        isHighlight={true}
-                        cards={prepareCardData(
-                          anime.related ? anime.related[relation][type] : []
-                        )}
-                      />
-                    </div>
-                  ))
-              )}
+              {Object.entries(anime.related).map((entry) => (
+                <div
+                  key={entry[0]}
+                  className="[&:not(:last-child)]:mb-l "
+                >
+                  <h4 className="font-bold mb-l">{entry[0]}</h4>
+                  <CardList
+                    type="horizontal"
+                    size="small"
+                    isHighlight={true}
+                    cards={prepareCardData(entry[1])}
+                  />
+                </div>
+              ))}
             </div>
             <div className="flex justify-end">
               <Link to={`/anime/${anime.rawData.id}/related`}>

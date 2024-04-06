@@ -1,11 +1,11 @@
 import { LooseObject } from '@/types'
 import { TAnime } from '@/types/api/anime'
 import {
-  TShikiAnime,
   TShikiAnimeRelation,
   TShikiAnimeScreenshot,
   TShikiAnimeVideo
 } from '@/types/api/shiki/anime'
+import { castToAnother } from '@/utils/api'
 import { clearHTML, groupBy } from '@/utils/utils'
 
 type TShikiApi = {
@@ -24,29 +24,33 @@ type TShikiApi = {
   ) => ReturnType<typeof getAnimeGroupedRelations>
 }
 
-function castToAnimes(data: TShikiAnime[]): TAnime[] {
-  return data.map(castToAnime)
+const map = {
+  id: 'id',
+  title: {
+    en: 'name',
+    ru: 'russian'
+  },
+  type: 'kind',
+  image: 'image',
+  released: 'released_on',
+  description: 'description_html', //only russian description
+  episodes: 'episodes',
+  aired_on: 'aired_on',
+  status: 'status',
+  rating: 'rating',
+  score: 'score',
+  genres: 'genres',
+  studios: 'studios'
 }
-// TODO: cast method to be abstract
-function castToAnime(item: TShikiAnime): TAnime {
-  return {
-    id: item.id,
-    title: {
-      en: item.name,
-      ru: item.russian
-    },
-    type: item.kind,
-    image: `${import.meta.env.VITE_SHIKI_URL}/${item.image.original}`,
-    released: item.released_on,
-    description: item.description_html ? clearHTML(item.description_html) : '',
-    episodes: item.episodes,
-    aired_on: item.aired_on,
-    status: item.status,
-    rating: item.rating,
-    score: item.score,
-    genres: item.genres,
-    studios: item.studios
-  }
+
+// TODO: fix types
+function prepareAnimeData(item): TAnime {
+  const res = castToAnother(item, map)
+
+  res.image = `${import.meta.env.VITE_SHIKI_URL}/${item.image.original}`
+  res.description = item.description ? clearHTML(item.description) : ''
+
+  return res
 }
 
 export function shikiApi(): TShikiApi {
@@ -77,9 +81,10 @@ async function getAnime(
   const res = await fetch(url)
 
   if (res.ok) {
-    let data = await res.json()
-
-    return data instanceof Array ? castToAnimes(data) : castToAnime(data)
+    const data = await res.json()
+    return data instanceof Array
+      ? data.map((item) => prepareAnimeData(item))
+      : prepareAnimeData(data)
   }
   return null
 }
@@ -133,27 +138,23 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
     data,
     'relation'
   )
-  const result: LooseObject = {}
 
-  Object.keys(groupedData).map((key) => {
-    result[key] = {}
-    result[key].mangas = []
-    result[key].animes = []
+  const res: LooseObject = {}
 
-    groupedData[key].map((item) => {
-      if (item.manga) {
-        result[key].mangas.push(item.manga)
-      } else {
-        result[key].animes.push(item.anime)
+  Object.entries(groupedData).map((entries) => {
+    const key = entries[0]
+    const value = entries[1]
+
+    res[key] = value.map((item) => {
+      if (item.anime) {
+        return prepareAnimeData(item.anime)
       }
+      if (item.manga) {
+        return prepareAnimeData(item.manga)
+      }
+      return item
     })
-    if (result[key].mangas.length === 0) {
-      delete result[key].mangas
-    }
-    if (result[key].animes.length === 0) {
-      delete result[key].animes
-    }
   })
 
-  return result
+  return res
 }

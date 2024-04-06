@@ -84,13 +84,13 @@ export async function getAnimeData(id: string) {
       if (res instanceof Array) {
         data.videos = res.slice(0, 1).map((item) => item.player_url)
       }
-    })
+    }),
 
-    // getAnimeGroupedRelations(id, 3).then((res) => {
-    //   if (res) {
-    //     data.related = res
-    //   }
-    // })
+    getAnimeGroupedRelations(id, 3).then((res) => {
+      if (res) {
+        data.related = res
+      }
+    })
   ])
 
   return data.rawData ? data : null
