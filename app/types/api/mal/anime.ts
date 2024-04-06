@@ -1,4 +1,4 @@
-export type TMyAnimeListAnime = {
+export type TMALAnime = {
   id: number
   title: string
   main_picture: {
