@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import invariant from 'tiny-invariant'
 import { getAnimeData } from '@/.server/anime'
 
-import { UserRateStatus } from '@/types/api/shiki/TAnime'
+import { UserRateStatus } from '@/types/user'
 
 import { prepareCardData } from '@/utils/card'
 import Button from '@/ui/button/Button'
@@ -17,7 +17,6 @@ import {
   CarouselContent,
   CarouselItem
 } from '@/components/carousel/Carousel'
-import { isRussianLang } from '@/utils/locale'
 
 export const handle = { i18n: ['default', 'account', 'anime', 'actions'] }
 
@@ -25,6 +24,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.id, 'Expected params.id')
 
   const data = await getAnimeData(params.id)
+
   if (!data) {
     throw new Response('Not Found', { status: 404 })
   }
@@ -36,7 +36,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     {
       title: `${
-        data && data.rawData ? data.rawData.russian : 'Anime page'
+        data && data.rawData ? data.rawData.title.ru : 'Anime page'
       } - Аниме`
     },
     { name: 'description', content: 'The best anime project' }
@@ -45,7 +45,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function AnimePage() {
   const anime = useLoaderData<typeof loader>()
-  const { t } = useTranslation(['anime', 'default', 'actions'])
+
+  const { t, i18n } = useTranslation(['anime', 'default', 'actions'])
   const playerRef = useRef<null | HTMLDivElement>(null)
 
   const scrollToPlayer = () => {
@@ -64,7 +65,11 @@ export default function AnimePage() {
               className="rounded block w-full object-center object-cover"
               src={anime.imageUrl}
               alt={`${t('poster of', { ns: 'default' })} ${
-                isRussianLang() ? anime.rawData.russian : anime.rawData.name
+                Object.keys(anime.rawData.title).includes(i18n.language)
+                  ? anime.rawData.title[
+                      i18n.language as keyof typeof anime.rawData.title
+                    ]
+                  : ''
               }`}
             />
           </div>
@@ -119,9 +124,15 @@ export default function AnimePage() {
         <div className="flex flex-col col-span-7 px-l">
           <div className="mb-2xl">
             <div className="flex items-start">
-              <h1 className="font-bold w-5/6 text-black-100">
-                {isRussianLang() ? anime.rawData.russian : anime.rawData.name}
-              </h1>
+              {Object.keys(anime.rawData.title).includes(i18n.language) && (
+                <h1 className="font-bold w-5/6 text-black-100">
+                  {
+                    anime.rawData.title[
+                      i18n.language as keyof typeof anime.rawData.title
+                    ]
+                  }
+                </h1>
+              )}
               <div className="flex items-center ml-l">
                 <StarIcon className="w-l h-l" />
                 <h1 className="font-bold text-black-80 ml-s">
@@ -129,7 +140,7 @@ export default function AnimePage() {
                 </h1>
               </div>
             </div>
-            <h5 className="mt-xs text-black-80">{anime.rawData.name}</h5>
+            <h5 className="mt-xs text-black-80">{anime.rawData.title.en}</h5>
           </div>
           {anime.info && (
             <>
@@ -188,14 +199,12 @@ export default function AnimePage() {
             </div>
           </div>
         )}
-        {anime.rawData.description_html && (
+        {anime.rawData.description && (
           <div className="mt-l col-span-9 pr-l">
             <h4 className="font-bold text-black-80">
               {t('description', { ns: 'default' })}
             </h4>
-            <p className="mt-m text-black-80">
-              {anime.rawData.description_html}
-            </p>
+            <p className="mt-m text-black-80">{anime.rawData.description}</p>
           </div>
         )}
         {anime.screenshots && (
@@ -213,7 +222,7 @@ export default function AnimePage() {
                     >
                       <img
                         src={item}
-                        alt={`Кадр из ${anime.rawData?.russian}`}
+                        alt={`Кадр из ${anime.rawData?.title.ru}`}
                       />
                     </CarouselItem>
                   ))}

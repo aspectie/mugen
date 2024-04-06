@@ -20,7 +20,7 @@ export type TCardData = {
   url?: string
   imageUrl: string
   date?: string
-  title: string
+  title?: string
   series?: string
 }
 

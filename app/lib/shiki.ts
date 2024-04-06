@@ -1,11 +1,12 @@
 import { LooseObject } from '@/types'
+import { TAnime } from '@/types/api/anime'
 import {
-  TAnime,
-  TAnimeRelation,
-  TAnimeScreenshot,
-  TAnimeVideo
-} from '@/types/api/shiki/TAnime'
-import { groupBy } from '@/utils/utils'
+  TShikiAnime,
+  TShikiAnimeRelation,
+  TShikiAnimeScreenshot,
+  TShikiAnimeVideo
+} from '@/types/api/shiki/anime'
+import { clearHTML, groupBy } from '@/utils/utils'
 
 type TShikiApi = {
   getAnime: (
@@ -21,6 +22,31 @@ type TShikiApi = {
     id: Parameters<typeof getAnimeGroupedRelations>[0],
     limit: Parameters<typeof getAnimeGroupedRelations>[1]
   ) => ReturnType<typeof getAnimeGroupedRelations>
+}
+
+function castToAnimes(data: TShikiAnime[]): TAnime[] {
+  return data.map(castToAnime)
+}
+// TODO: cast method to be abstract
+function castToAnime(item: TShikiAnime): TAnime {
+  return {
+    id: item.id,
+    title: {
+      en: item.name,
+      ru: item.russian
+    },
+    type: item.kind,
+    image: `${import.meta.env.VITE_SHIKI_URL}/${item.image.original}`,
+    released: item.released_on,
+    description: item.description_html ? clearHTML(item.description_html) : '',
+    episodes: item.episodes,
+    aired_on: item.aired_on,
+    status: item.status,
+    rating: item.rating,
+    score: item.score,
+    genres: item.genres,
+    studios: item.studios
+  }
 }
 
 export function shikiApi(): TShikiApi {
@@ -50,7 +76,12 @@ async function getAnime(
 
   const res = await fetch(url)
 
-  return res.ok ? await res.json() : null
+  if (res.ok) {
+    let data = await res.json()
+
+    return data instanceof Array ? castToAnimes(data) : castToAnime(data)
+  }
+  return null
 }
 
 async function getAnimeWithNestedRoute({
@@ -73,15 +104,17 @@ async function getAnimeWithNestedRoute({
 
 async function getAnimeScreenshots(
   id: string
-): Promise<TAnimeScreenshot[] | null> {
+): Promise<TShikiAnimeScreenshot[] | null> {
   return await getAnimeWithNestedRoute({ id, route: 'screenshots' })
 }
 
-async function getAnimeVideos(id: string): Promise<TAnimeVideo[] | null> {
+async function getAnimeVideos(id: string): Promise<TShikiAnimeVideo[] | null> {
   return await getAnimeWithNestedRoute({ id, route: 'videos' })
 }
 
-async function getAnimeRelated(id: string): Promise<TAnimeRelation[] | null> {
+async function getAnimeRelated(
+  id: string
+): Promise<TShikiAnimeRelation[] | null> {
   return await getAnimeWithNestedRoute({ id, route: 'related' })
 }
 
@@ -96,7 +129,7 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
     data = data.slice(0, limit)
   }
 
-  const groupedData: Record<string, TAnimeRelation[]> = groupBy(
+  const groupedData: Record<string, TShikiAnimeRelation[]> = groupBy(
     data,
     'relation'
   )

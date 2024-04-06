@@ -1,15 +1,15 @@
-import { TAnime } from '@/types/api/shiki/TAnime'
 import { LooseObject } from '@/types'
-import { clearHTML, convertObjectsArrayToList } from '@/utils/utils'
+import { convertObjectsArrayToList } from '@/utils/utils'
 import { useApi } from '@/hooks/api'
 import { shikiApi } from '@/lib/shiki'
 import { CONSTANTS } from '@/constants'
+import { TAnime } from '@/types/api/anime'
 
 const { COMMA } = CONSTANTS
 
 export async function getAnimeData(id: string) {
   let data: {
-    rawData?: Partial<TAnime>
+    rawData?: TAnime
     screenshots?: string[]
     imageUrl?: string
     videos?: string[]
@@ -27,16 +27,13 @@ export async function getAnimeData(id: string) {
   await Promise.allSettled([
     getAnime(id).then((res) => {
       data.rawData = res as TAnime
-      data.rawData.description_html = data.rawData.description_html
-        ? clearHTML(data.rawData.description_html)
-        : ''
       if (!process.env.SHIKI_URL) {
         throw new Error('Env var `SHIKI_URL` is not defined')
       }
-      data.imageUrl = process.env.SHIKI_URL + data.rawData.image?.original
+      data.imageUrl = data.rawData.image
 
       const textFields: Array<keyof TAnime> = [
-        'kind',
+        'type',
         'episodes',
         'aired_on',
         'status',
@@ -87,13 +84,13 @@ export async function getAnimeData(id: string) {
       if (res instanceof Array) {
         data.videos = res.slice(0, 1).map((item) => item.player_url)
       }
-    }),
-
-    getAnimeGroupedRelations(id, 3).then((res) => {
-      if (res) {
-        data.related = res
-      }
     })
+
+    // getAnimeGroupedRelations(id, 3).then((res) => {
+    //   if (res) {
+    //     data.related = res
+    //   }
+    // })
   ])
 
   return data.rawData ? data : null

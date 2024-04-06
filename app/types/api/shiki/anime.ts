@@ -1,14 +1,14 @@
-export type TAnime = {
+export type TShikiAnime = {
   id: number
   name: string
-  russian: string
+  russian?: string
   image: {
     original: string
     preview: string
     x96: string
     x48: string
   }
-  url: string
+  url?: string
   kind: string
   score: string
   status: string
@@ -39,14 +39,14 @@ export type TAnime = {
   fansubbers?: Array<any>
   fandubbers?: Array<any>
   licensors?: Array<any>
-  genres: TAnimeGenre[]
-  studios: TAnimeStudio[]
+  genres: TShikiAnimeGenre[]
+  studios: TShikiAnimeStudio[]
   videos?: Array<any>
   screenshots?: Array<any>
   user_rate?: any
 }
 
-export type TManga = {
+export type TShikiManga = {
   id: number
   name: string
   russian: string
@@ -86,7 +86,7 @@ export type TManga = {
   user_rate?: any
 }
 
-export type TAnimeGenre = {
+export type TShikiAnimeGenre = {
   id: number
   name: string
   russian: string
@@ -94,7 +94,7 @@ export type TAnimeGenre = {
   entry_type: string
 }
 
-export type TAnimeStudio = {
+export type TShikiAnimeStudio = {
   id: number
   name: string
   filtered_name: string
@@ -102,7 +102,7 @@ export type TAnimeStudio = {
   image: string
 }
 
-export type TAnimeVideo = {
+export type TShikiAnimeVideo = {
   id: number
   url: string
   image_url: string
@@ -112,25 +112,14 @@ export type TAnimeVideo = {
   hosting: string
 }
 
-export type TAnimeScreenshot = {
+export type TShikiAnimeScreenshot = {
   original: string
   preview: string
 }
 
-export type TAnimeRelation = {
+export type TShikiAnimeRelation = {
   relation: string
   relation_russian: string
-  anime?: TAnime
-  manga?: TManga
+  anime?: TShikiAnime
+  manga?: TShikiManga
 }
-
-export const enum UserRateStatus {
-  planned = "planned",
-  watching = "watching",
-  rewatching = "rewatching",
-  completed = "completed",
-  on_hold = "on_hold",
-  dropped = "dropped"
-}
-
-export type TUserRateStatus = keyof typeof UserRateStatus
