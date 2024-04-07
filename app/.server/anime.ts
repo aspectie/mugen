@@ -4,6 +4,7 @@ import { useApi } from '@/hooks/api'
 import { shikiApi } from '@/lib/shiki'
 import { CONSTANTS } from '@/constants'
 import { TAnime } from '@/types/api/anime'
+import { getPlayerLink } from '@/lib/kodik'
 
 const { COMMA } = CONSTANTS
 
@@ -16,6 +17,7 @@ export async function getAnimeData(id: string) {
     videos?: string[]
     info?: Record<string, string>[]
     related?: LooseObject
+    playerLink?: string
   } = {}
 
   const {
@@ -95,6 +97,12 @@ export async function getAnimeData(id: string) {
     getAnimeGroupedRelations(id, 3).then((res) => {
       if (res) {
         data.related = res
+      }
+    }),
+
+    getPlayerLink(id).then((res) => {
+      if (res) {
+        data.playerLink = res
       }
     })
   ])
