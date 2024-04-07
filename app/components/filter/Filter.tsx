@@ -5,13 +5,13 @@ import Button from '@/ui/button/Button'
 import Tag from '@/ui/tag/Tag'
 import classNames from 'classnames'
 import styles from './filter.module.scss'
-import { FilterType, TFilterSelections, TFilterType } from '@/types/ui'
+import { FilterType, TFilterSelection, TFilterType } from '@/types/ui'
 import { FilterIcon, SortIcon } from '@/assets/icons'
 import { useTranslation } from 'react-i18next'
 
 type TFilter = {
   type: TFilterType
-  selects: TFilterSelections[]
+  selects: TFilterSelection[]
 }
 
 const Filter = (props: TFilter) => {

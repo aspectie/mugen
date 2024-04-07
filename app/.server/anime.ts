@@ -1,15 +1,16 @@
-import { TAnime } from '@/types/api/shiki/TAnime'
 import { LooseObject } from '@/types'
-import { clearHTML, convertObjectsArrayToList } from '@/utils/utils'
+import { convertObjectsArrayToList } from '@/utils/utils'
 import { useApi } from '@/hooks/api'
 import { shikiApi } from '@/lib/shiki'
 import { CONSTANTS } from '@/constants'
+import { TAnime } from '@/types/api/anime'
 
 const { COMMA } = CONSTANTS
 
+export type TGetAnimeData = typeof getAnimeData
 export async function getAnimeData(id: string) {
   let data: {
-    rawData?: Partial<TAnime>
+    rawData?: TAnime
     screenshots?: string[]
     imageUrl?: string
     videos?: string[]
@@ -27,34 +28,35 @@ export async function getAnimeData(id: string) {
   await Promise.allSettled([
     getAnime(id).then((res) => {
       data.rawData = res as TAnime
-      data.rawData.description_html = data.rawData.description_html
-        ? clearHTML(data.rawData.description_html)
-        : ''
       if (!process.env.SHIKI_URL) {
         throw new Error('Env var `SHIKI_URL` is not defined')
       }
-      data.imageUrl = process.env.SHIKI_URL + data.rawData.image?.original
+      data.imageUrl = data.rawData.image
 
-      const textFields: Array<keyof TAnime> = [
-        'kind',
-        'episodes',
-        'aired_on',
-        'status',
-        'rating'
-      ]
-      const arrayFields = [
+      const textFields: (
+        | 'type'
+        | 'episodes'
+        | 'aired_on'
+        | 'status'
+        | 'rating'
+      )[] = ['type', 'episodes', 'aired_on', 'status', 'rating']
+
+      const arrayFields: Array<{
+        name: 'genres' | 'studios'
+        value: 'russian' | 'name'
+      }> = [
         { name: 'genres', value: 'russian' },
         { name: 'studios', value: 'name' }
       ]
 
-      textFields.map((field) => {
+      textFields.map((field): undefined | void => {
         if (!data.info) {
           data.info = []
         }
         if (!data.rawData) {
           return
         }
-        data.info.push({ title: field, value: data.rawData[field] })
+        data.info.push({ title: field, value: String(data.rawData[field]) })
       })
 
       arrayFields.map((field) => {
@@ -64,10 +66,11 @@ export async function getAnimeData(id: string) {
         if (!data.rawData) {
           return
         }
+
         data.info.push({
           title: field.name,
           value: convertObjectsArrayToList(
-            data.rawData[field.name as keyof TAnime],
+            data.rawData[field.name],
             field.value,
             COMMA
           )

@@ -1,12 +1,15 @@
 import { LooseObject } from '@/types'
+import { TAnime } from '@/types/api/anime'
 import {
-  TAnime,
-  TAnimeRelation,
-  TAnimeScreenshot,
-  TAnimeVideo
-} from '@/types/api/shiki/TAnime'
-import { groupBy } from '@/utils/utils'
-import { TFilterSelections } from '@/types/ui'
+  TShikiAnime,
+  TShikiAnimeRelation,
+  TShikiAnimeScreenshot,
+  TShikiAnimeVideo,
+  TShikiManga
+} from '@/types/api/shiki/anime'
+import { castToAnother } from '@/utils/api'
+import { clearHTML, groupBy } from '@/utils/utils'
+import { TFilterSelection } from '@/types/ui'
 
 type TShikiApi = {
   getAnime: (
@@ -22,6 +25,34 @@ type TShikiApi = {
     id: Parameters<typeof getAnimeGroupedRelations>[0],
     limit: Parameters<typeof getAnimeGroupedRelations>[1]
   ) => ReturnType<typeof getAnimeGroupedRelations>
+}
+
+const map = {
+  id: 'id',
+  title: {
+    en: 'name',
+    ru: 'russian'
+  },
+  type: 'kind',
+  image: 'image',
+  released: 'released_on',
+  description: 'description_html', //only russian description
+  episodes: 'episodes',
+  aired_on: 'aired_on',
+  status: 'status',
+  rating: 'rating',
+  score: 'score',
+  genres: 'genres',
+  studios: 'studios'
+}
+
+function prepareAnimeData(item: TShikiAnime | TShikiManga): TAnime {
+  const res = castToAnother(item, map) as TAnime
+
+  res.image = `${import.meta.env.VITE_SHIKI_URL}/${item.image.original}`
+  res.description = item.description ? clearHTML(item.description) : ''
+
+  return res
 }
 
 export function shikiApi(): TShikiApi {
@@ -51,7 +82,13 @@ async function getAnime(
 
   const res = await fetch(url)
 
-  return res.ok ? await res.json() : null
+  if (res.ok) {
+    const data = await res.json()
+    return data instanceof Array
+      ? data.map((item) => prepareAnimeData(item))
+      : prepareAnimeData(data)
+  }
+  return null
 }
 
 async function getAnimeWithNestedRoute({
@@ -74,15 +111,17 @@ async function getAnimeWithNestedRoute({
 
 async function getAnimeScreenshots(
   id: string
-): Promise<TAnimeScreenshot[] | null> {
+): Promise<TShikiAnimeScreenshot[] | null> {
   return await getAnimeWithNestedRoute({ id, route: 'screenshots' })
 }
 
-async function getAnimeVideos(id: string): Promise<TAnimeVideo[] | null> {
+async function getAnimeVideos(id: string): Promise<TShikiAnimeVideo[] | null> {
   return await getAnimeWithNestedRoute({ id, route: 'videos' })
 }
 
-async function getAnimeRelated(id: string): Promise<TAnimeRelation[] | null> {
+async function getAnimeRelated(
+  id: string
+): Promise<TShikiAnimeRelation[] | null> {
   return await getAnimeWithNestedRoute({ id, route: 'related' })
 }
 
@@ -97,37 +136,33 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
     data = data.slice(0, limit)
   }
 
-  const groupedData: Record<string, TAnimeRelation[]> = groupBy(
+  const groupedData: Record<string, TShikiAnimeRelation[]> = groupBy(
     data,
     'relation'
   )
-  const result: LooseObject = {}
 
-  Object.keys(groupedData).map(key => {
-    result[key] = {}
-    result[key].mangas = []
-    result[key].animes = []
+  const res: LooseObject = {}
 
-    groupedData[key].map(item => {
-      if (item.manga) {
-        result[key].mangas.push(item.manga)
-      } else {
-        result[key].animes.push(item.anime)
+  Object.entries(groupedData).map((entries) => {
+    const key = entries[0]
+    const value = entries[1]
+
+    res[key] = value.map((item) => {
+      if (item.anime) {
+        return prepareAnimeData(item.anime)
       }
+      if (item.manga) {
+        return prepareAnimeData(item.manga)
+      }
+      return item
     })
-    if (result[key].mangas.length === 0) {
-      delete result[key].mangas
-    }
-    if (result[key].animes.length === 0) {
-      delete result[key].animes
-    }
   })
 
-  return result
+  return res
 }
 
 /*TODO: remove it when API will be create */
-export const filterSelects: TFilterSelections = [
+export const filterSelects: TFilterSelection[] = [
   {
     name: 'Жанр',
     options: [

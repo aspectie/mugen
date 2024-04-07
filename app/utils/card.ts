@@ -1,10 +1,13 @@
-import { TAnime, TManga } from '@/types/api/shiki/TAnime'
 import { TCardData } from '@/types/ui'
 
 import { convertToDashed } from './utils'
-import { isRussianLang } from './locale'
+import { TAnime, TManga } from '@/types/api/anime'
+import { useTranslation } from 'react-i18next'
 
 export function prepareCardData(data: TAnime[] | TManga[]): TCardData[] {
+  const { i18n } = useTranslation()
+  const lang = i18n.language
+
   // TODO: get by endpoint
   const mangaTypes = [
     'manga',
@@ -18,18 +21,20 @@ export function prepareCardData(data: TAnime[] | TManga[]): TCardData[] {
   const animeTypes = ['tv', 'movie', 'ova', 'ona', 'special', 'music']
 
   return data.map((item) => {
-    const name = convertToDashed(item.name)
-    const url = animeTypes.includes(item.kind)
+    const name = convertToDashed(item.title.en)
+    const url = animeTypes.includes(item.type)
       ? `${import.meta.env.BASE_URL}anime/${item.id}/${name}`
       : `${import.meta.env.BASE_URL}manga/${item.id}/${name}`
-    const imageUrl = `${import.meta.env.VITE_SHIKI_URL}/${item.image?.original}`
+    const title = Object.keys(item.title).includes(lang)
+      ? item.title[lang as keyof typeof item.title]
+      : ''
 
     return {
       id: item.id,
       url,
-      imageUrl,
-      title: isRussianLang() ? item.russian : item.name,
-      date: item?.released_on
+      imageUrl: item.image,
+      title,
+      date: item?.released
     }
   })
 }

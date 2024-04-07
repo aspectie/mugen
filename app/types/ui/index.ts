@@ -20,7 +20,7 @@ export type TCardData = {
   url?: string
   imageUrl: string
   date?: string
-  title: string
+  title?: string
   series?: string
 }
 
@@ -49,7 +49,7 @@ export enum FilterType {
 
 export type TFilterType = keyof typeof FilterType
 
-export type TFilterSelections = {
+export type TFilterSelection = {
   name: string
   options: TOption[]
 }

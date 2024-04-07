@@ -1,6 +1,7 @@
-import Button from '@/ui/button/Button'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import Button from '@/ui/button/Button'
 
 function LanguageToggle() {
   const { i18n } = useTranslation()
@@ -9,6 +10,7 @@ function LanguageToggle() {
   const toggleLanguage = () => {
     const toggledLang = lang === 'ru' ? 'en' : 'ru'
     setLang(toggledLang)
+    // TODO: delegate to search ?lng=
     i18n.changeLanguage(toggledLang)
   }
 

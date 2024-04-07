@@ -1,15 +1,14 @@
 import { LoaderFunctionArgs, TypedResponse, json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
+import i18n from '@/.server/i18n'
+
+import { TAnime } from '@/types/api/anime'
 
 import { shikiApi } from '@/lib/shiki'
 import { useApi } from '@/hooks/api'
 import { prepareCardData } from '@/utils/card'
-
-import { TAnime } from '@/types/api/shiki/TAnime'
-
 import CardList from '@/components/card/CardList'
-import i18n from '@/.server/i18n'
 
 export const handle = { i18n: ['default', 'account'] }
 
@@ -17,10 +16,11 @@ export const loader = async ({
   request
 }: LoaderFunctionArgs): Promise<TypedResponse<TLoaderResponse> | null> => {
   const { getAnime } = useApi(shikiApi)
+
   const data = (await getAnime({
     limit: 5,
-    order: 'random',
-    score: 8
+    season: 'winter_2024',
+    order: 'ranked'
   })) as TAnime[] | null
 
   const t = await i18n.getFixedT(request, 'meta')
