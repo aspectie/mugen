@@ -13,6 +13,8 @@ export type TAnime = {
   status: string
   rating: string
   score: string
+  genres: TAnimeGenre[]
+  studios: TAnimeStudio[]
 }
 
 export type TManga = {
@@ -24,4 +26,14 @@ export type TManga = {
   type: string
   image: string
   released: string
+}
+
+export type TAnimeGenre = {
+  id: number
+  name: string
+}
+
+export type TAnimeStudio = {
+  id: number
+  name: string
 }

@@ -1,9 +1,11 @@
 import { LooseObject } from '@/types'
 import { TAnime } from '@/types/api/anime'
 import {
+  TShikiAnime,
   TShikiAnimeRelation,
   TShikiAnimeScreenshot,
-  TShikiAnimeVideo
+  TShikiAnimeVideo,
+  TShikiManga
 } from '@/types/api/shiki/anime'
 import { castToAnother } from '@/utils/api'
 import { clearHTML, groupBy } from '@/utils/utils'
@@ -43,9 +45,8 @@ const map = {
   studios: 'studios'
 }
 
-// TODO: fix types
-function prepareAnimeData(item): TAnime {
-  const res = castToAnother(item, map)
+function prepareAnimeData(item: TShikiAnime | TShikiManga): TAnime {
+  const res = castToAnother(item, map) as TAnime
 
   res.image = `${import.meta.env.VITE_SHIKI_URL}/${item.image.original}`
   res.description = item.description ? clearHTML(item.description) : ''

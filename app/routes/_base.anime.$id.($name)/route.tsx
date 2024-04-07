@@ -1,9 +1,9 @@
-import { useRef } from 'react'
+import { MutableRefObject, useRef } from 'react'
 import { Link, useLoaderData } from '@remix-run/react'
 import { json, LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { useTranslation } from 'react-i18next'
 import invariant from 'tiny-invariant'
-import { getAnimeData } from '@/.server/anime'
+import { TGetAnimeData, getAnimeData } from '@/.server/anime'
 
 import { UserRateStatus } from '@/types/user'
 
@@ -17,6 +17,7 @@ import {
   CarouselContent,
   CarouselItem
 } from '@/components/carousel/Carousel'
+import { TAnime } from '@/types/api/anime'
 
 export const handle = { i18n: ['default', 'account', 'anime', 'actions'] }
 
@@ -53,27 +54,39 @@ export default function AnimePage() {
       <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">
         <div className="col-span-2">
           <MainCard
-            anime={anime}
+            image={anime.imageUrl}
+            title={anime.rawData.title}
             playerRef={playerRef}
           />
         </div>
         <div className="flex flex-col col-span-7 px-l">
           <div className="mb-2xl">
-            <Title anime={anime} />
+            <Title
+              title={anime.rawData.title}
+              score={anime.rawData.score}
+            />
             <h5 className="mt-xs text-black-80">{anime.rawData.title.en}</h5>
           </div>
-          {anime.info && <Information anime={anime} />}
+          {anime.info && <Information info={anime.info} />}
         </div>
         {/* TODO: move out of this container because sections on the left are affected */}
         {anime.related && Object.keys(anime.related).length > 0 && (
           <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
-            <Related anime={anime} />
+            <Related
+              id={anime.rawData.id}
+              related={anime.related}
+            />
           </div>
         )}
-        {anime.rawData.description && <Description anime={anime} />}
+        {anime.rawData.description && (
+          <Description description={anime.rawData.description} />
+        )}
         {anime.screenshots && (
           <div className="mt-l col-span-9">
-            <Screenshots anime={anime} />
+            <Screenshots
+              title={anime.rawData.title}
+              screenshots={anime.screenshots}
+            />
           </div>
         )}
         <div
@@ -87,7 +100,15 @@ export default function AnimePage() {
   )
 }
 
-function MainCard({ anime, playerRef }) {
+function MainCard({
+  playerRef,
+  image,
+  title
+}: {
+  image?: Pick<TAnime, 'image'>['image']
+  title: Pick<TAnime, 'title'>['title']
+  playerRef: MutableRefObject<HTMLDivElement | null>
+}) {
   const { t, i18n } = useTranslation(['default', 'actions', 'anime'])
 
   const scrollToPlayer = () => {
@@ -98,19 +119,19 @@ function MainCard({ anime, playerRef }) {
 
   return (
     <>
-      <div className="rounded-s mb-m">
-        <img
-          className="rounded block w-full object-center object-cover"
-          src={anime.imageUrl}
-          alt={`${t('poster of', { ns: 'default' })} ${
-            Object.keys(anime.rawData.title).includes(i18n.language)
-              ? anime.rawData.title[
-                  i18n.language as keyof typeof anime.rawData.title
-                ]
-              : ''
-          }`}
-        />
-      </div>
+      {image && (
+        <div className="rounded-s mb-m">
+          <img
+            className="rounded block w-full object-center object-cover"
+            src={image}
+            alt={`${t('poster of', { ns: 'default' })} ${
+              Object.keys(title).includes(i18n.language)
+                ? title[i18n.language as keyof typeof title]
+                : ''
+            }`}
+          />
+        </div>
+      )}
       <div className="flex flex-col gap-s">
         <Button
           text={t('watch', { ns: 'actions' })}
@@ -162,33 +183,39 @@ function MainCard({ anime, playerRef }) {
   )
 }
 
-function Title({ anime }) {
+function Title({
+  title,
+  score
+}: {
+  title: Pick<TAnime, 'title'>['title']
+  score: Pick<TAnime, 'score'>['score']
+}) {
   const { i18n } = useTranslation(['default'])
 
   return (
     <>
       <div className="flex items-start">
-        {Object.keys(anime.rawData.title).includes(i18n.language) && (
+        {Object.keys(title).includes(i18n.language) && (
           <h1 className="font-bold w-5/6 text-black-100">
-            {
-              anime.rawData.title[
-                i18n.language as keyof typeof anime.rawData.title
-              ]
-            }
+            {title[i18n.language as keyof typeof title]}
           </h1>
         )}
         <div className="flex items-center ml-l">
           <StarIcon className="w-l h-l" />
-          <h1 className="font-bold text-black-80 ml-s">
-            {anime.rawData.score}
-          </h1>
+          <h1 className="font-bold text-black-80 ml-s">{score}</h1>
         </div>
       </div>
     </>
   )
 }
 
-function Information({ anime }) {
+function Information({
+  info
+}: {
+  info: NonNullable<
+    Pick<NonNullable<Awaited<ReturnType<TGetAnimeData>>>, 'info'>['info']
+  >
+}) {
   const { t } = useTranslation(['default'])
 
   return (
@@ -197,7 +224,7 @@ function Information({ anime }) {
         {t('info', { ns: 'default' })}
       </h4>
       <ul>
-        {anime.info.map((el, index) => (
+        {info.map((el, index) => (
           <li
             key={index}
             className="flex mb-s "
@@ -215,7 +242,11 @@ function Information({ anime }) {
   )
 }
 
-function Description({ anime }) {
+function Description({
+  description
+}: {
+  description: Pick<TAnime, 'description'>['description']
+}) {
   const { t } = useTranslation(['default'])
 
   return (
@@ -223,12 +254,23 @@ function Description({ anime }) {
       <h4 className="font-bold text-black-80">
         {t('description', { ns: 'default' })}
       </h4>
-      <p className="mt-m text-black-80">{anime.rawData.description}</p>
+      <p className="mt-m text-black-80">{description}</p>
     </div>
   )
 }
 
-function Screenshots({ anime }) {
+function Screenshots({
+  title,
+  screenshots
+}: {
+  title: Pick<TAnime, 'title'>['title']
+  screenshots: NonNullable<
+    Pick<
+      NonNullable<Awaited<ReturnType<typeof getAnimeData>>>,
+      'screenshots'
+    >['screenshots']
+  >
+}) {
   const { t } = useTranslation(['default'])
 
   return (
@@ -239,14 +281,14 @@ function Screenshots({ anime }) {
       <div className="flex mt-m bg-gray-40 p-s rounded-[8px]">
         <Carousel>
           <CarouselContent>
-            {anime.screenshots.map((item) => (
+            {screenshots.map((item) => (
               <CarouselItem
                 className="lg:basis-1/2 xl:basis-1/4"
                 key={item}
               >
                 <img
                   src={item}
-                  alt={`Кадр из ${anime.rawData?.title.ru}`}
+                  alt={`Кадр из ${title.ru}`}
                 />
               </CarouselItem>
             ))}
@@ -257,11 +299,22 @@ function Screenshots({ anime }) {
   )
 }
 
-function Related({ anime }) {
+function Related({
+  id,
+  related
+}: {
+  id: Pick<TAnime, 'id'>['id']
+  related: NonNullable<
+    Pick<
+      NonNullable<Awaited<ReturnType<typeof getAnimeData>>>,
+      'related'
+    >['related']
+  >
+}) {
   return (
     <>
       <div>
-        {Object.entries(anime.related).map((entry) => (
+        {Object.entries(related).map((entry) => (
           <div
             key={entry[0]}
             className="[&:not(:last-child)]:mb-l "
@@ -277,7 +330,7 @@ function Related({ anime }) {
         ))}
       </div>
       <div className="flex justify-end">
-        <Link to={`/anime/${anime.rawData.id}/related`}>
+        <Link to={`/anime/${id}/related`}>
           <h5 className="text-black-200 hover:text-accent-120">Смотреть все</h5>
         </Link>
       </div>

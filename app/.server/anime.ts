@@ -7,6 +7,7 @@ import { TAnime } from '@/types/api/anime'
 
 const { COMMA } = CONSTANTS
 
+export type TGetAnimeData = typeof getAnimeData
 export async function getAnimeData(id: string) {
   let data: {
     rawData?: TAnime
@@ -32,26 +33,30 @@ export async function getAnimeData(id: string) {
       }
       data.imageUrl = data.rawData.image
 
-      const textFields: Array<keyof TAnime> = [
-        'type',
-        'episodes',
-        'aired_on',
-        'status',
-        'rating'
-      ]
-      const arrayFields = [
+      const textFields: (
+        | 'type'
+        | 'episodes'
+        | 'aired_on'
+        | 'status'
+        | 'rating'
+      )[] = ['type', 'episodes', 'aired_on', 'status', 'rating']
+
+      const arrayFields: Array<{
+        name: 'genres' | 'studios'
+        value: 'russian' | 'name'
+      }> = [
         { name: 'genres', value: 'russian' },
         { name: 'studios', value: 'name' }
       ]
 
-      textFields.map((field) => {
+      textFields.map((field): undefined | void => {
         if (!data.info) {
           data.info = []
         }
         if (!data.rawData) {
           return
         }
-        data.info.push({ title: field, value: data.rawData[field] })
+        data.info.push({ title: field, value: String(data.rawData[field]) })
       })
 
       arrayFields.map((field) => {
@@ -61,10 +66,11 @@ export async function getAnimeData(id: string) {
         if (!data.rawData) {
           return
         }
+
         data.info.push({
           title: field.name,
           value: convertObjectsArrayToList(
-            data.rawData[field.name as keyof TAnime],
+            data.rawData[field.name],
             field.value,
             COMMA
           )

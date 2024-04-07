@@ -1,18 +1,20 @@
-import { LooseObject } from '@/types'
-
 // TODO: fix types
-export function castToAnother(item, mapping) {
-  const res: LooseObject = {}
+export function castToAnother<
+  T extends object,
+  M extends Record<string, keyof Partial<T>>
+>(item: T, mapping: M) {
+  const res: any = {}
 
   Object.keys(mapping).map((key) => {
-    const resKey = mapping[key]
-    if (Object.keys(item).includes(resKey)) {
-      res[key] = item[resKey]
-    }
-    if (typeof resKey === 'object') {
-      res[key] = castToAnother(item, resKey)
+    const mapValue = mapping[key as keyof M]
+    if (typeof mapValue === 'string') {
+      if (Object.keys(item).includes(mapValue)) {
+        res[key as keyof M] = item[mapValue as keyof T]
+      }
+    } else if (typeof mapValue === 'object') {
+      res[key] = castToAnother(item, mapValue)
     }
   })
 
-  return res
+  return res as Record<keyof M, any>
 }
