@@ -1,15 +1,17 @@
 import { vitePlugin as remix } from "@remix-run/dev";
 import { installGlobals } from "@remix-run/node";
 import { defineConfig } from "vite";
-import { fileURLToPath } from 'url'
+import { fileURLToPath } from "url";
 import tsconfigPaths from "vite-tsconfig-paths";
+import svgr from "vite-plugin-svgr";
 
 installGlobals();
 
 export default defineConfig({
   plugins: [
     remix(),
-    tsconfigPaths()
+    tsconfigPaths(),
+    svgr()
   ],
   resolve: {
     alias: {

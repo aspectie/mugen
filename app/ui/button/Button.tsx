@@ -1,37 +1,42 @@
 import classNames from 'classnames'
 
-import { TFieldSize } from '@/types/ui'
+import { ButtonType, FieldSize, TButtonType, TFieldSize } from '@/types/ui'
 import styles from './button.module.scss'
-
-type TButtonType = 'primary'
 
 type TButton = {
   type?: TButtonType
   size?: TFieldSize
+  align?: string
   disabled?: boolean
   children?: React.ReactNode
   style?: React.CSSProperties
   text?: string
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  suffix?: React.ReactNode
+  prefix?: React.ReactNode
 }
 
 const Button: React.ForwardRefRenderFunction<
   HTMLButtonElement | HTMLAnchorElement,
   TButton
-> = (props) => {
+> = props => {
   const {
-    type = 'primary',
-    size = 'medium',
+    type = ButtonType.primary,
+    size = FieldSize.medium,
+    align,
     disabled = false,
     text = 'Default text',
     style,
     onClick,
+    suffix,
+    prefix,
     ...rest
   } = props
 
   const classes = classNames(styles.button, {
     [styles[`button--${size}`]]: size,
     [styles[`button--${type}`]]: type,
+    [styles[`button--${align}`]]: align,
     [styles[`button--disabled`]]: disabled
   })
 
@@ -42,7 +47,9 @@ const Button: React.ForwardRefRenderFunction<
       disabled={disabled}
       onClick={onClick}
     >
-      {text}
+      {prefix}
+      <span className={styles.button__text}>{text}</span>
+      {suffix}
     </button>
   )
 }

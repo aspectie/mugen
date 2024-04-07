@@ -1,0 +1,10 @@
+{
+  "status": {
+    "completed": "Сompleted",
+    "planned": "Planned",
+    "watching": "Watching",
+    "rewatching": "Rewatching",
+    "on hold": "On hold",
+    "dropped": "Dropped"
+  }
+}

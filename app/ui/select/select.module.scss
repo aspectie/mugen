@@ -1,0 +1,31 @@
+.select {
+  position: relative;
+  height: min-content;
+}
+
+.options {
+  z-index: 1;
+  position: absolute;
+  min-width: 100%;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  max-height: 180px;
+  overflow-y: scroll;
+  padding-inline: $space-s;
+  padding-block: $space-s;
+  gap: $space-s;
+  border-top: 2px solid $gray-60;
+  background-color: $gray-40;
+}
+
+.option {
+  cursor: pointer;
+
+  &:hover {
+    color: $accent-100;
+  }
+  &:active {
+    color: $accent-120;
+  }
+}

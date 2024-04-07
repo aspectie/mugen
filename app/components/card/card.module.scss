@@ -1,31 +1,57 @@
 .card {
-  &__img-wrapper {
-    width: 100%;
-    box-shadow: 0 0 $space-xs rgb(0 0 0 / 0.25);
-    border-radius: $space-s;
+  &--horizontal {
+    display: flex;
+
+    .card__image-wrapper {
+      flex-shrink: 0;
+    }
+    .card__title {
+      margin-bottom: $space-s;
+    }
   }
 
-  &__img {
+  &--vertical {
+    display: block;
+
+    .card__image-wrapper {
+      width: 100%;
+      margin-bottom: $space-s;
+    }
+
+    .card__title {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      word-wrap: break-word;
+      text-align: center;
+    }
+  }
+
+  &__image {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
     border-radius: inherit;
+    box-shadow: 0 0 $space-xs rgb(0 0 0 / 0.25);
+
+    &-wrapper {
+      border-radius: $space-s;
+      padding: $space-xs;
+    }
   }
 
-  &__title {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    color: $black-100;
-    word-wrap: break-word;
-    margin-top: $space-s;
-    padding-inline: $space-s;
+  &__description {
+    margin-left: $space-s;
+    padding: $space-xs;
+  }
 
-    @include h5;
-    
-    text-align: center;
+  &:hover {
+    transition: all 0.1s linear;
+    transform: scale(1.05);
+    // background-color: $gray-60;
+    border-radius: $space-s;
   }
 }

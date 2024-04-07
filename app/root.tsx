@@ -1,14 +1,40 @@
 import {
+  Links,
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
+  json,
+  useLoaderData
 } from '@remix-run/react'
-import '@/styles/main.scss';
+import '@/styles/main.scss'
+import { useChangeLanguage } from 'remix-i18next/react'
+import { useTranslation } from 'react-i18next'
+import i18next from '@/.server/i18n'
+import { LoaderFunctionArgs } from '@remix-run/node'
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export async function loader({ request }: LoaderFunctionArgs) {
+  const locale = await i18next.getLocale(request)
+  return json({ locale })
+}
+
+export const handle = {
+  // In the handle export, we can add a i18n key with namespaces our route
+  // will need to load. This key can be a single string or an array of strings.
+  i18n: ['default']
+}
+
+export function Layout() {
+  const { locale } = useLoaderData<typeof loader>()
+
+  const { i18n } = useTranslation()
+
+  useChangeLanguage(locale)
   return (
-    <html lang="en">
+    <html
+      lang={locale}
+      dir={i18n.dir()}
+    >
       <head>
         <meta charSet="utf-8" />
         <meta
@@ -18,9 +44,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
       </head>
       <body>
-      {children}
-      <ScrollRestoration/>
-      <Scripts/>
+        <Outlet />
+        <ScrollRestoration />
+        <Links />
+        <Scripts />
       </body>
     </html>
   )

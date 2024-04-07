@@ -10,7 +10,8 @@ export const FormField = ({children, name, type}: {
 }) => {
   const { error, touched, getInputProps } = useField(name)
   const childrenWithProps = Children.map(children, child => {
-    const props = getInputProps({type});
+    const props = {inputType: type, ...getInputProps({type})};
+    delete props.type
 
     return cloneElement(child, { ...props })}
   )
