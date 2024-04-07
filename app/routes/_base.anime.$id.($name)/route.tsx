@@ -18,6 +18,7 @@ import {
   CarouselItem
 } from '@/components/carousel/Carousel'
 import { TAnime } from '@/types/api/anime'
+import Player from '@/components/player/Player'
 
 export const handle = { i18n: ['default', 'account', 'anime', 'actions'] }
 
@@ -47,22 +48,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export default function AnimePage() {
   const anime = useLoaderData<typeof loader>()
   const { t } = useTranslation(['anime', 'default', 'actions'])
-
-  const kodikUrl = import.meta.env.VITE_KODIK_URL
-  const kodikToken = import.meta.env.VITE_KODIK_TOKEN
-
-  /*todo: rework after create api*/
-  const [animeLink, setAnimeLink] = useState('')
-  useEffect(() => {
-    const getAnimeLink = async () => {
-      const response = await fetch(
-        `${kodikUrl}/search?shikimori_id=${anime.rawData.id}&token=${kodikToken}`
-      )
-      const data = await response.json()
-      setAnimeLink(data.results[0].link)
-    }
-    getAnimeLink()
-  }, [])
 
   const playerRef = useRef<null | HTMLDivElement>(null)
 
@@ -107,12 +92,14 @@ export default function AnimePage() {
             />
           </div>
         )}
-        <div
-          ref={playerRef}
-          className="col-start-1 col-end-10 self-end mt-l"
-        >
-          <Player link={animeLink} />
-        </div>
+        {anime.playerLink && (
+          <div
+            ref={playerRef}
+            className="col-start-1 col-end-10 self-end mt-l"
+          >
+            <Player link={anime.playerLink} />
+          </div>
+        )}
       </div>
     )
   )
@@ -352,29 +339,6 @@ function Related({
           <h5 className="text-black-200 hover:text-accent-120">Смотреть все</h5>
         </Link>
       </div>
-    </>
-  )
-}
-
-function Player({ link }: { link: string }) {
-  const { t } = useTranslation(['default'])
-
-  return (
-    <>
-      <h4 className="font-bold text-black-80">
-        {t('trailer', { ns: 'default' })}
-      </h4>
-      <iframe
-        className="mt-m"
-        key="12"
-        src={link}
-        width="100%"
-        height="588px"
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-      ></iframe>
     </>
   )
 }
