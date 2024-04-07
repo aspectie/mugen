@@ -1,8 +1,12 @@
 {
 	"login": "Войти",
-  "header search placeholder": "Аниме, манга, студия...",
+  	"header search placeholder": "Аниме, манга, студия...",
 	"popular": "Популярное",
 	"winter season": "Зимний сезон",
 	"anime": "Аниме",
-	"manga": "Манга"
+	"manga": "Манга",
+	"extended filter": "Расширенный фильтр",
+	"by order": "Упорядочить",
+	"search": "Искать",
+	"title...": "Название..."
 }

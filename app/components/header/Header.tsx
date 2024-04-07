@@ -1,7 +1,7 @@
-import { Link } from '@remix-run/react';
+import { Link } from '@remix-run/react'
 
-import Menu, { TLink } from '@/components/menu/Menu';
-import {LogoIcon} from '@/assets/icons';
+import Menu, { TLink } from '@/components/menu/Menu'
+import { LogoIcon } from '@/assets/icons'
 import Search from '@/ui/search/Search'
 import LanguageToggle from '@/components/language-toggle/LanguageToggle'
 
@@ -38,12 +38,13 @@ const Header = () => {
           )}
         </div>
         <div className="flex">
-          <div className="flex gap-4xl items-center">
+          <div className="flex gap-4xl items-center text-white">
             <Search placeholder={t('header search placeholder')} />
-            <Link to="/login">
-              <p className="text-white font-bold hover:text-accent-100">
-                {t('login')}
-              </p>
+            <Link
+              to="/login"
+              className="transition ease-in delay-100 hover:text-accent-120"
+            >
+              {t('login')}
             </Link>
           </div>
           <div className="ml-m">
@@ -55,4 +56,4 @@ const Header = () => {
   )
 }
 
-export default Header;
+export default Header

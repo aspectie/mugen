@@ -7,20 +7,22 @@ import classNames from 'classnames'
 import styles from './filter.module.scss'
 import { FilterType, TFilterSelections, TFilterType } from '@/types/ui'
 import { FilterIcon, SortIcon } from '@/assets/icons'
+import { useTranslation } from 'react-i18next'
 
 type TFilter = {
   type: TFilterType
   selects: TFilterSelections[]
-  style?: React.CSSProperties
 }
 
 const Filter = (props: TFilter) => {
   const { selects, type = FilterType.small } = props
 
-  const [isShow, setIsShow] = useState(true)
+  const { t } = useTranslation()
+
+  const [isShowed, setIsShowed] = useState(true)
 
   const toggleVisibility = () => {
-    setIsShow(!isShow)
+    setIsShowed(!isShowed)
   }
 
   const filterClasses = classNames(styles.filter, {
@@ -28,29 +30,28 @@ const Filter = (props: TFilter) => {
   })
 
   const selectsClasses = classNames(styles.filter__selects, {
-    [styles[`filter__selects--display`]]: !isShow
+    [styles[`filter__selects--displayed`]]: !isShowed
   })
 
   const tagsClasses = classNames(styles.filter__tags, {
-    [styles[`filter__tags--display`]]: !isShow
+    [styles[`filter__tags--displayed`]]: !isShowed
   })
 
   return (
     <div className={filterClasses}>
-      <div className={styles.filter__sort}>
-        <div className={styles['filter__sort-item']}>
+      <div className={styles['filter__controls']}>
+        <div className={styles['filter__controls-item']}>
           <Button
-            text="Упорядочить"
+            text={t('by order')}
             type="transparent"
             prefix={<SortIcon />}
             size="small"
             align="between"
-            onClick={toggleVisibility}
           />
         </div>
-        <div className={styles['filter__sort-item']}>
+        <div className={styles['filter__controls-item']}>
           <Button
-            text="Расширенный фильтр"
+            text={t('extended filter')}
             type="transparent"
             prefix={<FilterIcon />}
             size="small"
@@ -77,13 +78,13 @@ const Filter = (props: TFilter) => {
           />
         ))}
       </div>
-      <div className={styles['filter__inner']}>
-        <div className={styles.filter__inner__search}>
-          <Search placeholder="Название..." />
+      <div className={styles['filter__search-area']}>
+        <div className={styles['search-area__search-input']}>
+          <Search placeholder={t('title...')} />
         </div>
-        <div className={styles.filter__inner__button}>
+        <div className={styles['search-area__search-button']}>
           <Button
-            text="Искать"
+            text={t('search')}
             size="small"
           />
         </div>
