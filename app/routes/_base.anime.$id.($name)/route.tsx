@@ -1,4 +1,4 @@
-import { MutableRefObject, useRef } from 'react'
+import { useEffect, MutableRefObject, useRef, useState } from 'react'
 import { Link, useLoaderData } from '@remix-run/react'
 import { json, LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { useTranslation } from 'react-i18next'
@@ -46,6 +46,24 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export default function AnimePage() {
   const anime = useLoaderData<typeof loader>()
+  const { t } = useTranslation(['anime', 'default', 'actions'])
+
+  const kodikUrl = import.meta.env.VITE_KODIK_URL
+  const kodikToken = import.meta.env.VITE_KODIK_TOKEN
+
+  /*todo: rework after create api*/
+  const [animeLink, setAnimeLink] = useState('')
+  useEffect(() => {
+    const getAnimeLink = async () => {
+      const response = await fetch(
+        `${kodikUrl}/search?shikimori_id=${anime.rawData.id}&token=${kodikToken}`
+      )
+      const data = await response.json()
+      setAnimeLink(data.results[0].link)
+    }
+    getAnimeLink()
+  }, [])
+
   const playerRef = useRef<null | HTMLDivElement>(null)
 
   return (
@@ -93,7 +111,7 @@ export default function AnimePage() {
           ref={playerRef}
           className="col-start-1 col-end-10 self-end mt-l"
         >
-          <Player />
+          <Player link={animeLink} />
         </div>
       </div>
     )
@@ -338,7 +356,7 @@ function Related({
   )
 }
 
-function Player() {
+function Player({ link }: { link: string }) {
   const { t } = useTranslation(['default'])
 
   return (
@@ -349,7 +367,7 @@ function Player() {
       <iframe
         className="mt-m"
         key="12"
-        src="//kodik.info/season/84066/0372efad8c745626a261699d3b24400e/720p"
+        src={link}
         width="100%"
         height="588px"
         title="YouTube video player"

@@ -1,4 +1,4 @@
-import Input from "@/ui/input/Input";
+import Input from '@/ui/input/Input'
 import { FieldSize, InputType, TFieldSize } from '@/types/ui'
 import { SearchIcon } from '@/assets/icons'
 import styles from './search.module.scss'
@@ -21,16 +21,15 @@ const Search = (props: TSearch) => {
     name,
     onChange
   } = props
-
   return (
     <div className={styles.search}>
       <Input
+        type={InputType.transparent}
         size={size}
         placeholder={placeholder}
         value={value}
         name={name}
         disabled={disabled}
-        type={InputType.transparent}
       />
       <span className="px-s">
         <SearchIcon
@@ -42,4 +41,4 @@ const Search = (props: TSearch) => {
   )
 }
 
-export default Search;
+export default Search

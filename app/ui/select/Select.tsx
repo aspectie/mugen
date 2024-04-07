@@ -1,15 +1,11 @@
 import Button from '@/ui/button/Button'
 import React, { useEffect, useRef, useState } from 'react'
 import Checkbox from '@/ui/checkbox/Checkbox'
-import { ButtonType, FieldSize, TFieldSize } from '@/types/ui'
+import { ButtonType, FieldSize, TFieldSize, TOption } from '@/types/ui'
 import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
 
 import styles from './select.module.scss'
 
-type TOption = {
-  label: string
-  value: string
-}
 type TSelect = {
   options: TOption[]
   isMulti?: boolean

@@ -9,6 +9,7 @@ import {
 } from '@/types/api/shiki/anime'
 import { castToAnother } from '@/utils/api'
 import { clearHTML, groupBy } from '@/utils/utils'
+import { TFilterSelection } from '@/types/ui'
 
 type TShikiApi = {
   getAnime: (
@@ -159,3 +160,98 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
 
   return res
 }
+
+/*TODO: remove it when API will be create */
+export const filterSelects: TFilterSelection[] = [
+  {
+    name: 'Жанр',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  },
+  {
+    name: 'Тип',
+    options: [
+      {
+        label: 'Экшен',
+        value: 'action'
+      },
+      {
+        label: 'Приключения',
+        value: 'adventure'
+      }
+    ]
+  }
+]

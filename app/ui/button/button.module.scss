@@ -5,6 +5,7 @@
   border-radius: $space-xs;
   color: $gray-40;
   cursor: pointer;
+  transition: all 0.2s ease;
 
 
   /* align */
@@ -12,7 +13,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     .button__text {
       flex-grow: 2;
     }
@@ -22,6 +22,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    svg {
+      margin-right: $space-xs;
+    }
   }
 
   /* Sizes */
@@ -72,9 +75,7 @@
     background-color: $black-60 !important;
   }
 
+  &--transparent {
+    color: inherit;
+  }
 }
-
-svg {
-  color: inherit;
-}
-
