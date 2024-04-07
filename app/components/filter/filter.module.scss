@@ -7,25 +7,52 @@
   padding: $space-m;
 
   /*Types*/
-  &--full {
+  &--detailed {
     gap: $space-l;
+
+    .filter__sort {
+      display: flex;
+      flex-direction: column;
+      gap: $space-s;
+    }
+
+    .filter__selects {
+      display: none;
+      grid-template-columns: repeat(7, 1fr);
+      row-gap: $space-m;
+      column-gap: $space-m;
+
+      &--display {
+        display: grid;
+      }
+
+    }
+
+    .filter__inner {
+      flex-direction: row;
+    }
   }
+
   &--small {
     gap: $space-m;
+
+    .filter__sort {
+      display: none;
+    }
+
+    .filter__selects {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: $space-s;
+      column-gap: $space-s;
+    }
+
+    .filter__inner {
+      flex-direction: column;
+    }
   }
 
   &__sort {
-    gap: $space-s;
     @include h5;
-
-    &--full {
-      display: flex;
-      flex-direction: column;
-    }
-
-    &--small {
-      display: none;
-    }
 
     &-item {
       display: flex;
@@ -43,23 +70,6 @@
   &__selects {
     width: 100%;
     display: grid;
-
-    /*Types*/
-    &--full {
-      display: none;
-      grid-template-columns: repeat(7, 1fr);
-      row-gap: $space-m;
-      column-gap: $space-m;
-
-      &--show {
-        display: grid;
-      }
-    }
-    &--small {
-      grid-template-columns: repeat(2, 1fr);
-      row-gap: $space-s;
-      column-gap: $space-s;
-    }
   }
 
   &__tags {
@@ -68,36 +78,24 @@
     flex-wrap: wrap;
     width: 100%;
 
-    &--show {
+    &--display {
       display: flex;
+      }
+    }
+
+    &__inner {
+      width: 100%;
+      display: flex;
+      gap: $space-m;
+
+      &__search {
+        width: 100%;
+        flex-shrink: 1;
+      }
+
+      &__button {
+        width: 100%;
+        flex-shrink: 10;
+      }
     }
   }
-
-  &__inner {
-    width: 100%;
-    display: flex;
-    gap: $space-m;
-
-    &--full {
-      flex-direction: row;
-    }
-    &--small {
-      flex-direction: column;
-    }
-
-    &__search {
-      width: 100%;
-      flex-shrink: 1;
-    }
-
-    &__button {
-      width: 100%;
-      flex-shrink: 10;
-    }
-  }
-
-}
-
-.display {
-  display: flex;
-}

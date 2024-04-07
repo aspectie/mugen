@@ -1,25 +1,21 @@
-import { useState, useEffect } from 'react'
-import Select, { TOption } from '@/ui/select/Select'
+import { useState } from 'react'
+import Select from '@/ui/select/Select'
 import Search from '@/ui/search/Search'
 import Button from '@/ui/button/Button'
 import Tag from '@/ui/tag/Tag'
 import classNames from 'classnames'
 import styles from './filter.module.scss'
+import { FilterType, TFilterSelections, TFilterType } from '@/types/ui'
 import { FilterIcon, SortIcon } from '@/assets/icons'
 
 type TFilter = {
-  type: 'small' | 'full'
-  selects: [
-    {
-      name: string
-      options: TOption[]
-    }
-  ]
+  type: TFilterType
+  selects: TFilterSelections[]
   style?: React.CSSProperties
 }
 
 const Filter = (props: TFilter) => {
-  const { selects, type } = props
+  const { selects, type = FilterType.small } = props
 
   const [isShow, setIsShow] = useState(true)
 
@@ -30,36 +26,40 @@ const Filter = (props: TFilter) => {
   const filterClasses = classNames(styles.filter, {
     [styles[`filter--${type}`]]: type
   })
-  const selectClasses = classNames(styles.filter__selects, {
-    [styles[`filter__selects--${type}`]]: type,
-    [styles[`filter__selects--full--show`]]: !isShow
+
+  const selectsClasses = classNames(styles.filter__selects, {
+    [styles[`filter__selects--display`]]: !isShow
   })
-  const innerClasses = classNames(styles.filter__inner, {
-    [styles[`filter__inner--${type}`]]: type
-  })
-  const sortClasses = classNames(styles.filter__sort, {
-    [styles[`filter__sort--${type}`]]: type
-  })
+
   const tagsClasses = classNames(styles.filter__tags, {
-    [styles[`filter__tags--show`]]: !isShow
+    [styles[`filter__tags--display`]]: !isShow
   })
 
   return (
     <div className={filterClasses}>
-      <div className={sortClasses}>
+      <div className={styles.filter__sort}>
         <div className={styles['filter__sort-item']}>
-          <SortIcon />
-          <span>Упорядочить</span>
+          <Button
+            text="Упорядочить"
+            type="transparent"
+            prefix={<SortIcon />}
+            size="small"
+            align="between"
+            onClick={toggleVisibility}
+          />
         </div>
-        <div
-          className={styles['filter__sort-item']}
-          onClick={toggleVisibility}
-        >
-          <FilterIcon />
-          <span>Расширенный фильтр</span>
+        <div className={styles['filter__sort-item']}>
+          <Button
+            text="Расширенный фильтр"
+            type="transparent"
+            prefix={<FilterIcon />}
+            size="small"
+            align="between"
+            onClick={toggleVisibility}
+          />
         </div>
       </div>
-      <div className={selectClasses}>
+      <div className={selectsClasses}>
         {selects.map(item => (
           <Select
             key={item.name}
@@ -69,22 +69,23 @@ const Filter = (props: TFilter) => {
           />
         ))}
       </div>
-      {type === 'full' && (
-        <div className={tagsClasses}>
-          {selects.map(item => (
-            <Tag
-              key={item.name}
-              text={item.name}
-            />
-          ))}
-        </div>
-      )}
-      <div className={innerClasses}>
+      <div className={tagsClasses}>
+        {selects.map(item => (
+          <Tag
+            key={item.name}
+            text={item.name}
+          />
+        ))}
+      </div>
+      <div className={styles['filter__inner']}>
         <div className={styles.filter__inner__search}>
           <Search placeholder="Название..." />
         </div>
         <div className={styles.filter__inner__button}>
-          <Button text="Искать" />
+          <Button
+            text="Искать"
+            size="small"
+          />
         </div>
       </div>
     </div>

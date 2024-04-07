@@ -27,7 +27,8 @@ export type TCardData = {
 export const enum ButtonType {
   primary = 'primary',
   secondary = 'secondary',
-  ghost = 'ghost'
+  ghost = 'ghost',
+  transparent = 'transparent'
 }
 export type TButtonType = keyof typeof ButtonType
 
@@ -39,4 +40,16 @@ export type TInputType = keyof typeof InputType
 export type TOption = {
   label: string
   value: string
+}
+
+export enum FilterType {
+  detailed = 'detailed',
+  small = 'small'
+}
+
+export type TFilterType = keyof typeof FilterType
+
+export type TFilterSelections = {
+  name: string
+  options: TOption[]
 }

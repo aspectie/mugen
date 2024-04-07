@@ -6,6 +6,7 @@ import {
   TAnimeVideo
 } from '@/types/api/shiki/TAnime'
 import { groupBy } from '@/utils/utils'
+import { TFilterSelections } from '@/types/ui'
 
 type TShikiApi = {
   getAnime: (
@@ -126,7 +127,7 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
 }
 
 /*TODO: remove it when API will be create */
-export const filterSelects: Array<object> = [
+export const filterSelects: TFilterSelections = [
   {
     name: 'Жанр',
     options: [
