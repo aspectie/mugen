@@ -47,12 +47,15 @@ export default function AnimePage() {
   const anime = useLoaderData<typeof loader>()
   const { t } = useTranslation(['anime', 'default', 'actions'])
 
+  const kodikUrl = import.meta.env.VITE_KODIK_URL
+  const kodikToken = import.meta.env.VITE_KODIK_TOKEN
+
   /*todo: rework after create api*/
   const [animeLink, setAnimeLink] = useState(null)
   useEffect(() => {
     const getAnimeLink = async () => {
       const response = await fetch(
-        `https://kodikapi.com/search?shikimori_id=${anime.rawData.id}&token=a5726fece69584dc582e201bcac30ce6`
+        `${kodikUrl}/search?shikimori_id=${anime.rawData.id}&token=${kodikToken}`
       )
       const data = await response.json()
       setAnimeLink(data.results[0].link)
