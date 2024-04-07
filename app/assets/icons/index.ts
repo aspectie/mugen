@@ -7,6 +7,8 @@ import ArrowLeftIcon from './arrow-left.svg?react'
 import ArrowRightIcon from './arrow-right.svg?react'
 import ArrowDownIcon from './arrow-down.svg?react'
 import ArrowUpIcon from './arrow-up.svg?react'
+import FilterIcon from './filter.svg?react'
+import SortIcon from './sort.svg?react'
 
 export {
   NotFoundIcon,
@@ -17,5 +19,7 @@ export {
   ArrowLeftIcon,
   ArrowRightIcon,
   ArrowDownIcon,
-  ArrowUpIcon
+  ArrowUpIcon,
+  FilterIcon,
+  SortIcon
 }

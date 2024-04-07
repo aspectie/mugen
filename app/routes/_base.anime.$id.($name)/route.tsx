@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLoaderData } from '@remix-run/react'
 import { json, LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { useTranslation } from 'react-i18next'
@@ -46,6 +46,23 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 export default function AnimePage() {
   const anime = useLoaderData<typeof loader>()
   const { t } = useTranslation(['anime', 'default', 'actions'])
+
+  const kodikUrl = import.meta.env.VITE_KODIK_URL
+  const kodikToken = import.meta.env.VITE_KODIK_TOKEN
+
+  /*todo: rework after create api*/
+  const [animeLink, setAnimeLink] = useState(null)
+  useEffect(() => {
+    const getAnimeLink = async () => {
+      const response = await fetch(
+        `${kodikUrl}/search?shikimori_id=${anime.rawData.id}&token=${kodikToken}`
+      )
+      const data = await response.json()
+      setAnimeLink(data.results[0].link)
+    }
+    getAnimeLink()
+  }, [])
+
   const playerRef = useRef<null | HTMLDivElement>(null)
 
   const scrollToPlayer = () => {
@@ -159,9 +176,9 @@ export default function AnimePage() {
           <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
             <div>
               {Object.keys(anime.related).map(
-                (relation) =>
+                relation =>
                   anime.related &&
-                  Object.keys(anime.related[relation]).map((type) => (
+                  Object.keys(anime.related[relation]).map(type => (
                     <div
                       key={relation}
                       className="[&:not(:last-child)]:mb-l "
@@ -206,7 +223,7 @@ export default function AnimePage() {
             <div className="flex mt-m bg-gray-40 p-s rounded-[8px]">
               <Carousel>
                 <CarouselContent>
-                  {anime.screenshots.map((item) => (
+                  {anime.screenshots.map(item => (
                     <CarouselItem
                       className="lg:basis-1/2 xl:basis-1/4"
                       key={item}
@@ -233,7 +250,7 @@ export default function AnimePage() {
           <iframe
             className="mt-m"
             key="12"
-            src="//kodik.info/season/84066/0372efad8c745626a261699d3b24400e/720p"
+            src={animeLink}
             width="100%"
             height="588px"
             title="YouTube video player"

@@ -10,6 +10,7 @@
   width: max-content;
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
   max-height: 180px;
   overflow-y: scroll;
   padding-inline: $space-s;
