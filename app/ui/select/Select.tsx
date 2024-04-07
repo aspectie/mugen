@@ -33,7 +33,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [placeholderText, setPlaceholderText] = useState(placeholder)
   const dropdownRef = useRef<HTMLDivElement>(null)
-
+  
   const toggleDropdown = () => {
     setIsOpened(!isOpened)
     setIcon(!isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
@@ -41,7 +41,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
 
   const updateOptions = (value: string) => {
     if (selectedOptions.includes(value)) {
-      const options = selectedOptions.filter(item => item !== value)
+      const options = selectedOptions.filter((item) => item !== value)
       setSelectedOptions([...options])
     } else {
       setSelectedOptions([...selectedOptions, value])
@@ -70,6 +70,10 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
       document.removeEventListener('click', handleClickOutside)
     }
   }, [])
+
+  useEffect(() => {
+    setPlaceholderText(placeholder)
+  }, [placeholder])
 
   return (
     <div

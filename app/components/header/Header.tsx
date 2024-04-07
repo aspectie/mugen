@@ -1,14 +1,14 @@
-import { Link } from '@remix-run/react'
+import { Link } from '@remix-run/react';
+import { useTranslation } from 'react-i18next'
+
 
 import Menu, { TLink } from '@/components/menu/Menu'
 import { LogoIcon } from '@/assets/icons'
 import Search from '@/ui/search/Search'
 import LanguageToggle from '@/components/language-toggle/LanguageToggle'
 
-import { useTranslation } from 'react-i18next'
-
 const Header = () => {
-  let { t } = useTranslation()
+  const { t } = useTranslation(['default', 'account'])
 
   const links: TLink[] = [
     {
@@ -40,12 +40,11 @@ const Header = () => {
         <div className="flex">
           <div className="flex gap-4xl items-center text-white">
             <Search placeholder={t('header search placeholder')} />
-            <Link
-              to="/login"
-              className="transition ease-in delay-100 hover:text-accent-120"
-            >
-              {t('login')}
-            </Link>
+              <Link to="/login">
+                <p className="text-white font-bold hover:text-accent-100">
+                  {t('sign in', { ns: 'account' })}
+                </p>
+              </Link>
           </div>
           <div className="ml-m">
             <LanguageToggle />
