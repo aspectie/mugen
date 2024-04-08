@@ -25,7 +25,8 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     size = FieldSize.medium,
     disabled = false,
     align = 'between',
-    placeholder = 'Default text'
+    placeholder = 'Default text',
+    onOptionChange
   } = props
 
   const [icon, setIcon] = useState(<ArrowDownIcon />)
@@ -33,15 +34,15 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [placeholderText, setPlaceholderText] = useState(placeholder)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  
+
   const toggleDropdown = () => {
     setIsOpened(!isOpened)
     setIcon(!isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
   }
 
-  const updateOptions = (value: string) => {
+  const updateOptions = (value: string, label: string) => {
     if (selectedOptions.includes(value)) {
-      const options = selectedOptions.filter((item) => item !== value)
+      const options = selectedOptions.filter(item => item !== value)
       setSelectedOptions([...options])
     } else {
       setSelectedOptions([...selectedOptions, value])
@@ -100,7 +101,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
                 <Checkbox
                   id={option.value}
                   text={option.label}
-                  onChange={() => updateOptions(option.value)}
+                  onChange={() => updateOptions(option.value, option.label)}
                   isChecked={selectedOptions.includes(option.value)}
                 />
               </li>

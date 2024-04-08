@@ -25,6 +25,10 @@ const Filter = (props: TFilter) => {
     setIsShowed(!isShowed)
   }
 
+  const handleOptionChange = (selectedOptions: object) => {
+    console.log(`лололо ${selectedOptions}`)
+  }
+
   const filterClasses = classNames(styles.filter, {
     [styles[`filter--${type}`]]: type
   })
@@ -67,6 +71,7 @@ const Filter = (props: TFilter) => {
             placeholder={item.name}
             options={item.options}
             isMulti={true}
+            onOptionChange={handleOptionChange}
           />
         ))}
       </div>
