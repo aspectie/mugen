@@ -17,7 +17,7 @@ type TFilter = {
 const Filter = (props: TFilter) => {
   const { selects, type = FilterType.small } = props
 
-  const { t } = useTranslation()
+  const { t } = useTranslation('ui')
 
   const [isShowed, setIsShowed] = useState(true)
 
@@ -42,7 +42,7 @@ const Filter = (props: TFilter) => {
       <div className={styles['filter__controls']}>
         <div className={styles['filter__controls-item']}>
           <Button
-            text={t('by order')}
+            text={t('sort by')}
             type="transparent"
             prefix={<SortIcon />}
             size="small"
