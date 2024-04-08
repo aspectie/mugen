@@ -25,9 +25,7 @@ const Filter = (props: TFilter) => {
     setIsShowed(!isShowed)
   }
 
-  const handleOptionChange = (selectedOptions: object) => {
-    console.log(`лололо ${selectedOptions}`)
-  }
+  const handleOptionChange = (selectedOptions: object) => {}
 
   const filterClasses = classNames(styles.filter, {
     [styles[`filter--${type}`]]: type
