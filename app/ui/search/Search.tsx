@@ -10,6 +10,7 @@ type TSearch = {
   value?: string
   name?: string
   onChange?: any
+  onKeyDown?: any
 }
 
 const Search = (props: TSearch) => {
@@ -19,7 +20,8 @@ const Search = (props: TSearch) => {
     disabled = false,
     value,
     name,
-    onChange
+    onChange,
+    onKeyDown
   } = props
   return (
     <div className={styles.search}>
@@ -30,12 +32,11 @@ const Search = (props: TSearch) => {
         value={value}
         name={name}
         disabled={disabled}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
       />
       <span className="px-s">
-        <SearchIcon
-          className="cursor-pointer w-m min-w-m h-m"
-          onClick={onChange}
-        />
+        <SearchIcon className="cursor-pointer w-m min-w-m h-m" />
       </span>
     </div>
   )
