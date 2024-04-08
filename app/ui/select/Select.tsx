@@ -15,6 +15,7 @@ type TSelect = {
   children?: React.ReactNode
   style?: React.CSSProperties
   placeholder?: string
+  onChange?: (options: string[]) => void
 }
 const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   props: TSelect
@@ -26,7 +27,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     disabled = false,
     align = 'between',
     placeholder = 'Default text',
-    onOptionChange
+    onChange = () => {}
   } = props
 
   const [icon, setIcon] = useState(<ArrowDownIcon />)
@@ -40,12 +41,23 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     setIcon(!isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
   }
 
-  const updateOptions = (value: string, label: string) => {
+  const removeOption = (value: string) => {
+    const newValue = selectedOptions.filter((item) => item !== value)
+    setSelectedOptions([...newValue])
+    onChange(newValue)
+  }
+
+  const addOption = (value: string) => {
+    const newValue = [...selectedOptions, value]
+    setSelectedOptions([...newValue])
+    onChange(newValue)
+  }
+
+  const updateOptions = (value: string) => {
     if (selectedOptions.includes(value)) {
-      const options = selectedOptions.filter(item => item !== value)
-      setSelectedOptions([...options])
+      removeOption(value)
     } else {
-      setSelectedOptions([...selectedOptions, value])
+      addOption(value)
     }
   }
 
@@ -65,6 +77,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     toggleDropdown()
   }
 
+  // TODO: to be moved
   useEffect(() => {
     document.addEventListener('click', handleClickOutside)
     return () => {
@@ -92,7 +105,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
       />
       {isOpened && (
         <ul className={styles.options}>
-          {options.map(option =>
+          {options.map((option) =>
             isMulti ? (
               <li
                 className={styles.option}
@@ -101,7 +114,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
                 <Checkbox
                   id={option.value}
                   text={option.label}
-                  onChange={() => updateOptions(option.value, option.label)}
+                  onChange={() => updateOptions(option.value)}
                   isChecked={selectedOptions.includes(option.value)}
                 />
               </li>

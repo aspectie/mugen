@@ -3,16 +3,15 @@ export function clearHTML(text: string): string {
 }
 
 // TODO: remove when remix will support typescript 5.4
-// @ts-ignore
+// @ts-expect-error
 export function groupBy(array, key) {
-  // @ts-ignore
   return array && array instanceof Array
     ? array.reduce((acc, value) => {
         const keyValue = value[key]
         ;(acc[keyValue] = acc[keyValue] || []).push(value)
         return acc
-      }, {})
-    : array
+      }, {}) 
+    : array 
 }
 
 export function convertToDashed(value: string): string {

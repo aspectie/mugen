@@ -201,57 +201,5 @@ export const filterSelects: TFilterSelection[] = [
         value: 'summer'
       }
     ]
-  },
-  {
-    name: 'Тип',
-    options: [
-      {
-        label: 'Экшен',
-        value: 'action'
-      },
-      {
-        label: 'Приключения',
-        value: 'adventure'
-      }
-    ]
-  },
-  {
-    name: 'Тип',
-    options: [
-      {
-        label: 'Экшен',
-        value: 'action'
-      },
-      {
-        label: 'Приключения',
-        value: 'adventure'
-      }
-    ]
-  },
-  {
-    name: 'Тип',
-    options: [
-      {
-        label: 'Экшен',
-        value: 'action'
-      },
-      {
-        label: 'Приключения',
-        value: 'adventure'
-      }
-    ]
-  },
-  {
-    name: 'Тип',
-    options: [
-      {
-        label: 'Экшен',
-        value: 'action'
-      },
-      {
-        label: 'Приключения',
-        value: 'adventure'
-      }
-    ]
   }
 ]

@@ -5,10 +5,11 @@ import i18n from '@/.server/i18n'
 
 import { TAnime } from '@/types/api/anime'
 
-import { shikiApi } from '@/lib/shiki'
+import { filterSelects, shikiApi } from '@/lib/shiki'
 import { useApi } from '@/hooks/api'
 import { prepareCardData } from '@/utils/card'
 import CardList from '@/components/card/CardList'
+import Filter from '@/components/filter/Filter'
 
 export const handle = { i18n: ['default', 'account'] }
 
@@ -54,6 +55,12 @@ export default function Index() {
       <div className="grid grid-cols-12 pt-xl">
         {data && data.animes && (
           <div className="col-span-8">
+            <div>
+              <Filter
+                selects={filterSelects}
+                type="detailed"
+              />
+            </div>
             <div className="mb-l">
               <h2 className="font-bold mb-l">{t('winter season')}</h2>
               <div className="p-m bg-black-100 border border-black-20">

@@ -10,7 +10,7 @@ import { FilterIcon, SortIcon } from '@/assets/icons'
 import { useTranslation } from 'react-i18next'
 
 type TFilter = {
-  type: TFilterType
+  type?: TFilterType
   selects: TFilterSelection[]
 }
 
@@ -25,7 +25,13 @@ const Filter = (props: TFilter) => {
     setIsShowed(!isShowed)
   }
 
-  const handleOptionChange = (selectedOptions: object) => {}
+  const onSelectChange = (options: string[]) => {
+    // TODO: update state with new value
+  }
+
+  const onTagRemove = (name: string) => {
+    // TODO: remove selected value from state
+  }
 
   const filterClasses = classNames(styles.filter, {
     [styles[`filter--${type}`]]: type
@@ -43,6 +49,7 @@ const Filter = (props: TFilter) => {
     <div className={filterClasses}>
       <div className={styles['filter__controls']}>
         <div className={styles['filter__controls-item']}>
+          {/* TODO: implement sort control with state */}
           <Button
             text={t('sort by')}
             type="transparent"
@@ -63,25 +70,29 @@ const Filter = (props: TFilter) => {
         </div>
       </div>
       <div className={selectsClasses}>
-        {selects.map(item => (
+        {selects.map((item) => (
           <Select
             key={item.name}
             placeholder={item.name}
             options={item.options}
             isMulti={true}
-            onOptionChange={handleOptionChange}
+            onChange={onSelectChange}
           />
         ))}
       </div>
       <div className={tagsClasses}>
-        {selects.map(item => (
+        {/* TODO: map values from state */}
+        {selects.map((item) => (
           <Tag
             key={item.name}
+            name={item.name}
             text={item.name}
+            onClick={onTagRemove}
           />
         ))}
       </div>
       <div className={styles['filter__search-area']}>
+        {/* TODO: add state for search */}
         <div className={styles['search-area__search-input']}>
           <Search placeholder={t('title...')} />
         </div>
