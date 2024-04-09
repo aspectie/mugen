@@ -5,7 +5,7 @@ import {FieldSize, TFieldSize, TInputType} from '@/types/ui'
 import styles from './input.module.scss'
 
 type TInput = {
-  inputType?: "text"
+  inputType?: 'text'
   size?: TFieldSize
   disabled?: boolean
   placeholder?: string
@@ -13,17 +13,21 @@ type TInput = {
   name?: string
   onChange?: any
   type?: TInputType
+  onKeyDown?: any
 }
 
-const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: TInput) => {
+const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (
+  props: TInput
+) => {
   const {
-    inputType = "text",
+    inputType = 'text',
     size = FieldSize.medium,
     disabled = false,
     placeholder = 'Default placeholder',
     value,
     name,
     onChange,
+    onKeyDown,
     type,
     ...rest
   } = props
@@ -31,7 +35,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: 
   const classes = classNames(styles.input, {
     [styles[`input--${size}`]]: size,
     [styles[`input--${type}`]]: type,
-    [styles[`input--disabled`]]: disabled,
+    [styles[`input--disabled`]]: disabled
   })
 
   return (
@@ -43,6 +47,7 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (props: 
       value={value}
       name={name}
       onChange={onChange}
+      onKeyDown={onKeyDown}
     />
   )
 }
