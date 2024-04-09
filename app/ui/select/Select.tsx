@@ -1,7 +1,13 @@
 import Button from '@/ui/button/Button'
 import React, { useEffect, useRef, useState } from 'react'
 import Checkbox from '@/ui/checkbox/Checkbox'
-import { ButtonType, FieldSize, TFieldSize, TOption } from '@/types/ui'
+import {
+  ButtonJustify,
+  ButtonType,
+  FieldSize,
+  TFieldSize,
+  TOption
+} from '@/types/ui'
 import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
 
 import styles from './select.module.scss'
@@ -11,7 +17,7 @@ type TSelect = {
   isMulti?: boolean
   size?: TFieldSize
   disabled?: boolean
-  align?: string
+  justify?: ButtonJustify
   children?: React.ReactNode
   style?: React.CSSProperties
   placeholder?: string
@@ -25,7 +31,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     isMulti = false,
     size = FieldSize.medium,
     disabled = false,
-    align = 'between',
+    justify = ButtonJustify.between,
     placeholder = 'Default text',
     onChange = () => {}
   } = props
@@ -98,7 +104,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
         type={ButtonType.secondary}
         size={size}
         text={placeholderText}
-        align={align}
+        justify={justify}
         disabled={disabled}
         onClick={toggleDropdown}
         suffix={icon}

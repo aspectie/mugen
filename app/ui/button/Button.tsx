@@ -1,12 +1,18 @@
 import classNames from 'classnames'
 
-import { ButtonType, FieldSize, TButtonType, TFieldSize } from '@/types/ui'
+import {
+  ButtonType,
+  FieldSize,
+  TButtonJustify,
+  TButtonType,
+  TFieldSize
+} from '@/types/ui'
 import styles from './button.module.scss'
 
 type TButton = {
   type?: TButtonType
   size?: TFieldSize
-  align?: string
+  justify?: TButtonJustify
   disabled?: boolean
   children?: React.ReactNode
   style?: React.CSSProperties
@@ -19,11 +25,11 @@ type TButton = {
 const Button: React.ForwardRefRenderFunction<
   HTMLButtonElement | HTMLAnchorElement,
   TButton
-> = props => {
+> = (props) => {
   const {
     type = ButtonType.primary,
-    size = FieldSize.medium,
-    align,
+    size = FieldSize.extraSmall,
+    justify,
     disabled = false,
     text = 'Default text',
     style,
@@ -36,7 +42,7 @@ const Button: React.ForwardRefRenderFunction<
   const classes = classNames(styles.button, {
     [styles[`button--${size}`]]: size,
     [styles[`button--${type}`]]: type,
-    [styles[`button--${align}`]]: align,
+    [styles[`button--${justify}`]]: justify,
     [styles[`button--disabled`]]: disabled
   })
 

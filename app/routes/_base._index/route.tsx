@@ -55,12 +55,6 @@ export default function Index() {
       <div className="grid grid-cols-12 pt-xl">
         {data && data.animes && (
           <div className="col-span-8">
-            <div>
-              <Filter
-                selects={filterSelects}
-                type="detailed"
-              />
-            </div>
             <div className="mb-l">
               <h2 className="font-bold mb-l">{t('winter season')}</h2>
               <div className="p-m bg-black-100 border border-black-20">
