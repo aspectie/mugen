@@ -1,20 +1,30 @@
+import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
+import classNames from 'classnames'
+
+import {
+  ButtonJustify,
+  ButtonType,
+  FieldSize,
+  FilterType,
+  TFilterSelection,
+  TFilterType
+} from '@/types/ui'
+
+import styles from './filter.module.scss'
+import { FilterIcon, SortIcon } from '@/assets/icons'
+
 import Select from '@/ui/select/Select'
 import Search from '@/ui/search/Search'
 import Button from '@/ui/button/Button'
 import Tag from '@/ui/tag/Tag'
-import classNames from 'classnames'
-import styles from './filter.module.scss'
-import { FilterType, TFilterSelection, TFilterType } from '@/types/ui'
-import { FilterIcon, SortIcon } from '@/assets/icons'
-import { useTranslation } from 'react-i18next'
 
-type TFilter = {
+type TFilterProps = {
   type?: TFilterType
   selects: TFilterSelection[]
 }
 
-const Filter = (props: TFilter) => {
+const Filter = (props: TFilterProps) => {
   const { selects, type = FilterType.small } = props
 
   const { t } = useTranslation('ui')
@@ -52,19 +62,19 @@ const Filter = (props: TFilter) => {
           {/* TODO: implement sort control with state */}
           <Button
             text={t('sort by')}
-            type="transparent"
+            type={ButtonType.transparent}
             prefix={<SortIcon />}
-            size="small"
-            align="between"
+            size={FieldSize.smallest}
+            justify={ButtonJustify.between}
           />
         </div>
         <div className={styles['filter__controls-item']}>
           <Button
             text={t('extended filter')}
-            type="transparent"
+            type={ButtonType.transparent}
             prefix={<FilterIcon />}
-            size="small"
-            align="between"
+            size={FieldSize.smallest}
+            justify={ButtonJustify.between}
             onClick={toggleVisibility}
           />
         </div>
