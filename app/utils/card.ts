@@ -2,12 +2,11 @@ import { TCardData } from '@/types/ui'
 
 import { convertToDashed } from './utils'
 import { TAnime, TManga } from '@/types/api/anime'
-import { useTranslation } from 'react-i18next'
 
-export function prepareCardData(data: TAnime[] | TManga[]): TCardData[] {
-  const { i18n } = useTranslation()
-  const lang = i18n.language
-
+export function prepareCardData(
+  data: TAnime[] | TManga[],
+  lang: string = 'en'
+): TCardData[] {
   // TODO: get by endpoint
   const mangaTypes = [
     'manga',
