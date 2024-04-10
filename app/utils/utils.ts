@@ -35,3 +35,23 @@ export function convertObjectsArrayToList(
       : acc + el[key]
   }, '')
 }
+
+// TODO: fix types
+export function urlParamsToObject(params) {
+  const obj = {}
+  const searchParams = new URLSearchParams(params)
+
+  for (const [key, value] of searchParams) {
+    if (obj.hasOwnProperty(key)) {
+      if (Array.isArray(obj[key])) {
+        obj[key].push(value)
+      } else {
+        obj[key] = [obj[key], value]
+      }
+    } else {
+      obj[key] = value
+    }
+  }
+
+  return obj
+}
