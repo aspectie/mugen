@@ -29,14 +29,18 @@ const Filter = (props: TFilterProps) => {
 
   const { t } = useTranslation('ui')
 
+  const [filterParams, setfilterParams] = useState({})
+
   const [isShowed, setIsShowed] = useState(true)
 
   const toggleVisibility = () => {
     setIsShowed(!isShowed)
   }
 
-  const onSelectChange = (options: string[]) => {
+  const onSelectChange = (name: string, options: string[]) => {
     // TODO: update state with new value
+    const newValue = { ...filterParams, [name]: options }
+    setfilterParams(newValue)
   }
 
   const onTagRemove = (name: string) => {
@@ -80,26 +84,28 @@ const Filter = (props: TFilterProps) => {
         </div>
       </div>
       <div className={selectsClasses}>
-        {selects.map((item) => (
+        {selects.map(item => (
           <Select
             key={item.name}
-            placeholder={item.name}
+            placeholder={item.title}
             options={item.options}
             isMulti={true}
-            onChange={onSelectChange}
+            onChange={b => onSelectChange(item.name, b)}
           />
         ))}
       </div>
       <div className={tagsClasses}>
         {/* TODO: map values from state */}
-        {selects.map((item) => (
-          <Tag
-            key={item.name}
-            name={item.name}
-            text={item.name}
-            onClick={onTagRemove}
-          />
-        ))}
+        {Object.entries(filterParams).map(([key, value]) =>
+          value.map(tagName => (
+            <Tag
+              key={tagName}
+              name={tagName}
+              text={tagName}
+              onClick={onTagRemove}
+            />
+          ))
+        )}
       </div>
       <div className={styles['filter__search-area']}>
         {/* TODO: add state for search */}

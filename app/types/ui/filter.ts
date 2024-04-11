@@ -8,6 +8,7 @@ export enum FilterType {
 export type TFilterType = `${FilterType}`
 
 export type TFilterSelection = {
+  title: string
   name: string
   options: TOption[]
 }

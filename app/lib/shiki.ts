@@ -164,7 +164,8 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
 /*TODO: remove it when API will be create */
 export const filterSelects: TFilterSelection[] = [
   {
-    name: 'Жанр',
+    title: 'Жанр',
+    name: 'genre',
     options: [
       {
         label: 'Экшен',
@@ -177,7 +178,8 @@ export const filterSelects: TFilterSelection[] = [
     ]
   },
   {
-    name: 'Тип',
+    title: 'Тип',
+    name: 'kind',
     options: [
       {
         label: 'ТВ',
@@ -190,7 +192,8 @@ export const filterSelects: TFilterSelection[] = [
     ]
   },
   {
-    name: 'Сезон',
+    title: 'Сезон',
+    name: 'season',
     options: [
       {
         label: 'Зима',
