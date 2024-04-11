@@ -48,7 +48,7 @@ export const meta = ({ data }: { data: TLoaderResponse }) => {
 
 export default function Index() {
   const data: TLoaderResponse = useLoaderData<typeof loader>()
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   return (
     <div className="container mx-auto text-black-100">
@@ -59,7 +59,7 @@ export default function Index() {
               <h2 className="font-bold mb-l">{t('winter season')}</h2>
               <div className="p-m bg-black-100 border border-black-20">
                 <CardList
-                  cards={prepareCardData(data.animes)}
+                  cards={prepareCardData(data.animes, i18n.language)}
                   className="columns-5 text-white"
                 />
               </div>
@@ -68,7 +68,7 @@ export default function Index() {
               <h2 className="font-bold mb-l">{t('popular')}</h2>
               <div className="col-span-8 p-m">
                 <CardList
-                  cards={prepareCardData(data.animes)}
+                  cards={prepareCardData(data.animes, i18n.language)}
                   className="columns-5"
                 />
               </div>

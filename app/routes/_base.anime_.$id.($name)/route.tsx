@@ -85,7 +85,7 @@ export default function AnimePage() {
         {anime.rawData.description && (
           <Description description={anime.rawData.description} />
         )}
-        {anime.screenshots && (
+        {anime.screenshots && anime.screenshots.length > 0 && (
           <div className="mt-l col-span-9">
             <Screenshots
               title={anime.rawData.title}
@@ -317,6 +317,8 @@ function Related({
     >['related']
   >
 }) {
+  const { i18n } = useTranslation()
+
   return (
     <>
       <div>
@@ -330,7 +332,7 @@ function Related({
               type="horizontal"
               size="small"
               isHighlight={true}
-              cards={prepareCardData(entry[1])}
+              cards={prepareCardData(entry[1], i18n.language)}
             />
           </div>
         ))}
