@@ -29,7 +29,9 @@ const Filter = (props: TFilterProps) => {
 
   const { t } = useTranslation('ui')
 
-  const [filterParams, setfilterParams] = useState({})
+  const [filterParams, setFilterParams] = useState({})
+
+  const [searchParams, setSearchParams] = useState('')
 
   const [isShowed, setIsShowed] = useState(true)
 
@@ -40,11 +42,29 @@ const Filter = (props: TFilterProps) => {
   const onSelectChange = (name: string, options: string[]) => {
     // TODO: update state with new value
     const newValue = { ...filterParams, [name]: options }
-    setfilterParams(newValue)
+    setFilterParams(newValue)
   }
 
   const onTagRemove = (name: string) => {
-    // TODO: remove selected value from state
+    // Создаем копию объекта состояния filterParams
+    const updatedParams: object = { ...filterParams }
+
+    // Проходимся по каждому ключу в объекте состояния
+    Object.keys(updatedParams).forEach((key: string) => {
+      // Фильтруем массив значений для текущего ключа
+      updatedParams[key] = updatedParams[key].filter(
+        (value: string) => value !== name
+      )
+
+      if (updatedParams[key].length === 0) {
+        delete updatedParams[key]
+      }
+    })
+    setFilterParams(updatedParams)
+  }
+
+  const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams(event.target.value)
   }
 
   const filterClasses = classNames(styles.filter, {
@@ -102,7 +122,7 @@ const Filter = (props: TFilterProps) => {
               key={tagName}
               name={tagName}
               text={tagName}
-              onClick={onTagRemove}
+              onClick={() => onTagRemove(tagName)}
             />
           ))
         )}
@@ -110,7 +130,10 @@ const Filter = (props: TFilterProps) => {
       <div className={styles['filter__search-area']}>
         {/* TODO: add state for search */}
         <div className={styles['search-area__search-input']}>
-          <Search placeholder={t('title...')} />
+          <Search
+            placeholder={t('title...')}
+            onKeyDown={searchHandler}
+          />
         </div>
         <div className={styles['search-area__search-button']}>
           <Button
