@@ -7,6 +7,7 @@ export const enum ButtonType {
 export type TButtonType = `${ButtonType}`
 
 export const enum ButtonJustify {
+  start = 'start',
   center = 'center',
   between = 'between'
 }

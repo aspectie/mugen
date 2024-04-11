@@ -30,28 +30,22 @@ const Filter = (props: TFilterProps) => {
   const { t } = useTranslation('ui')
 
   const [filterParams, setFilterParams] = useState({})
-
   const [searchParams, setSearchParams] = useState('')
+  const [isFiltersHidden, setIsFiltersHidden] = useState(true)
 
-  const [isShowed, setIsShowed] = useState(true)
-
-  const toggleVisibility = () => {
-    setIsShowed(!isShowed)
+  const toggleFiltersVisibility = () => {
+    setIsFiltersHidden(!isFiltersHidden)
   }
 
   const onSelectChange = (name: string, options: string[]) => {
-    // TODO: update state with new value
     const newValue = { ...filterParams, [name]: options }
     setFilterParams(newValue)
   }
 
   const onTagRemove = (name: string) => {
-    // Создаем копию объекта состояния filterParams
     const updatedParams: object = { ...filterParams }
 
-    // Проходимся по каждому ключу в объекте состояния
     Object.keys(updatedParams).forEach((key: string) => {
-      // Фильтруем массив значений для текущего ключа
       updatedParams[key] = updatedParams[key].filter(
         (value: string) => value !== name
       )
@@ -67,72 +61,54 @@ const Filter = (props: TFilterProps) => {
     setSearchParams(event.target.value)
   }
 
-  const filterClasses = classNames(styles.filter, {
+  const classes = classNames(styles.filter, {
     [styles[`filter--${type}`]]: type
   })
 
-  const selectsClasses = classNames(styles.filter__selects, {
-    [styles[`filter__selects--displayed`]]: !isShowed
-  })
-
-  const tagsClasses = classNames(styles.filter__tags, {
-    [styles[`filter__tags--displayed`]]: !isShowed
+  const filtersClasses = classNames(styles.filters, {
+    [styles[`filters--isHidden`]]: isFiltersHidden
   })
 
   return (
-    <div className={filterClasses}>
-      <div className={styles['filter__controls']}>
-        <div className={styles['filter__controls-item']}>
-          {/* TODO: implement sort control with state */}
-          <Button
-            text={t('sort by')}
-            type={ButtonType.transparent}
-            prefix={<SortIcon />}
-            size={FieldSize.smallest}
-            justify={ButtonJustify.between}
-          />
-        </div>
-        <div className={styles['filter__controls-item']}>
-          <Button
-            text={t('extended filter')}
-            type={ButtonType.transparent}
-            prefix={<FilterIcon />}
-            size={FieldSize.smallest}
-            justify={ButtonJustify.between}
-            onClick={toggleVisibility}
-          />
-        </div>
-      </div>
-      <div className={selectsClasses}>
-        {selects.map(item => (
-          <Select
-            key={item.name}
-            placeholder={item.title}
-            options={item.options}
-            isMulti={true}
-            onChange={b => onSelectChange(item.name, b)}
-          />
-        ))}
-      </div>
-      <div className={tagsClasses}>
-        {/* TODO: map values from state */}
-        {Object.entries(filterParams).map(([key, value]) =>
-          value.map(tagName => (
-            <Tag
-              key={tagName}
-              name={tagName}
-              text={tagName}
-              onClick={() => onTagRemove(tagName)}
+    <div className={classes}>
+      <Button
+        text={t('extended filter')}
+        type={ButtonType.transparent}
+        prefix={<FilterIcon />}
+        size={FieldSize.smallest}
+        justify={ButtonJustify.start}
+        onClick={toggleFiltersVisibility}
+      />
+      <div className={filtersClasses}>
+        <div className={styles.filter__selects}>
+          {selects.map((item) => (
+            <Select
+              key={item.name}
+              placeholder={item.title}
+              options={item.options}
+              isMulti={true}
+              onChange={(name) => onSelectChange(item.name, name)}
             />
-          ))
-        )}
+          ))}
+        </div>
+        <div className={styles.filter__tags}>
+          {Object.entries(filterParams).map(([key, value]) =>
+            value.map((tagName) => (
+              <Tag
+                key={tagName}
+                name={tagName}
+                text={tagName}
+                onClick={() => onTagRemove(tagName)}
+              />
+            ))
+          )}
+        </div>
       </div>
       <div className={styles['filter__search-area']}>
-        {/* TODO: add state for search */}
         <div className={styles['search-area__search-input']}>
           <Search
             placeholder={t('title...')}
-            onKeyDown={searchHandler}
+            onChange={searchHandler}
           />
         </div>
         <div className={styles['search-area__search-button']}>
