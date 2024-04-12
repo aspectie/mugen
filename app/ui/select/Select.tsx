@@ -71,7 +71,6 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
       !dropdownRef.current.contains(event.target as Node)
     ) {
       setIsOpened(false)
-      setIcon(isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
     }
   }
 
