@@ -22,7 +22,7 @@ type TSelect = {
   style?: React.CSSProperties
   placeholder?: string
   onChange?: (options: string[]) => void
-  selected?: string[]
+  selectedOptions?: string[]
 }
 const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   props: TSelect
@@ -35,12 +35,11 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     justify = ButtonJustify.between,
     placeholder = 'Default text',
     onChange = () => {},
-    selected = []
+    selectedOptions = []
   } = props
 
   const [icon, setIcon] = useState(<ArrowDownIcon />)
   const [isOpened, setIsOpened] = useState(false)
-  const [selectedOptions, setSelectedOptions] = useState<string[]>(selected)
   const [placeholderText, setPlaceholderText] = useState(placeholder)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -50,14 +49,12 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   }
 
   const removeOption = (value: string) => {
-    const newValue = selectedOptions.filter(item => item !== value)
-    setSelectedOptions([...newValue])
+    const newValue = selectedOptions.filter((item) => item !== value)
     onChange(newValue)
   }
 
   const addOption = (value: string) => {
     const newValue = [...selectedOptions, value]
-    setSelectedOptions([...newValue])
     onChange(newValue)
   }
 
@@ -97,10 +94,6 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     setPlaceholderText(placeholder)
   }, [placeholder])
 
-  useEffect(() => {
-    setSelectedOptions(selected)
-  }, [selected])
-
   return (
     <div
       className={styles.select}
@@ -117,7 +110,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
       />
       {isOpened && (
         <ul className={styles.options}>
-          {options.map(option =>
+          {options.map((option) =>
             isMulti ? (
               <li
                 className={styles.option}

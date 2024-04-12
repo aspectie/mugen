@@ -11,7 +11,7 @@ import { prepareCardData } from '@/utils/card'
 import CardList from '@/components/card/CardList'
 import Filter from '@/components/filter/Filter'
 
-export const handle = { i18n: ['default', 'account'] }
+export const handle = { i18n: ['default', 'account', 'ui'] }
 
 export const loader = async ({
   request,
