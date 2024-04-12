@@ -38,10 +38,6 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     selectedOptions = []
   } = props
 
-  //todo: Fix select layout
-  //todo: Show title in tags
-  //todo: filter redesign need
-
   const [icon, setIcon] = useState(<ArrowDownIcon />)
   const [isOpened, setIsOpened] = useState(false)
   const [placeholderText, setPlaceholderText] = useState(placeholder)
@@ -49,7 +45,6 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
 
   const toggleDropdown = () => {
     setIsOpened(!isOpened)
-    // setIcon(!isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
   }
 
   const removeOption = (value: string) => {
@@ -76,7 +71,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
       !dropdownRef.current.contains(event.target as Node)
     ) {
       setIsOpened(false)
-      // setIcon(isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
+      setIcon(isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
     }
   }
 
@@ -98,6 +93,10 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     setPlaceholderText(placeholder)
   }, [placeholder])
 
+  useEffect(() => {
+    setIcon(isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
+  }, [isOpened])
+
   return (
     <div
       className={styles.select}
@@ -111,7 +110,6 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
         disabled={disabled}
         onClick={toggleDropdown}
         suffix={icon}
-        isActive={isOpened}
       />
       {isOpened && (
         <ul className={styles.options}>

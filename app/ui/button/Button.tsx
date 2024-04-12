@@ -20,7 +20,6 @@ type TButton = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   suffix?: React.ReactNode
   prefix?: React.ReactNode
-  isActive?: boolean
 }
 
 const Button: React.ForwardRefRenderFunction<
@@ -37,7 +36,6 @@ const Button: React.ForwardRefRenderFunction<
     onClick,
     suffix,
     prefix,
-    isActive,
     ...rest
   } = props
 
@@ -45,8 +43,7 @@ const Button: React.ForwardRefRenderFunction<
     [styles[`button--${size}`]]: size,
     [styles[`button--${type}`]]: type,
     [styles[`button--${justify}`]]: justify,
-    [styles[`button--disabled`]]: disabled,
-    [styles[`active`]]: isActive
+    [styles[`button--disabled`]]: disabled
   })
 
   return (

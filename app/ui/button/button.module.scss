@@ -7,11 +7,6 @@
   cursor: pointer;
   transition: all 0.2s ease;
 
-  &.active svg {
-    transition: all 300ms ease;
-    transform: rotate(180deg);
-  }
-
   /* justify */
   &--start {
     display: flex;
