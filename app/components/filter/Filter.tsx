@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 import {
@@ -69,6 +69,10 @@ const Filter = (props: TFilterProps) => {
     [styles[`filters--isHidden`]]: isFiltersHidden
   })
 
+  const disabledSer = () => {
+    return Object.keys(filterParams).length < 1 && searchParams.length < 1
+  }
+
   return (
     <div className={classes}>
       <Button
@@ -81,25 +85,25 @@ const Filter = (props: TFilterProps) => {
       />
       <div className={filtersClasses}>
         <div className={styles.filter__selects}>
-          {selects.map((item) => (
+          {selects.map(item => (
             <Select
               key={item.name}
               placeholder={item.title}
               options={item.options}
               isMulti={true}
-              onChange={(name) => onSelectChange(item.name, name)}
+              onChange={name => onSelectChange(item.name, name)}
               selectedOptions={filterParams[item.name] || []}
             />
           ))}
         </div>
         <div className={styles.filter__tags}>
-          {Object.entries(filterParams).map(([key, value]) =>
-            value.map((tagName) => (
+          {Object.entries(filterParams).map(option =>
+            option[1].map(tag => (
               <Tag
-                key={tagName}
-                name={tagName}
-                text={tagName}
-                onClick={() => onTagRemove(tagName)}
+                name={tag.name}
+                text={tag.title}
+                key={tag.name}
+                onClick={() => onTagRemove(tag)}
               />
             ))
           )}
@@ -116,6 +120,7 @@ const Filter = (props: TFilterProps) => {
           <Button
             text={t('search')}
             size="small"
+            disabled={disabledSer()}
           />
         </div>
       </div>

@@ -48,20 +48,20 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   }
 
   const removeOption = (value: string) => {
-    const newValue = selectedOptions.filter(item => item !== value)
+    const newValue = selectedOptions.filter(option => option.name !== value)
     onChange(newValue)
   }
 
-  const addOption = (value: string) => {
-    const newValue = [...selectedOptions, value]
+  const addOption = (name: string, title) => {
+    const newValue = [...selectedOptions, { name: name, title: title }]
     onChange(newValue)
   }
 
-  const updateOptions = (value: string) => {
-    if (selectedOptions.includes(value)) {
+  const updateOptions = (value: string, label) => {
+    if (selectedOptions.some(option => option.name === value)) {
       removeOption(value)
     } else {
-      addOption(value)
+      addOption(value, label)
     }
   }
 
@@ -75,7 +75,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   }
 
   const onOptionClick = (option: TOption) => {
-    updateOptions(option.value)
+    updateOptions(option.value, option.label)
     setPlaceholderText(option.label)
     toggleDropdown()
   }
@@ -121,8 +121,10 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
                 <Checkbox
                   id={option.value}
                   text={option.label}
-                  onChange={() => updateOptions(option.value)}
-                  isChecked={selectedOptions.includes(option.value)}
+                  onChange={() => updateOptions(option.value, option.label)}
+                  isChecked={selectedOptions.some(
+                    selectedOption => selectedOption.name === option.value
+                  )}
                 />
               </li>
             ) : (
