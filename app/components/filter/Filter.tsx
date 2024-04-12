@@ -81,19 +81,20 @@ const Filter = (props: TFilterProps) => {
       />
       <div className={filtersClasses}>
         <div className={styles.filter__selects}>
-          {selects.map((item) => (
+          {selects.map(item => (
             <Select
               key={item.name}
               placeholder={item.title}
               options={item.options}
               isMulti={true}
-              onChange={(name) => onSelectChange(item.name, name)}
+              onChange={name => onSelectChange(item.name, name)}
+              selected={filterParams[item.name] || []}
             />
           ))}
         </div>
         <div className={styles.filter__tags}>
           {Object.entries(filterParams).map(([key, value]) =>
-            value.map((tagName) => (
+            value.map(tagName => (
               <Tag
                 key={tagName}
                 name={tagName}
