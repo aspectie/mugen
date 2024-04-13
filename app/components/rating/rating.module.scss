@@ -4,7 +4,7 @@
   background-color: $gray-40;
   border-radius: $space-xs;
   color: $black-80;
-  transition: all 1s;
+  transition: all 0.2s;
   gap: $space-s;
   overflow: hidden;
   font-weight: $bold;
@@ -45,9 +45,11 @@
 .star {
   position: relative;
   cursor: pointer;
+
   &__background {
     fill: $black-80;
   }
+
   &__layer {
     width: 100%;
     height: 100%;
@@ -69,21 +71,25 @@
         fill: $red-120;
       }
     }
+    
     &--level-2 {
       svg {
         fill: $red-60;
       }
     }
+
     &--level-4 {
       svg {
         fill: $accent-40;
       }
     }
+
     &--level-6 {
       svg {
         fill: $accent-80;
       }
     }
+
     &--level-8 {
       svg {
         fill: $accent-100;
