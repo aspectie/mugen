@@ -29,8 +29,20 @@
     align-items: center;
   }
 
+  /* gap */
+  &--gap-xs {
+    gap: $space-xs
+  }
 
-  /* Sizes */
+  &--gap-s {
+    gap: $space-s
+  }
+
+  &--gap-m {
+    gap: $space-m
+  }
+
+  /* size */
   &--smallest {
     @include field--smallest
   }
@@ -51,7 +63,7 @@
     @include field--large
   }
 
-  /* Types */
+  /* type */
   &--primary {
     background-color: $accent-80;
 
