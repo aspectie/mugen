@@ -1,7 +1,13 @@
 import Button from '@/ui/button/Button'
 import React, { useEffect, useRef, useState } from 'react'
 import Checkbox from '@/ui/checkbox/Checkbox'
-import { ButtonType, FieldSize, TFieldSize, TOption } from '@/types/ui'
+import {
+  ButtonJustify,
+  ButtonType,
+  FieldSize,
+  TFieldSize,
+  TOption
+} from '@/types/ui'
 import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
 
 import styles from './select.module.scss'
@@ -11,10 +17,12 @@ type TSelect = {
   isMulti?: boolean
   size?: TFieldSize
   disabled?: boolean
-  align?: string
+  justify?: ButtonJustify
   children?: React.ReactNode
   style?: React.CSSProperties
   placeholder?: string
+  onChange?: (options: string[]) => void
+  selectedOptions?: string[]
 }
 const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   props: TSelect
@@ -24,27 +32,36 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     isMulti = false,
     size = FieldSize.medium,
     disabled = false,
-    align = 'between',
-    placeholder = 'Default text'
+    justify = ButtonJustify.between,
+    placeholder = 'Default text',
+    onChange = () => {},
+    selectedOptions = []
   } = props
 
   const [icon, setIcon] = useState(<ArrowDownIcon />)
   const [isOpened, setIsOpened] = useState(false)
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [placeholderText, setPlaceholderText] = useState(placeholder)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  
+
   const toggleDropdown = () => {
     setIsOpened(!isOpened)
-    setIcon(!isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
   }
 
-  const updateOptions = (value: string) => {
-    if (selectedOptions.includes(value)) {
-      const options = selectedOptions.filter((item) => item !== value)
-      setSelectedOptions([...options])
+  const removeOption = (value: string) => {
+    const newValue = selectedOptions.filter(option => option.name !== value)
+    onChange(newValue)
+  }
+
+  const addOption = (name: string, title) => {
+    const newValue = [...selectedOptions, { name: name, title: title }]
+    onChange(newValue)
+  }
+
+  const updateOptions = (value: string, label) => {
+    if (selectedOptions.some(option => option.name === value)) {
+      removeOption(value)
     } else {
-      setSelectedOptions([...selectedOptions, value])
+      addOption(value, label)
     }
   }
 
@@ -54,16 +71,16 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
       !dropdownRef.current.contains(event.target as Node)
     ) {
       setIsOpened(false)
-      setIcon(isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
     }
   }
 
   const onOptionClick = (option: TOption) => {
-    updateOptions(option.value)
+    updateOptions(option.value, option.label)
     setPlaceholderText(option.label)
     toggleDropdown()
   }
 
+  // TODO: to be moved
   useEffect(() => {
     document.addEventListener('click', handleClickOutside)
     return () => {
@@ -75,6 +92,10 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     setPlaceholderText(placeholder)
   }, [placeholder])
 
+  useEffect(() => {
+    setIcon(isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
+  }, [isOpened])
+
   return (
     <div
       className={styles.select}
@@ -84,7 +105,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
         type={ButtonType.secondary}
         size={size}
         text={placeholderText}
-        align={align}
+        justify={justify}
         disabled={disabled}
         onClick={toggleDropdown}
         suffix={icon}
@@ -100,8 +121,10 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
                 <Checkbox
                   id={option.value}
                   text={option.label}
-                  onChange={() => updateOptions(option.value)}
-                  isChecked={selectedOptions.includes(option.value)}
+                  onChange={() => updateOptions(option.value, option.label)}
+                  isChecked={selectedOptions.some(
+                    selectedOption => selectedOption.name === option.value
+                  )}
                 />
               </li>
             ) : (

@@ -85,7 +85,7 @@ async function getAnime(
   if (res.ok) {
     const data = await res.json()
     return data instanceof Array
-      ? data.map((item) => prepareAnimeData(item))
+      ? data.map(item => prepareAnimeData(item))
       : prepareAnimeData(data)
   }
   return null
@@ -143,11 +143,11 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
 
   const res: LooseObject = {}
 
-  Object.entries(groupedData).map((entries) => {
+  Object.entries(groupedData).map(entries => {
     const key = entries[0]
     const value = entries[1]
 
-    res[key] = value.map((item) => {
+    res[key] = value.map(item => {
       if (item.anime) {
         return prepareAnimeData(item.anime)
       }
@@ -164,7 +164,8 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
 /*TODO: remove it when API will be create */
 export const filterSelects: TFilterSelection[] = [
   {
-    name: 'Жанр',
+    title: 'Жанр',
+    name: 'genre',
     options: [
       {
         label: 'Экшен',
@@ -177,80 +178,30 @@ export const filterSelects: TFilterSelection[] = [
     ]
   },
   {
-    name: 'Тип',
+    title: 'Тип',
+    name: 'kind',
     options: [
       {
-        label: 'Экшен',
-        value: 'action'
+        label: 'ТВ',
+        value: 'TV'
       },
       {
-        label: 'Приключения',
-        value: 'adventure'
+        label: 'Фильм',
+        value: 'Movie'
       }
     ]
   },
   {
-    name: 'Тип',
+    title: 'Сезон',
+    name: 'season',
     options: [
       {
-        label: 'Экшен',
-        value: 'action'
+        label: 'Зима',
+        value: 'winter'
       },
       {
-        label: 'Приключения',
-        value: 'adventure'
-      }
-    ]
-  },
-  {
-    name: 'Тип',
-    options: [
-      {
-        label: 'Экшен',
-        value: 'action'
-      },
-      {
-        label: 'Приключения',
-        value: 'adventure'
-      }
-    ]
-  },
-  {
-    name: 'Тип',
-    options: [
-      {
-        label: 'Экшен',
-        value: 'action'
-      },
-      {
-        label: 'Приключения',
-        value: 'adventure'
-      }
-    ]
-  },
-  {
-    name: 'Тип',
-    options: [
-      {
-        label: 'Экшен',
-        value: 'action'
-      },
-      {
-        label: 'Приключения',
-        value: 'adventure'
-      }
-    ]
-  },
-  {
-    name: 'Тип',
-    options: [
-      {
-        label: 'Экшен',
-        value: 'action'
-      },
-      {
-        label: 'Приключения',
-        value: 'adventure'
+        label: 'Лето',
+        value: 'summer'
       }
     ]
   }

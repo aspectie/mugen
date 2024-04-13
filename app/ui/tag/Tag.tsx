@@ -6,15 +6,17 @@ import { CloseIcon } from '@/assets/icons'
 import styles from './tag.module.scss'
 
 const Tag = (props: {
-  text: string,
-  size?: TFieldSize,
-  onClick: (event: React.MouseEvent<HTMLOrSVGElement>) => void
+  name: string
+  text: string
+  size?: TFieldSize
+  onClick?: (name: string) => void
 }) => {
   const {
     text = 'Default text',
     size = FieldSize.small,
-    onClick
-  } = props;
+    onClick = () => {},
+    name
+  } = props
 
   const classes = classNames(styles.tag, {
     [styles[`tag--${size}`]]: size
@@ -22,7 +24,10 @@ const Tag = (props: {
 
   return (
     <span className={classes}>
-      <CloseIcon className={styles.tag__close} onClick={onClick}/>
+      <CloseIcon
+        className={styles.tag__close}
+        onClick={() => onClick(name)}
+      />
       <span className={styles.tag__text}>{text}</span>
     </span>
   )

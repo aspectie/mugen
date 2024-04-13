@@ -1,55 +1,34 @@
-export const enum FieldSize {
+import {
+  ButtonType,
+  TButtonType,
+  ButtonJustify,
+  TButtonJustify
+} from './button'
+import { CardSize, TCardPreferences, TCardData } from './card'
+import { TOption } from './select'
+import { FilterType, TFilterType, TFilterSelection } from './filter'
+import { InputType, TInputType } from './input'
+
+enum FieldSize {
+  smallest = 'smallest',
+  extraSmall = 'extra-small',
   small = 'small',
   medium = 'medium',
   large = 'large'
 }
-export type TFieldSize = keyof typeof FieldSize
 
-export const enum CardSize {
-  vertical = 'vertical',
-  horizontal = 'horizontal'
-}
-export type TCardPreferences = {
-  type?: keyof typeof CardSize
-  size?: TFieldSize
-  isHighlight?: boolean
-}
+type TFieldSize = `${FieldSize}`
 
-export type TCardData = {
-  id: number
-  url?: string
-  imageUrl: string
-  date?: string
-  title?: string
-  series?: string
-}
+export { FieldSize, ButtonType, ButtonJustify, CardSize, FilterType, InputType }
 
-export const enum ButtonType {
-  primary = 'primary',
-  secondary = 'secondary',
-  ghost = 'ghost',
-  transparent = 'transparent'
-}
-export type TButtonType = keyof typeof ButtonType
-
-export const enum InputType {
-  transparent = 'transparent'
-}
-export type TInputType = keyof typeof InputType
-
-export type TOption = {
-  label: string
-  value: string
-}
-
-export enum FilterType {
-  detailed = 'detailed',
-  small = 'small'
-}
-
-export type TFilterType = keyof typeof FilterType
-
-export type TFilterSelection = {
-  name: string
-  options: TOption[]
+export type {
+  TFieldSize,
+  TButtonType,
+  TButtonJustify,
+  TCardPreferences,
+  TCardData,
+  TOption,
+  TFilterType,
+  TFilterSelection,
+  TInputType
 }

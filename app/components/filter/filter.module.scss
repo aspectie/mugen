@@ -10,22 +10,11 @@
   &--detailed {
     gap: $space-l;
 
-    .filter__controls {
-      display: flex;
-      flex-direction: column;
-      gap: $space-s;
-    }
-
     .filter__selects {
-      display: none;
+      display: grid;
       grid-template-columns: repeat(7, 1fr);
       row-gap: $space-m;
       column-gap: $space-m;
-
-      &--displayed {
-        display: grid;
-      }
-
     }
 
     .filter__search-area {
@@ -35,10 +24,6 @@
 
   &--small {
     gap: $space-m;
-
-    .filter__controls {
-      display: none;
-    }
 
     .filter__selects {
       grid-template-columns: repeat(2, 1fr);
@@ -51,42 +36,32 @@
     }
   }
 
-  &__controls {
-    @include h5;
-
-    &-item {
-      display: flex;
-      width: max-content;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      gap: $space-s;
-
-      &:hover {
-        color: $accent-120;
-      }
-    }
-  }
-
   &__selects {
     width: 100%;
     display: grid;
   }
 
   &__tags {
-    display: none;
+    display: flex;
     gap: $space-s;
     flex-wrap: wrap;
     width: 100%;
-
-    &--displayed {
-      display: flex;
-    }
   }
 
   &__search-area {
     width: 100%;
     display: flex;
     gap: $space-m;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-m;
+
+  &--isHidden {
+    display: none;
   }
 }
 

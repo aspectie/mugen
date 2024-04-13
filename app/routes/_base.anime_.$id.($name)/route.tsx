@@ -19,6 +19,7 @@ import {
 } from '@/components/carousel/Carousel'
 import { TAnime } from '@/types/api/anime'
 import Player from '@/components/player/Player'
+import { ButtonJustify, ButtonType, FieldSize } from '@/types/ui'
 
 export const handle = { i18n: ['default', 'account', 'anime', 'actions'] }
 
@@ -141,14 +142,14 @@ function MainCard({
         <Button
           text={t('watch', { ns: 'actions' })}
           onClick={scrollToPlayer}
-          size="small"
+          size={FieldSize.small}
         />
         <Button
           text={`${t('add to', { ns: 'actions' })} ${t('favourites', {
             ns: 'default'
           }).toLocaleLowerCase()}`}
-          type="ghost"
-          size="small"
+          type={ButtonType.ghost}
+          size={FieldSize.small}
         />
         <Select
           placeholder={`${t('add to', { ns: 'actions' })} ${t('list', {
@@ -180,8 +181,8 @@ function MainCard({
               value: UserRateStatus.watching
             }
           ]}
-          size="small"
-          align="center"
+          size={FieldSize.small}
+          justify={ButtonJustify.center}
         />
       </div>
     </>

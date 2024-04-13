@@ -1,4 +1,8 @@
-@mixin field--extra-small {
+@mixin field--smallest {
+  @include p
+}
+
+@mixin field--extra_small {
   padding: $space-xs $space-s;
   
   @include p
