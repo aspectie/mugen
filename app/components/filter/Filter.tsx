@@ -44,7 +44,7 @@ const Filter = (props: TFilterProps) => {
 
   const onTagRemove = (name: string) => {
     const updatedParams: object = { ...filterParams }
-
+    // TODO: fix types
     Object.keys(updatedParams).forEach((key: string) => {
       updatedParams[key] = updatedParams[key].filter(
         (value: string) => value !== name
@@ -69,10 +69,6 @@ const Filter = (props: TFilterProps) => {
     [styles[`filters--isHidden`]]: isFiltersHidden
   })
 
-  const disabledSer = () => {
-    return Object.keys(filterParams).length < 1 && searchParams.length < 1
-  }
-
   return (
     <div className={classes}>
       <Button
@@ -86,6 +82,7 @@ const Filter = (props: TFilterProps) => {
       <div className={filtersClasses}>
         <div className={styles.filter__selects}>
           {selects.map(item => (
+            // TODO: fix types
             <Select
               key={item.name}
               placeholder={item.title}
@@ -97,8 +94,9 @@ const Filter = (props: TFilterProps) => {
           ))}
         </div>
         <div className={styles.filter__tags}>
-          {Object.entries(filterParams).map(option =>
-            option[1].map(tag => (
+          {Object.values(filterParams).map(option =>
+            // TODO: fix types
+            option.map(tag => (
               <Tag
                 name={tag.name}
                 text={tag.title}
@@ -120,7 +118,7 @@ const Filter = (props: TFilterProps) => {
           <Button
             text={t('search')}
             size="small"
-            disabled={disabledSer()}
+            disabled={searchParams.length === 0}
           />
         </div>
       </div>
