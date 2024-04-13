@@ -1,0 +1,49 @@
+.rating {
+  display: inline-flex;
+  padding: $space-s;
+  background-color: $gray-40;
+  border-radius: $space-xs;
+  color: $black-80;
+  transition: all 0.1s;
+  gap: $space-m;
+  overflow: hidden;
+  cursor: pointer;
+
+  &:hover {
+    @include shadow-xs;
+  }
+
+  &__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-s;
+  }
+
+  &__score {
+    font-weight: $bold;
+    color: $black-200;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  &__icon {
+    fill: $black-80;
+  }
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-s;
+  font-weight: $bold;
+  cursor: pointer;
+
+  &__title {
+    line-height: 1;
+    max-width: 65px;
+  }
+
+  &__icon {
+    fill: $black-80;
+  }
+}
