@@ -1,4 +1,4 @@
-import { useEffect, MutableRefObject, useRef, useState } from 'react'
+import { MutableRefObject, useRef } from 'react'
 import { Link, useLoaderData } from '@remix-run/react'
 import { json, LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { useTranslation } from 'react-i18next'
@@ -20,6 +20,7 @@ import {
 import { TAnime } from '@/types/api/anime'
 import Player from '@/components/player/Player'
 import { ButtonJustify, ButtonType, FieldSize } from '@/types/ui'
+import Rating from '@/components/rating/Rating'
 
 export const handle = { i18n: ['default', 'account', 'anime', 'actions'] }
 
@@ -64,12 +65,15 @@ export default function AnimePage() {
           />
         </div>
         <div className="flex flex-col col-span-7 px-l">
-          <div className="mb-2xl">
+          <div className="mb-l">
             <Title
               title={anime.rawData.title}
               score={anime.rawData.score}
             />
             <h5 className="mt-xs text-black-80">{anime.rawData.title.en}</h5>
+          </div>
+          <div className="mb-l">
+            <Rating />
           </div>
           {anime.info && <Information info={anime.info} />}
         </div>
@@ -142,7 +146,7 @@ function MainCard({
         <Button
           text={t('watch', { ns: 'actions' })}
           onClick={scrollToPlayer}
-          size={FieldSize.small}
+          size={FieldSize.medium}
         />
         <Button
           text={`${t('add to', { ns: 'actions' })} ${t('favourites', {
@@ -207,7 +211,7 @@ function Title({
           </h1>
         )}
         <div className="flex items-center ml-l">
-          <StarIcon className="w-l h-l" />
+          <StarIcon className="w-l h-l fill-accent-80" />
           <h1 className="font-bold text-black-80 ml-s">{score}</h1>
         </div>
       </div>
@@ -287,7 +291,7 @@ function Screenshots({
       <div className="flex mt-m bg-gray-40 p-s rounded-[8px]">
         <Carousel>
           <CarouselContent>
-            {screenshots.map((item) => (
+            {screenshots.map(item => (
               <CarouselItem
                 className="lg:basis-1/2 xl:basis-1/4"
                 key={item}
@@ -322,7 +326,7 @@ function Related({
   return (
     <>
       <div>
-        {Object.entries(related).map((entry) => (
+        {Object.entries(related).map(entry => (
           <div
             key={entry[0]}
             className="[&:not(:last-child)]:mb-l "

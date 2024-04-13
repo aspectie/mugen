@@ -1,0 +1,99 @@
+.rating {
+  display: inline-flex;
+  padding: $space-s;
+  background-color: $gray-40;
+  border-radius: $space-xs;
+  color: $black-80;
+  transition: all 0.2s;
+  gap: $space-s;
+  overflow: hidden;
+  font-weight: $bold;
+  cursor: pointer;
+
+  &:hover {
+    @include shadow-xs;
+  }
+
+  &__title {
+    line-height: 1;
+    max-width: 65px;
+    max-height: 29px;
+    text-align: start;
+  }
+
+  &__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-s;
+  }
+
+  &__score {
+    font-weight: $bold;
+    color: $black-200;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  &__remove {
+    stroke: $gray-100;
+    &:hover {
+      stroke: $red-60;
+    }
+  }
+}
+
+.star {
+  position: relative;
+  cursor: pointer;
+
+  &__background {
+    fill: $black-80;
+  }
+
+  &__layer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+
+    &--hidden {
+      display: none;
+    }
+
+    &--half {
+      width: 50%;
+    }
+
+    &--level-0 {
+      svg {
+        fill: $red-120;
+      }
+    }
+    
+    &--level-2 {
+      svg {
+        fill: $red-60;
+      }
+    }
+
+    &--level-4 {
+      svg {
+        fill: $accent-40;
+      }
+    }
+
+    &--level-6 {
+      svg {
+        fill: $accent-80;
+      }
+    }
+
+    &--level-8 {
+      svg {
+        fill: $accent-100;
+      }
+    }
+  }
+}

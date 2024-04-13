@@ -5,7 +5,8 @@ import {
   FieldSize,
   TButtonJustify,
   TButtonType,
-  TFieldSize
+  TFieldSize,
+  TSpace
 } from '@/types/ui'
 import styles from './button.module.scss'
 
@@ -20,6 +21,7 @@ type TButton = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   suffix?: React.ReactNode
   prefix?: React.ReactNode
+  gap?: TSpace
 }
 
 const Button: React.ForwardRefRenderFunction<
@@ -31,11 +33,13 @@ const Button: React.ForwardRefRenderFunction<
     size = FieldSize.extraSmall,
     justify,
     disabled = false,
-    text = 'Default text',
+    text,
     style,
     onClick,
     suffix,
     prefix,
+    gap,
+    children,
     ...rest
   } = props
 
@@ -43,6 +47,7 @@ const Button: React.ForwardRefRenderFunction<
     [styles[`button--${size}`]]: size,
     [styles[`button--${type}`]]: type,
     [styles[`button--${justify}`]]: justify,
+    [styles[`button--gap-${gap}`]]: gap,
     [styles[`button--disabled`]]: disabled
   })
 
@@ -54,7 +59,8 @@ const Button: React.ForwardRefRenderFunction<
       onClick={onClick}
     >
       {prefix}
-      <span className={styles.button__text}>{text}</span>
+      {text && <span className={styles.button__text}>{text}</span>}
+      {children}
       {suffix}
     </button>
   )

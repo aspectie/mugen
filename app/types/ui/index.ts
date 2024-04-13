@@ -16,10 +16,26 @@ enum FieldSize {
   medium = 'medium',
   large = 'large'
 }
-
 type TFieldSize = `${FieldSize}`
 
-export { FieldSize, ButtonType, ButtonJustify, CardSize, FilterType, InputType }
+enum Space {
+  xs = 'xs',
+  s = 's',
+  m = 'm',
+  l = 'l',
+  xl = 'xl'
+}
+type TSpace = `${Space}`
+
+export {
+  FieldSize,
+  ButtonType,
+  ButtonJustify,
+  CardSize,
+  FilterType,
+  InputType,
+  Space
+}
 
 export type {
   TFieldSize,
@@ -30,5 +46,6 @@ export type {
   TOption,
   TFilterType,
   TFilterSelection,
-  TInputType
+  TInputType,
+  TSpace
 }
