@@ -1,28 +1,38 @@
-import { useRef, useState } from 'react'
+import { MouseEvent, TouchEvent, MouseEventHandler, useState } from 'react'
+import classNames from 'classnames'
+
+import { ButtonJustify, ButtonType, FieldSize, Space } from '@/types/ui'
+
 import { CloseIcon, StarIcon } from '@/assets/icons'
 import styles from './rating.module.scss'
-import classNames from 'classnames'
+
 import Button from '@/ui/button/Button'
-import { ButtonJustify, ButtonType, FieldSize, Space } from '@/types/ui'
+
+type TDirection = 'toRight' | 'toLeft'
+type TRatingProps = {
+  fractions: number
+  totalSymbols: number
+  direction: TDirection
+}
 
 const formatValue = (value: number) => {
   return value > 0 && value < 10 ? value.toFixed(1) : value
 }
-// TODO: fix types
-export default function Rating(props: any) {
+
+export default function Rating(props: TRatingProps) {
   const { fractions = 2, totalSymbols = 10, direction = 'toRight' } = props
 
   const [isOpened, setIsOpened] = useState(false)
-  const [score, setScore] = useState(null)
+  const [score, setScore] = useState<number | null>(null)
 
   const toggleIsOpened = () => {
     setIsOpened(!isOpened)
   }
-  const onStarClick = (_score: any) => {
+  const onStarClick = (_score: number | null) => {
     setIsOpened(false)
     setScore(_score)
   }
-  const onRemoveScore = (event: any) => {
+  const onRemoveScore = (event: MouseEvent) => {
     event.stopPropagation()
     setScore(null)
   }
@@ -38,7 +48,7 @@ export default function Rating(props: any) {
           totalSymbols={totalSymbols}
           direction={direction}
           onClick={onStarClick}
-          onChange={(_score: any) => setScore(_score)}
+          onChange={(_score: number) => setScore(_score)}
           score={score || 0}
         />
       ) : (
@@ -84,14 +94,17 @@ function Interactive({
   onChange,
   score
 }: {
-  fractions: any
-  totalSymbols: any
-  direction: any
-  onClick: any
-  onChange: any
+  fractions: number
+  totalSymbols: number
+  direction: TDirection
+  onClick: (score: number | null) => void
+  onChange: (value: number) => void
   score: number
 }) {
-  const calculateValue = (index: any, event: any) => {
+  const calculateValue = (
+    event: MouseEvent<HTMLElement> | TouchEvent<HTMLElement>,
+    index: number
+  ) => {
     const percentage = calculateHoverPercentage(event)
     const fraction = Math.ceil((percentage % 1) * fractions) / fractions
     const precision = 10 ** 3
@@ -107,15 +120,17 @@ function Interactive({
       : 1 / fractions
   }
 
-  const calculateHoverPercentage = (event: any) => {
+  const calculateHoverPercentage = (
+    event: MouseEvent<HTMLElement> | TouchEvent<HTMLElement>
+  ) => {
     const clientX =
       event.nativeEvent.type.indexOf('touch') > -1
         ? event.nativeEvent.type.indexOf('touchend') > -1
-          ? event.changedTouches[0].clientX
-          : event.touches[0].clientX
-        : event.clientX
+          ? (event as TouchEvent).changedTouches[0].clientX
+          : (event as TouchEvent).touches[0].clientX
+        : (event as MouseEvent).clientX
 
-    const targetRect = event.target.getBoundingClientRect()
+    const targetRect = (event.target as HTMLElement).getBoundingClientRect()
     const delta =
       direction === 'toLeft'
         ? targetRect.right - clientX
@@ -124,8 +139,11 @@ function Interactive({
     return delta < 0 ? 0 : delta / targetRect.width
   }
 
-  const onMouseMove = (event: any, index: any) => {
-    const value = calculateValue(index, event)
+  const onScoreChange = (
+    event: MouseEvent<HTMLElement> | TouchEvent<HTMLElement>,
+    index: number
+  ) => {
+    const value = calculateValue(event, index)
     onChange(value)
   }
 
@@ -136,7 +154,9 @@ function Interactive({
 
     starNodes.push(
       <Star
-        onMouseMove={(event: any) => onMouseMove(event, i)}
+        onChange={(event: MouseEvent<HTMLElement> | TouchEvent<HTMLElement>) =>
+          onScoreChange(event, i)
+        }
         key={i}
         isFilled={isFilled}
         isHalf={isHalf}
@@ -163,12 +183,12 @@ function Star({
   isFilled,
   isHalf,
   score,
-  onMouseMove
+  onChange
 }: {
   isFilled: boolean
   isHalf: boolean
   score: number
-  onMouseMove?: any
+  onChange?: MouseEventHandler<HTMLLabelElement>
 }) {
   const levels = [0, 2, 4, 6, 8]
 
@@ -194,7 +214,8 @@ function Star({
   return (
     <label
       className={styles.star}
-      onMouseMove={onMouseMove}
+      onMouseMove={onChange}
+      onClick={onChange}
     >
       <span className={starLayerClasses}>
         <StarIcon />
