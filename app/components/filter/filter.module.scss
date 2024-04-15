@@ -47,15 +47,16 @@
     flex-wrap: wrap;
     width: 100%;
 
-    &--isHidden {
+    &--hidden {
       display: none;
     }
   }
 
   &__search-area {
     width: 100%;
-    display: flex;
-    gap: $space-m;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    column-gap: $space-m;
   }
 }
 
@@ -64,7 +65,7 @@
   flex-wrap: wrap;
   gap: $space-m;
 
-  &--isHidden {
+  &--hidden {
     display: none;
   }
 }

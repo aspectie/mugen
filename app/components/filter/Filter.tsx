@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import classNames from 'classnames'
 
 import {
@@ -31,7 +31,9 @@ const Filter = (props: TFilterProps) => {
 
   const [filterParams, setFilterParams] = useState({})
   const [searchParams, setSearchParams] = useState('')
-  const [isFiltersHidden, setIsFiltersHidden] = useState(true)
+  const [isFiltersHidden, setIsFiltersHidden] = useState(
+    type === FilterType.detailed
+  )
 
   const toggleFiltersVisibility = () => {
     setIsFiltersHidden(!isFiltersHidden)
@@ -66,16 +68,12 @@ const Filter = (props: TFilterProps) => {
   })
 
   const filtersClasses = classNames(styles.filters, {
-    [styles[`filters--isHidden`]]: isFiltersHidden
+    [styles[`filters--hidden`]]: isFiltersHidden
   })
 
   const tagsClasses = classNames(styles.filter__tags, {
-    [styles[`filter__tags--isHidden`]]: Object.keys(filterParams).length === 0
+    [styles[`filter__tags--hidden`]]: Object.keys(filterParams).length === 0
   })
-
-  useEffect(() => {
-    setIsFiltersHidden(type == FilterType.detailed)
-  }, [type])
 
   return (
     <div className={classes}>
@@ -84,7 +82,11 @@ const Filter = (props: TFilterProps) => {
           {selects.map(item => (
             // TODO: fix types
             <Select
-              size={type === FilterType.detailed ? 'small' : 'medium'}
+              size={
+                type === FilterType.detailed
+                  ? FieldSize.small
+                  : FieldSize.medium
+              }
               key={item.name}
               placeholder={item.title}
               options={item.options}
@@ -94,23 +96,25 @@ const Filter = (props: TFilterProps) => {
             />
           ))}
         </div>
-        <div className={tagsClasses}>
-          {Object.values(filterParams).map(option =>
-            // TODO: fix types
-            option.map((tag: string) => (
-              <Tag
-                name={tag.name}
-                text={tag.title}
-                key={tag.name}
-                onClick={() => onTagRemove(tag)}
-              />
-            ))
-          )}
-        </div>
+        {Object.keys(filterParams).length > 0 && (
+          <div className={tagsClasses}>
+            {Object.values(filterParams).map(option =>
+              // TODO: fix types
+              option.map((tag: string) => (
+                <Tag
+                  name={tag.name}
+                  text={tag.title}
+                  key={tag.name}
+                  onClick={() => onTagRemove(tag)}
+                />
+              ))
+            )}
+          </div>
+        )}
       </div>
       <div className={styles['filter__search-area']}>
         {type === FilterType.detailed && (
-          <div className="w-[111px] hover:text-accent-120">
+          <div className="hover:text-accent-120">
             <Button
               text={t('extended filter')}
               type={ButtonType.ghost}
@@ -130,7 +134,7 @@ const Filter = (props: TFilterProps) => {
         <div className={styles['search-area__search-button']}>
           <Button
             text={t('search')}
-            size="small"
+            size={FieldSize.small}
             disabled={
               searchParams.length === 0 &&
               Object.keys(filterParams).length === 0
