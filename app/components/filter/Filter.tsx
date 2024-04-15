@@ -108,7 +108,6 @@ const Filter = (props: TFilterProps) => {
         {Object.keys(filterParams).length > 0 && (
           <div className={tagsClasses}>
             {Object.values(filterParams).map((option: TOption[]) =>
-              // TODO: fix types
               option.map((tag: TOption) => (
                 <Tag
                   name={tag.name}
