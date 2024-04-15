@@ -52,7 +52,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     onChange(newValue)
   }
 
-  const addOption = (name: string, title) => {
+  const addOption = (name: string, title: string) => {
     const newValue = [...selectedOptions, { name: name, title: title }]
     onChange(newValue)
   }

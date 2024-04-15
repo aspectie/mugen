@@ -12,7 +12,7 @@ import {
 } from '@/types/ui'
 
 import styles from './filter.module.scss'
-import { FilterIcon, SortIcon } from '@/assets/icons'
+import { FilterIcon } from '@/assets/icons'
 
 import Select from '@/ui/select/Select'
 import Search from '@/ui/search/Search'
@@ -69,21 +69,22 @@ const Filter = (props: TFilterProps) => {
     [styles[`filters--isHidden`]]: isFiltersHidden
   })
 
+  const tagsClasses = classNames(styles.filter__tags, {
+    [styles[`filter__tags--isHidden`]]: Object.keys(filterParams).length === 0
+  })
+
+  useEffect(() => {
+    setIsFiltersHidden(type == FilterType.detailed)
+  }, [type])
+
   return (
     <div className={classes}>
-      <Button
-        text={t('extended filter')}
-        type={ButtonType.transparent}
-        prefix={<FilterIcon />}
-        size={FieldSize.smallest}
-        justify={ButtonJustify.start}
-        onClick={toggleFiltersVisibility}
-      />
       <div className={filtersClasses}>
         <div className={styles.filter__selects}>
           {selects.map(item => (
             // TODO: fix types
             <Select
+              size={type === FilterType.detailed ? 'small' : 'medium'}
               key={item.name}
               placeholder={item.title}
               options={item.options}
@@ -93,10 +94,10 @@ const Filter = (props: TFilterProps) => {
             />
           ))}
         </div>
-        <div className={styles.filter__tags}>
+        <div className={tagsClasses}>
           {Object.values(filterParams).map(option =>
             // TODO: fix types
-            option.map(tag => (
+            option.map((tag: string) => (
               <Tag
                 name={tag.name}
                 text={tag.title}
@@ -108,9 +109,21 @@ const Filter = (props: TFilterProps) => {
         </div>
       </div>
       <div className={styles['filter__search-area']}>
+        {type === FilterType.detailed && (
+          <div className="w-[111px] hover:text-accent-120">
+            <Button
+              text={t('extended filter')}
+              type={ButtonType.ghost}
+              prefix={<FilterIcon />}
+              size={FieldSize.extraSmall}
+              justify={ButtonJustify.center}
+              onClick={toggleFiltersVisibility}
+            />
+          </div>
+        )}
         <div className={styles['search-area__search-input']}>
           <Search
-            placeholder={t('title...')}
+            placeholder={t('title')}
             onChange={searchHandler}
           />
         </div>
@@ -118,7 +131,10 @@ const Filter = (props: TFilterProps) => {
           <Button
             text={t('search')}
             size="small"
-            disabled={searchParams.length === 0}
+            disabled={
+              searchParams.length === 0 &&
+              Object.keys(filterParams).length === 0
+            }
           />
         </div>
       </div>
