@@ -161,28 +161,28 @@ function MainCard({
           }).toLocaleLowerCase()}`}
           options={[
             {
-              label: t('status.completed', { ns: 'anime' }),
-              value: UserRateStatus.completed
+              title: t('status.completed', { ns: 'anime' }),
+              name: UserRateStatus.completed
             },
             {
-              label: t('status.dropped', { ns: 'anime' }),
-              value: UserRateStatus.dropped
+              title: t('status.dropped', { ns: 'anime' }),
+              name: UserRateStatus.dropped
             },
             {
-              label: t('status.on hold', { ns: 'anime' }),
-              value: UserRateStatus.on_hold
+              title: t('status.on hold', { ns: 'anime' }),
+              name: UserRateStatus.on_hold
             },
             {
-              label: t('status.planned', { ns: 'anime' }),
-              value: UserRateStatus.planned
+              title: t('status.planned', { ns: 'anime' }),
+              name: UserRateStatus.planned
             },
             {
-              label: t('status.rewatching', { ns: 'anime' }),
-              value: UserRateStatus.rewatching
+              title: t('status.rewatching', { ns: 'anime' }),
+              name: UserRateStatus.rewatching
             },
             {
-              label: t('status.watching', { ns: 'anime' }),
-              value: UserRateStatus.watching
+              title: t('status.watching', { ns: 'anime' }),
+              name: UserRateStatus.watching
             }
           ]}
           size={FieldSize.small}
