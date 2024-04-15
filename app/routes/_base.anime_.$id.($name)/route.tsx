@@ -57,20 +57,22 @@ export default function AnimePage() {
     anime &&
     anime.rawData && (
       <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">
-        <div className="col-span-2">
+        <div className="xl:col-span-2 lg:col-span-3 md:col-span-4 sm:col-span-5 col-span-12 sm:mb-auto mb-l gap-s">
           <MainCard
             image={anime.imageUrl}
             title={anime.rawData.title}
             playerRef={playerRef}
           />
         </div>
-        <div className="flex flex-col col-span-7 px-l">
+        <div className="flex flex-col xl:col-span-7 lg:col-span-9 md:col-span-8 sm:col-span-7 col-span-12 sm:px-l px-auto">
           <div className="mb-l">
             <Title
               title={anime.rawData.title}
               score={anime.rawData.score}
             />
-            <h5 className="mt-xs text-black-80">{anime.rawData.title.en}</h5>
+            <h5 className="mt-xs text-black-80 sm:text-start text-center">
+              {anime.rawData.title.en}
+            </h5>
           </div>
           <div className="mb-l">
             <Rating />
@@ -79,7 +81,7 @@ export default function AnimePage() {
         </div>
         {/* TODO: move out of this container because sections on the left are affected */}
         {anime.related && Object.keys(anime.related).length > 0 && (
-          <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex flex-col justify-between">
+          <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex-col justify-between xl:flex hidden">
             <Related
               id={anime.rawData.id}
               related={anime.related}
@@ -87,10 +89,12 @@ export default function AnimePage() {
           </div>
         )}
         {anime.rawData.description && (
-          <Description description={anime.rawData.description} />
+          <div className="mt-l pr-l xl:col-span-9 col-span-12">
+            <Description description={anime.rawData.description} />
+          </div>
         )}
         {anime.screenshots && anime.screenshots.length > 0 && (
-          <div className="mt-l col-span-9">
+          <div className="mt-l xl:col-span-9 lg:col-span-12 col-span-12">
             <Screenshots
               title={anime.rawData.title}
               screenshots={anime.screenshots}
@@ -100,7 +104,7 @@ export default function AnimePage() {
         {anime.playerLink && (
           <div
             ref={playerRef}
-            className="col-start-1 col-end-10 self-end mt-l"
+            className="xl:col-span-9 lg:col-span-12 col-span-12 self-end mt-l"
           >
             <Player link={anime.playerLink} />
           </div>
@@ -204,13 +208,13 @@ function Title({
 
   return (
     <>
-      <div className="flex items-start">
+      <div className="flex items-start md:flex-nowrap flex-wrap sm:justify-start justify-center">
         {Object.keys(title).includes(i18n.language) && (
-          <h1 className="font-bold w-5/6 text-black-100">
+          <h1 className="font-bold w-full sm:text-start text-center text-black-100">
             {title[i18n.language as keyof typeof title]}
           </h1>
         )}
-        <div className="flex items-center ml-l">
+        <div className="flex items-center">
           <StarIcon className="w-l h-l fill-accent-80" />
           <h1 className="font-bold text-black-80 ml-s">{score}</h1>
         </div>
@@ -260,12 +264,12 @@ function Description({
   const { t } = useTranslation(['default'])
 
   return (
-    <div className="mt-l col-span-9 pr-l">
+    <>
       <h4 className="font-bold text-black-80">
         {t('description', { ns: 'default' })}
       </h4>
       <p className="mt-m text-black-80">{description}</p>
-    </div>
+    </>
   )
 }
 

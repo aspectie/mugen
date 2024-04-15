@@ -18,9 +18,9 @@ import Button from '@/ui/button/Button'
 
 type TDirection = 'toRight' | 'toLeft'
 type TRatingProps = {
-  fractions: number
-  totalSymbols: number
-  direction: TDirection
+  fractions?: number
+  totalSymbols?: number
+  direction?: TDirection
 }
 
 const formatValue = (value: number) => {
