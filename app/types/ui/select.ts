@@ -1,4 +1,4 @@
 export type TOption = {
-  label: string
-  value: string
+  name: string
+  title: string
 }

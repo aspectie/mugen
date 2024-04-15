@@ -12,3 +12,7 @@ export type TFilterSelection = {
   name: string
   options: TOption[]
 }
+
+export type TSelectedOptions = {
+  [key: string]: TOption[]
+}

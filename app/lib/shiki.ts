@@ -168,12 +168,12 @@ export const filterSelects: TFilterSelection[] = [
     name: 'genre',
     options: [
       {
-        label: 'Экшен',
-        value: 'action'
+        title: 'Экшен',
+        name: 'action'
       },
       {
-        label: 'Приключения',
-        value: 'adventure'
+        title: 'Приключения',
+        name: 'adventure'
       }
     ]
   },
@@ -182,12 +182,12 @@ export const filterSelects: TFilterSelection[] = [
     name: 'kind',
     options: [
       {
-        label: 'ТВ',
-        value: 'TV'
+        title: 'ТВ',
+        name: 'TV'
       },
       {
-        label: 'Фильм',
-        value: 'Movie'
+        title: 'Фильм',
+        name: 'Movie'
       }
     ]
   },
@@ -196,12 +196,12 @@ export const filterSelects: TFilterSelection[] = [
     name: 'season',
     options: [
       {
-        label: 'Зима',
-        value: 'winter'
+        title: 'Зима',
+        name: 'winter'
       },
       {
-        label: 'Лето',
-        value: 'summer'
+        title: 'Лето',
+        name: 'summer'
       }
     ]
   }

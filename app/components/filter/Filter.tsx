@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import classNames from 'classnames'
 
 import {
@@ -8,11 +8,13 @@ import {
   FieldSize,
   FilterType,
   TFilterSelection,
-  TFilterType
+  TFilterType,
+  TOption
 } from '@/types/ui'
+import { TSelectedOptions } from '@/types/ui/filter'
 
 import styles from './filter.module.scss'
-import { FilterIcon, SortIcon } from '@/assets/icons'
+import { FilterIcon } from '@/assets/icons'
 
 import Select from '@/ui/select/Select'
 import Search from '@/ui/search/Search'
@@ -29,32 +31,40 @@ const Filter = (props: TFilterProps) => {
 
   const { t } = useTranslation('ui')
 
-  const [filterParams, setFilterParams] = useState({})
+  const [filterParams, setFilterParams] = useState<TSelectedOptions>({})
   const [searchParams, setSearchParams] = useState('')
-  const [isFiltersHidden, setIsFiltersHidden] = useState(true)
+  const [isFiltersHidden, setIsFiltersHidden] = useState(
+    type === FilterType.detailed
+  )
 
   const toggleFiltersVisibility = () => {
     setIsFiltersHidden(!isFiltersHidden)
   }
 
-  const onSelectChange = (name: string, options: string[]) => {
-    const newValue = { ...filterParams, [name]: options }
+  const onSelectChange = (name: string, options: TOption[]) => {
+    const newValue: TSelectedOptions = { ...filterParams, [name]: options }
+    Object.keys(newValue).forEach((key: string) => {
+      checkIsParamsEmpty(newValue, key)
+    })
     setFilterParams(newValue)
   }
 
-  const onTagRemove = (name: string) => {
-    const updatedParams: object = { ...filterParams }
-    // TODO: fix types
+  const onTagRemove = (name: TOption) => {
+    const updatedParams: TSelectedOptions = { ...filterParams }
     Object.keys(updatedParams).forEach((key: string) => {
       updatedParams[key] = updatedParams[key].filter(
-        (value: string) => value !== name
+        (value: TOption) => value !== name
       )
 
-      if (updatedParams[key].length === 0) {
-        delete updatedParams[key]
-      }
+      checkIsParamsEmpty(updatedParams, key)
     })
     setFilterParams(updatedParams)
+  }
+
+  const checkIsParamsEmpty = (params: TSelectedOptions, key: string) => {
+    if (params[key].length === 0) {
+      delete params[key]
+    }
   }
 
   const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,59 +76,77 @@ const Filter = (props: TFilterProps) => {
   })
 
   const filtersClasses = classNames(styles.filters, {
-    [styles[`filters--isHidden`]]: isFiltersHidden
+    [styles[`filters--hidden`]]: isFiltersHidden
+  })
+
+  const tagsClasses = classNames(styles.filter__tags, {
+    [styles[`filter__tags--hidden`]]: Object.keys(filterParams).length === 0
   })
 
   return (
     <div className={classes}>
-      <Button
-        text={t('extended filter')}
-        type={ButtonType.transparent}
-        prefix={<FilterIcon />}
-        size={FieldSize.smallest}
-        justify={ButtonJustify.start}
-        onClick={toggleFiltersVisibility}
-      />
       <div className={filtersClasses}>
         <div className={styles.filter__selects}>
-          {selects.map(item => (
-            // TODO: fix types
+          {selects.map((item: TFilterSelection) => (
             <Select
+              size={
+                type === FilterType.detailed
+                  ? FieldSize.small
+                  : FieldSize.medium
+              }
               key={item.name}
               placeholder={item.title}
               options={item.options}
               isMulti={true}
-              onChange={name => onSelectChange(item.name, name)}
+              onChange={(option: TOption[]) =>
+                onSelectChange(item.name, option)
+              }
               selectedOptions={filterParams[item.name] || []}
             />
           ))}
         </div>
-        <div className={styles.filter__tags}>
-          {Object.values(filterParams).map(option =>
-            // TODO: fix types
-            option.map(tag => (
-              <Tag
-                name={tag.name}
-                text={tag.title}
-                key={tag.name}
-                onClick={() => onTagRemove(tag)}
-              />
-            ))
-          )}
-        </div>
+        {Object.keys(filterParams).length > 0 && (
+          <div className={tagsClasses}>
+            {Object.values(filterParams).map((option: TOption[]) =>
+              option.map((tag: TOption) => (
+                <Tag
+                  name={tag.name}
+                  text={tag.title}
+                  key={tag.name}
+                  onClick={() => onTagRemove(tag)}
+                />
+              ))
+            )}
+          </div>
+        )}
       </div>
       <div className={styles['filter__search-area']}>
+        {type === FilterType.detailed && (
+          <div className="hover:text-accent-120">
+            <Button
+              text={t('extended filter')}
+              type={ButtonType.ghost}
+              prefix={<FilterIcon />}
+              size={FieldSize.extraSmall}
+              justify={ButtonJustify.center}
+              onClick={toggleFiltersVisibility}
+            />
+          </div>
+        )}
         <div className={styles['search-area__search-input']}>
           <Search
-            placeholder={t('title...')}
+            placeholder={t('title')}
             onChange={searchHandler}
           />
         </div>
         <div className={styles['search-area__search-button']}>
           <Button
             text={t('search')}
-            size="small"
-            disabled={searchParams.length === 0}
+            size={FieldSize.small}
+            disabled={
+              searchParams.length === 0 &&
+              Object.keys(filterParams).length === 0
+            }
           />
         </div>
       </div>

@@ -46,12 +46,17 @@
     gap: $space-s;
     flex-wrap: wrap;
     width: 100%;
+
+    &--hidden {
+      display: none;
+    }
   }
 
   &__search-area {
     width: 100%;
-    display: flex;
-    gap: $space-m;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    column-gap: $space-m;
   }
 }
 
@@ -60,7 +65,7 @@
   flex-wrap: wrap;
   gap: $space-m;
 
-  &--isHidden {
+  &--hidden {
     display: none;
   }
 }
@@ -68,7 +73,7 @@
 .search-area {
   &__search-input {
     width: 100%;
-    flex-shrink: 1;
+    flex-shrink: 2;
   }
 
   &__button-button {

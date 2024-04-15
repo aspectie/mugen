@@ -21,8 +21,8 @@ type TSelect = {
   children?: React.ReactNode
   style?: React.CSSProperties
   placeholder?: string
-  onChange?: (options: string[]) => void
-  selectedOptions?: string[]
+  onChange?: (options: TOption[]) => void
+  selectedOptions?: TOption[]
 }
 const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   props: TSelect
@@ -47,21 +47,27 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     setIsOpened(!isOpened)
   }
 
-  const removeOption = (value: string) => {
-    const newValue = selectedOptions.filter(option => option.name !== value)
+  const removeOption = (name: string) => {
+    const newValue: TOption[] = selectedOptions.filter(
+      (option: TOption) => option.name !== name
+    )
+
     onChange(newValue)
   }
 
-  const addOption = (name: string, title) => {
-    const newValue = [...selectedOptions, { name: name, title: title }]
+  const addOption = (name: string, title: string) => {
+    const newValue: TOption[] = [
+      ...selectedOptions,
+      { name: name, title: title }
+    ]
     onChange(newValue)
   }
 
-  const updateOptions = (value: string, label) => {
-    if (selectedOptions.some(option => option.name === value)) {
-      removeOption(value)
+  const updateOptions = (name: string, title: string) => {
+    if (selectedOptions.some((option: TOption) => option.name === name)) {
+      removeOption(name)
     } else {
-      addOption(value, label)
+      addOption(name, title)
     }
   }
 
@@ -75,8 +81,8 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   }
 
   const onOptionClick = (option: TOption) => {
-    updateOptions(option.value, option.label)
-    setPlaceholderText(option.label)
+    updateOptions(option.name, option.title)
+    setPlaceholderText(option.title)
     toggleDropdown()
   }
 
@@ -116,24 +122,25 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
             isMulti ? (
               <li
                 className={styles.option}
-                key={option.value}
+                key={option.name}
               >
                 <Checkbox
-                  id={option.value}
-                  text={option.label}
-                  onChange={() => updateOptions(option.value, option.label)}
+                  id={option.name}
+                  text={option.title}
+                  onChange={() => updateOptions(option.name, option.title)}
                   isChecked={selectedOptions.some(
-                    selectedOption => selectedOption.name === option.value
+                    (selectedOption: TOption) =>
+                      selectedOption.name === option.name
                   )}
                 />
               </li>
             ) : (
               <li
                 className={styles.option}
-                key={option.value}
+                key={option.name}
                 onClick={() => onOptionClick(option)}
               >
-                {option.label}
+                {option.title}
               </li>
             )
           )}
