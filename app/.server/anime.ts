@@ -1,6 +1,6 @@
 import { LooseObject } from '@/types'
 import { convertObjectsArrayToList } from '@/utils/utils'
-import { useApi } from '@/hooks/api'
+import { useApi } from '@/hooks/useApi'
 import { shikiApi } from '@/lib/shiki'
 import { CONSTANTS } from '@/constants'
 import { TAnime } from '@/types/api/anime'

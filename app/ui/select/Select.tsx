@@ -11,6 +11,7 @@ import {
 import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
 
 import styles from './select.module.scss'
+import { useOutsideClick } from '@/hooks/useOutsideClick'
 
 type TSelect = {
   options: TOption[]
@@ -71,28 +72,11 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     }
   }
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      setIsOpened(false)
-    }
-  }
-
   const onOptionClick = (option: TOption) => {
     updateOptions(option.name, option.title)
     setPlaceholderText(option.title)
     toggleDropdown()
   }
-
-  // TODO: to be moved
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside)
-    return () => {
-      document.removeEventListener('click', handleClickOutside)
-    }
-  }, [])
 
   useEffect(() => {
     setPlaceholderText(placeholder)
@@ -101,6 +85,8 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
   useEffect(() => {
     setIcon(isOpened ? <ArrowUpIcon /> : <ArrowDownIcon />)
   }, [isOpened])
+
+  useOutsideClick(dropdownRef, () => setIsOpened(false))
 
   return (
     <div

@@ -5,11 +5,10 @@ import i18n from '@/.server/i18n'
 
 import { TAnime } from '@/types/api/anime'
 
-import { filterSelects, shikiApi } from '@/lib/shiki'
-import { useApi } from '@/hooks/api'
+import { shikiApi } from '@/lib/shiki'
+import { useApi } from '@/hooks/useApi'
 import { prepareCardData } from '@/utils/card'
 import CardList from '@/components/card/CardList'
-import Filter from '@/components/filter/Filter'
 
 export const handle = { i18n: ['default', 'account'] }
 

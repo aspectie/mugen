@@ -1,7 +1,7 @@
 import { Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next'
 
-import { useSearch } from '@/hooks/search'
+import { useSearch } from '@/hooks/useSearch'
 import { LogoIcon } from '@/assets/icons'
 import Search from '@/ui/search/Search'
 import Menu, { TLink } from '@/components/menu/Menu'
