@@ -1,8 +1,16 @@
-import { MouseEvent, TouchEvent, MouseEventHandler, useState } from 'react'
+import {
+  MouseEvent,
+  TouchEvent,
+  MouseEventHandler,
+  useState,
+  useRef
+} from 'react'
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 
 import { ButtonJustify, ButtonType, FieldSize, Space } from '@/types/ui'
 
+import { useOutsideClick } from '@/hooks/useOutsideClick'
 import { CloseIcon, StarIcon } from '@/assets/icons'
 import styles from './rating.module.scss'
 
@@ -24,30 +32,30 @@ export default function Rating(props: TRatingProps) {
 
   const [isOpened, setIsOpened] = useState(false)
   const [score, setScore] = useState<number | null>(null)
+  const ratingRef = useRef(null)
+  const { t } = useTranslation()
 
   const toggleIsOpened = () => {
     setIsOpened(!isOpened)
-  }
-  const onStarClick = (_score: number | null) => {
-    setIsOpened(false)
-    setScore(_score)
   }
   const onRemoveScore = (event: MouseEvent) => {
     event.stopPropagation()
     setScore(null)
   }
 
+  useOutsideClick(ratingRef, () => setIsOpened(false))
+
   return (
     <div
       className={styles.rating}
       onClick={toggleIsOpened}
+      ref={ratingRef}
     >
       {isOpened ? (
         <Interactive
           fractions={fractions}
           totalSymbols={totalSymbols}
           direction={direction}
-          onClick={onStarClick}
           onChange={(_score: number) => setScore(_score)}
           score={score || 0}
         />
@@ -77,7 +85,7 @@ export default function Rating(props: TRatingProps) {
             {score ? (
               <h3>{formatValue(score)}</h3>
             ) : (
-              <h5 className={styles.rating__title}>Ваша оценка</h5>
+              <h5 className={styles.rating__title}>{t('your score')}</h5>
             )}
           </>
         </Button>
@@ -90,14 +98,12 @@ function Interactive({
   fractions,
   totalSymbols,
   direction,
-  onClick,
   onChange,
   score
 }: {
   fractions: number
   totalSymbols: number
   direction: TDirection
-  onClick: (score: number | null) => void
   onChange: (value: number) => void
   score: number
 }) {
@@ -166,12 +172,7 @@ function Interactive({
   }
   return (
     <>
-      <div
-        className={styles.rating__stars}
-        onClick={() => onClick(score)}
-      >
-        {starNodes}
-      </div>
+      <div className={styles.rating__stars}>{starNodes}</div>
       <div className="min-w-2xl">
         <h3 className={styles.rating__score}>{formatValue(score)}</h3>
       </div>
