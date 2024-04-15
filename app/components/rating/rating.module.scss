@@ -1,5 +1,6 @@
 .rating {
   display: inline-flex;
+  flex-wrap: wrap;
   padding: $space-s;
   background-color: $gray-40;
   border-radius: $space-xs;
@@ -24,6 +25,7 @@
   &__stars {
     display: inline-flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: $space-s;
   }
 

@@ -32,14 +32,16 @@ const Header = () => {
             <LogoIcon />
           </Link>
           {links.length > 0 && (
-            <div className="ml-xl">
+            <div className="ml-xl hidden md:block">
               <Menu links={links} />
             </div>
           )}
         </div>
         <div className="flex">
-          <div className="flex gap-4xl items-center text-white">
-            <HeaderSearch />
+          <div className="flex md:gap-4xl gap-m items-center text-white">
+            <div className="hidden sm:block">
+              <HeaderSearch />
+            </div>
             <Link to="/login">
               <p className="text-white font-bold hover:text-accent-100">
                 {t('sign in', { ns: 'account' })}
