@@ -6,14 +6,15 @@ import {
   useRef
 } from 'react'
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 
 import { ButtonJustify, ButtonType, FieldSize, Space } from '@/types/ui'
 
+import { useOutsideClick } from '@/hooks/useOutsideClick'
 import { CloseIcon, StarIcon } from '@/assets/icons'
 import styles from './rating.module.scss'
 
 import Button from '@/ui/button/Button'
-import { useOutsideClick } from '@/hooks/useOutsideClick'
 
 type TDirection = 'toRight' | 'toLeft'
 type TRatingProps = {
@@ -32,6 +33,7 @@ export default function Rating(props: TRatingProps) {
   const [isOpened, setIsOpened] = useState(false)
   const [score, setScore] = useState<number | null>(null)
   const ratingRef = useRef(null)
+  const { t } = useTranslation()
 
   const toggleIsOpened = () => {
     setIsOpened(!isOpened)
@@ -83,7 +85,7 @@ export default function Rating(props: TRatingProps) {
             {score ? (
               <h3>{formatValue(score)}</h3>
             ) : (
-              <h5 className={styles.rating__title}>Ваша оценка</h5>
+              <h5 className={styles.rating__title}>{t('your score')}</h5>
             )}
           </>
         </Button>
