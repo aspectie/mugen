@@ -9,6 +9,8 @@ import ArrowDownIcon from './arrow-down.svg?react'
 import ArrowUpIcon from './arrow-up.svg?react'
 import FilterIcon from './filter.svg?react'
 import SortIcon from './sort.svg?react'
+import MoonIcon from './moon.svg?react'
+import SunIcon from './sun.svg?react'
 
 export {
   NotFoundIcon,
@@ -21,5 +23,7 @@ export {
   ArrowDownIcon,
   ArrowUpIcon,
   FilterIcon,
-  SortIcon
+  SortIcon,
+  MoonIcon,
+  SunIcon
 }
