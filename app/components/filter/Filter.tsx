@@ -36,17 +36,55 @@ const Filter = (props: TFilterProps) => {
   const [isFiltersHidden, setIsFiltersHidden] = useState(
     type === FilterType.detailed
   )
-
   const toggleFiltersVisibility = () => {
     setIsFiltersHidden(!isFiltersHidden)
   }
 
-  const onSelectChange = (name: string, options: TOption[]) => {
-    const newValue: TSelectedOptions = { ...filterParams, [name]: options }
+  const addOption = (name: string, option: TOption) => {
+    if (filterParams[name]) {
+      const newValues = [
+        ...filterParams[name],
+        { name: option.name, title: option.title }
+      ]
+      const newFilterParams = {
+        ...filterParams,
+        [name]: newValues
+      }
+      setFilterParams(newFilterParams)
+    } else {
+      setFilterParams(prevState => ({
+        ...prevState,
+        [name]: [{ name: option.name, title: option.title }]
+      }))
+    }
+  }
+
+  const removeOption = (name: string, option: TOption) => {
+    const newValues: TOption[] = filterParams[name].filter(
+      (item: TOption) => item.name !== option.name
+    )
+    const newFilterParams = {
+      ...filterParams,
+      [name]: newValues
+    }
+    setFilterParams(newFilterParams)
+    const newValue: TSelectedOptions = { ...filterParams, [name]: newValues }
     Object.keys(newValue).forEach((key: string) => {
       checkIsParamsEmpty(newValue, key)
     })
     setFilterParams(newValue)
+  }
+
+  const updateOptions = (name: string, option: TOption) => {
+    if (filterParams[name]) {
+      if (filterParams[name].some(item => item.name === option.name)) {
+        removeOption(name, option)
+      } else {
+        addOption(name, option)
+      }
+    } else {
+      addOption(name, option)
+    }
   }
 
   const onTagRemove = (name: TOption) => {
@@ -55,7 +93,6 @@ const Filter = (props: TFilterProps) => {
       updatedParams[key] = updatedParams[key].filter(
         (value: TOption) => value !== name
       )
-
       checkIsParamsEmpty(updatedParams, key)
     })
     setFilterParams(updatedParams)
@@ -96,11 +133,10 @@ const Filter = (props: TFilterProps) => {
               }
               key={item.name}
               placeholder={item.title}
+              selectName={item.name}
               options={item.options}
               isMulti={true}
-              onChange={(option: TOption[]) =>
-                onSelectChange(item.name, option)
-              }
+              updateOptions={updateOptions}
               selectedOptions={filterParams[item.name] || []}
             />
           ))}

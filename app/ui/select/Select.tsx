@@ -15,6 +15,7 @@ import { useOutsideClick } from '@/hooks/useOutsideClick'
 
 type TSelect = {
   options: TOption[]
+  selectName?: string
   isMulti?: boolean
   size?: TFieldSize
   disabled?: boolean
@@ -22,7 +23,7 @@ type TSelect = {
   children?: React.ReactNode
   style?: React.CSSProperties
   placeholder?: string
-  onChange?: (options: TOption[]) => void
+  updateOptions?: (name: string, option: TOption) => void
   selectedOptions?: TOption[]
 }
 const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
@@ -30,13 +31,14 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
 ) => {
   const {
     options,
+    selectName,
     isMulti = false,
     size = FieldSize.medium,
     disabled = false,
     justify = ButtonJustify.between,
     placeholder = 'Default text',
-    onChange = () => {},
-    selectedOptions = []
+    updateOptions,
+    selectedOptions
   } = props
 
   const [icon, setIcon] = useState(<ArrowDownIcon />)
@@ -48,32 +50,8 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     setIsOpened(!isOpened)
   }
 
-  const removeOption = (name: string) => {
-    const newValue: TOption[] = selectedOptions.filter(
-      (option: TOption) => option.name !== name
-    )
-
-    onChange(newValue)
-  }
-
-  const addOption = (name: string, title: string) => {
-    const newValue: TOption[] = [
-      ...selectedOptions,
-      { name: name, title: title }
-    ]
-    onChange(newValue)
-  }
-
-  const updateOptions = (name: string, title: string) => {
-    if (selectedOptions.some((option: TOption) => option.name === name)) {
-      removeOption(name)
-    } else {
-      addOption(name, title)
-    }
-  }
-
   const onOptionClick = (option: TOption) => {
-    updateOptions(option.name, option.title)
+    // updateOptions(option.name, option.title)
     setPlaceholderText(option.title)
     toggleDropdown()
   }
@@ -113,7 +91,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
                 <Checkbox
                   id={option.name}
                   text={option.title}
-                  onChange={() => updateOptions(option.name, option.title)}
+                  onChange={() => updateOptions(selectName, option)}
                   isChecked={selectedOptions.some(
                     (selectedOption: TOption) =>
                       selectedOption.name === option.name
