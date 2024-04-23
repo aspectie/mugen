@@ -15,7 +15,7 @@ import { useOutsideClick } from '@/hooks/useOutsideClick'
 
 type TSelect = {
   options: TOption[]
-  selectName?: string
+  selectName?: string | undefined
   isMulti?: boolean
   size?: TFieldSize
   disabled?: boolean
@@ -23,7 +23,7 @@ type TSelect = {
   children?: React.ReactNode
   style?: React.CSSProperties
   placeholder?: string
-  updateOptions?: (name: string, option: TOption) => void
+  updateOptions?: (name: string | undefined, option: TOption) => void
   selectedOptions?: TOption[]
 }
 const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
@@ -80,7 +80,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
         onClick={toggleDropdown}
         suffix={icon}
       />
-      {isOpened && (
+      {isOpened && selectedOptions && updateOptions && (
         <ul className={styles.options}>
           {options.map(option =>
             isMulti ? (
