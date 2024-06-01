@@ -5,7 +5,7 @@ import { TAnime, TManga } from '@/types/api/anime'
 
 export function prepareCardData(
   data: TAnime[] | TManga[],
-  lang: string = 'en'
+  lang: string = 'ru'
 ): TCardData[] {
   // TODO: get by endpoint
   const mangaTypes = [
@@ -19,7 +19,7 @@ export function prepareCardData(
   ]
   const animeTypes = ['tv', 'movie', 'ova', 'ona', 'special', 'music']
 
-  return data.map((item) => {
+  return data.map(item => {
     const name = convertToDashed(item.title.en)
     const url = animeTypes.includes(item.type)
       ? `${import.meta.env.BASE_URL}anime/${item.id}/${name}`

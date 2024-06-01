@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useState, ChangeEvent, useRef, MouseEvent, FormEvent } from 'react'
 import classNames from 'classnames'
 
 import {
@@ -11,7 +11,7 @@ import {
   TFilterType,
   TOption
 } from '@/types/ui'
-import { TSelectedOptions } from '@/types/ui/filter'
+import { TFilterParams, TSelectedOptions } from '@/types/ui/filter'
 
 import styles from './filter.module.scss'
 import { FilterIcon } from '@/assets/icons'
@@ -28,85 +28,19 @@ type TFilterProps = {
 
 const Filter = (props: TFilterProps) => {
   const { selects, type = FilterType.small } = props
-
   const { t } = useTranslation('ui')
+  const [searchInputValue, setSearchInputValue] = useState<string>('')
 
-  const [filterParams, setFilterParams] = useState<TSelectedOptions>({})
-  const [searchParams, setSearchParams] = useState('')
+  const [selectedOptions, setSelectedOptions] = useState<TSelectedOptions>({})
+  const [filterParams, setFilterParams] = useState<TFilterParams>({
+    selectedOptions,
+    searchOption: searchInputValue
+  })
+
   const [isFiltersHidden, setIsFiltersHidden] = useState(
     type === FilterType.detailed
   )
-  const toggleFiltersVisibility = () => {
-    setIsFiltersHidden(!isFiltersHidden)
-  }
-
-  const addOption = (name: string, option: TOption) => {
-    if (filterParams[name]) {
-      const newValues = [
-        ...filterParams[name],
-        { name: option.name, title: option.title }
-      ]
-      const newFilterParams = {
-        ...filterParams,
-        [name]: newValues
-      }
-      setFilterParams(newFilterParams)
-    } else {
-      setFilterParams(prevState => ({
-        ...prevState,
-        [name]: [{ name: option.name, title: option.title }]
-      }))
-    }
-  }
-
-  const removeOption = (name: string, option: TOption) => {
-    const newValues: TOption[] = filterParams[name].filter(
-      (item: TOption) => item.name !== option.name
-    )
-    const newFilterParams = {
-      ...filterParams,
-      [name]: newValues
-    }
-    setFilterParams(newFilterParams)
-    const newValue: TSelectedOptions = { ...filterParams, [name]: newValues }
-    Object.keys(newValue).forEach((key: string) => {
-      checkIsParamsEmpty(newValue, key)
-    })
-    setFilterParams(newValue)
-  }
-
-  const updateOptions = (name: string, option: TOption) => {
-    if (filterParams[name]) {
-      if (filterParams[name].some(item => item.name === option.name)) {
-        removeOption(name, option)
-      } else {
-        addOption(name, option)
-      }
-    } else {
-      addOption(name, option)
-    }
-  }
-
-  const onTagRemove = (name: TOption) => {
-    const updatedParams: TSelectedOptions = { ...filterParams }
-    Object.keys(updatedParams).forEach((key: string) => {
-      updatedParams[key] = updatedParams[key].filter(
-        (value: TOption) => value !== name
-      )
-      checkIsParamsEmpty(updatedParams, key)
-    })
-    setFilterParams(updatedParams)
-  }
-
-  const checkIsParamsEmpty = (params: TSelectedOptions, key: string) => {
-    if (params[key].length === 0) {
-      delete params[key]
-    }
-  }
-
-  const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchParams(event.target.value)
-  }
+  const inputRef = useRef(null)
 
   const classes = classNames(styles.filter, {
     [styles[`filter--${type}`]]: type
@@ -117,11 +51,100 @@ const Filter = (props: TFilterProps) => {
   })
 
   const tagsClasses = classNames(styles.filter__tags, {
-    [styles[`filter__tags--hidden`]]: Object.keys(filterParams).length === 0
+    [styles[`filter__tags--hidden`]]: Object.keys(selectedOptions!).length === 0
   })
 
+  const toggleFiltersVisibility = () => {
+    setIsFiltersHidden(!isFiltersHidden)
+  }
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchInputValue(event.target.value)
+
+    setFilterParams({
+      ...filterParams,
+      searchOption: searchInputValue
+    })
+  }
+
+  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    toggleFiltersVisibility()
+  }
+
+  const handleSelectClick = (option: TOption, id: string) => {
+    setSelectedOptions(prevSelectedOptions => {
+      const currentOptions = prevSelectedOptions[id] || []
+      const optionExists = currentOptions.some(
+        existingOption => existingOption === option
+      )
+
+      const updatedOptions = optionExists
+        ? currentOptions.filter(existingOption => existingOption !== option)
+        : [...currentOptions, option]
+
+      const newSelectedOptions = { ...prevSelectedOptions }
+
+      if (updatedOptions.length > 0) {
+        newSelectedOptions[id] = updatedOptions
+      } else {
+        delete newSelectedOptions[id]
+      }
+
+      setFilterParams(prevFilterParams => ({
+        ...prevFilterParams,
+        selectedOptions: newSelectedOptions
+      }))
+
+      return newSelectedOptions
+    })
+  }
+
+  const onRemoveTag = (tag: string) => {
+    setSelectedOptions(prevSelectedOptions => {
+      const newSelectedOptions = {}
+
+      Object.keys(prevSelectedOptions).forEach((id: string) => {
+        const currentOptions = prevSelectedOptions[id]
+        const updatedOptions = currentOptions.filter(
+          option => option.name !== tag
+        )
+
+        if (updatedOptions.length > 0) {
+          newSelectedOptions[id] = updatedOptions
+        }
+      })
+
+      setFilterParams(prevFilterParams => ({
+        ...prevFilterParams,
+        selectedOptions: newSelectedOptions
+      }))
+
+      return newSelectedOptions
+    })
+  }
+
+  const isOptionChecked = (option: TOption, id: string) => {
+    const currentOptions = selectedOptions![id] || []
+    return currentOptions.includes(option)
+  }
+
+  const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    console.log(filterParams)
+    setSelectedOptions({})
+    setSearchInputValue('')
+    setFilterParams({
+      selectedOptions,
+      searchOption: searchInputValue
+    })
+  }
+
   return (
-    <div className={classes}>
+    <form
+      id="filter"
+      className={classes}
+      onSubmit={handleSubmitForm}
+    >
       <div className={filtersClasses}>
         <div className={styles.filter__selects}>
           {selects.map((item: TFilterSelection) => (
@@ -133,28 +156,26 @@ const Filter = (props: TFilterProps) => {
               }
               key={item.name}
               placeholder={item.title}
-              selectName={item.name}
               options={item.options}
               isMulti={true}
-              updateOptions={updateOptions}
-              selectedOptions={filterParams[item.name] || []}
+              id={item.name}
+              onClick={handleSelectClick}
+              isChecked={isOptionChecked}
             />
           ))}
         </div>
-        {Object.keys(filterParams).length > 0 && (
-          <div className={tagsClasses}>
-            {Object.values(filterParams).map((option: TOption[]) =>
-              option.map((tag: TOption) => (
-                <Tag
-                  name={tag.name}
-                  text={tag.title}
-                  key={tag.name}
-                  onClick={() => onTagRemove(tag)}
-                />
-              ))
-            )}
-          </div>
-        )}
+        <div className={tagsClasses}>
+          {Object.values(selectedOptions).map((option: TOption[]) =>
+            option.map(tag => (
+              <Tag
+                name={tag.name}
+                text={tag.title}
+                key={tag.name}
+                onClick={onRemoveTag}
+              />
+            ))
+          )}
+        </div>
       </div>
       <div className={styles['filter__search-area']}>
         {type === FilterType.detailed && (
@@ -165,14 +186,16 @@ const Filter = (props: TFilterProps) => {
               prefix={<FilterIcon />}
               size={FieldSize.extraSmall}
               justify={ButtonJustify.center}
-              onClick={toggleFiltersVisibility}
+              onClick={handleButtonClick}
             />
           </div>
         )}
         <div className={styles['search-area__search-input']}>
           <Search
             placeholder={t('title')}
-            onChange={searchHandler}
+            ref={inputRef}
+            value={searchInputValue}
+            onInputChange={handleInputChange}
           />
         </div>
         <div className={styles['search-area__search-button']}>
@@ -180,14 +203,13 @@ const Filter = (props: TFilterProps) => {
             text={t('search')}
             size={FieldSize.small}
             disabled={
-              searchParams.length === 0 &&
-              Object.keys(filterParams).length === 0
+              searchInputValue === '' &&
+              Object.values(selectedOptions).length === 0
             }
           />
         </div>
       </div>
-    </div>
+    </form>
   )
 }
-
 export default Filter

@@ -16,3 +16,8 @@ export type TFilterSelection = {
 export type TSelectedOptions = {
   [key: string]: TOption[]
 }
+
+export type TFilterParams = {
+  selectedOptions?: TSelectedOptions
+  searchOption?: string
+}

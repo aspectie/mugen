@@ -1,59 +1,39 @@
+import { MouseEvent, ReactElement, useEffect, useRef, useState } from 'react'
 import Button from '@/ui/button/Button'
-import React, { useEffect, useRef, useState } from 'react'
 import Checkbox from '@/ui/checkbox/Checkbox'
-import {
-  ButtonJustify,
-  ButtonType,
-  FieldSize,
-  TFieldSize,
-  TOption
-} from '@/types/ui'
+import { ButtonJustify, ButtonType, FieldSize, TOption } from '@/types/ui'
+import { TSelect } from '@/types/ui/select'
 import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
-
-import styles from './select.module.scss'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 
-type TSelect = {
-  options: TOption[]
-  selectName?: string | undefined
-  isMulti?: boolean
-  size?: TFieldSize
-  disabled?: boolean
-  justify?: ButtonJustify
-  children?: React.ReactNode
-  style?: React.CSSProperties
-  placeholder?: string
-  updateOptions?: (name: string | undefined, option: TOption) => void
-  selectedOptions?: TOption[]
-}
-const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
-  props: TSelect
-) => {
+import styles from './select.module.scss'
+
+const Select = (props: TSelect): ReactElement => {
   const {
     options,
-    selectName,
     isMulti = false,
     size = FieldSize.medium,
     disabled = false,
     justify = ButtonJustify.between,
     placeholder = 'Default text',
-    updateOptions,
-    selectedOptions
+    isChecked,
+    onClick,
+    id
   } = props
 
   const [icon, setIcon] = useState(<ArrowDownIcon />)
   const [isOpened, setIsOpened] = useState(false)
   const [placeholderText, setPlaceholderText] = useState(placeholder)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-
-  const toggleDropdown = () => {
+  const dropdownRef = useRef<HTMLDivElement | null>(null)
+  const toggleDropdown = (event: MouseEvent) => {
+    event.preventDefault()
     setIsOpened(!isOpened)
   }
 
-  const onOptionClick = (option: TOption) => {
+  const onOptionClick = (option: TOption, event: MouseEvent) => {
     // updateOptions(option.name, option.title)
     setPlaceholderText(option.title)
-    toggleDropdown()
+    toggleDropdown(event)
   }
 
   useEffect(() => {
@@ -80,7 +60,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
         onClick={toggleDropdown}
         suffix={icon}
       />
-      {isOpened && selectedOptions && updateOptions && (
+      {isOpened && (
         <ul className={styles.options}>
           {options.map(option =>
             isMulti ? (
@@ -91,14 +71,12 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
                 <Checkbox
                   id={option.name}
                   text={option.title}
-                  onChange={() => updateOptions(selectName, option)}
-                  isChecked={selectedOptions.some(
-                    (selectedOption: TOption) =>
-                      selectedOption.name === option.name
-                  )}
+                  isChecked={isChecked(option, id!)}
+                  onChange={() => onClick(option, id!)}
                 />
               </li>
             ) : (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
               <li
                 className={styles.option}
                 key={option.name}

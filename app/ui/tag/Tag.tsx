@@ -1,6 +1,6 @@
-import classNames from 'classnames';
+import classNames from 'classnames'
 
-import { FieldSize, TFieldSize } from '@/types/ui';
+import { FieldSize, TFieldSize } from '@/types/ui'
 
 import { CloseIcon } from '@/assets/icons'
 import styles from './tag.module.scss'
@@ -10,12 +10,14 @@ const Tag = (props: {
   text: string
   size?: TFieldSize
   onClick?: (name: string) => void
+  paramId?: string
 }) => {
   const {
     text = 'Default text',
     size = FieldSize.small,
     onClick = () => {},
-    name
+    name,
+    paramId
   } = props
 
   const classes = classNames(styles.tag, {

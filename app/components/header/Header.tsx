@@ -18,6 +18,10 @@ const Header = () => {
     {
       title: t('manga'),
       route: '/manga'
+    },
+    {
+      title: 'Тест',
+      route: '/test'
     }
   ]
 
