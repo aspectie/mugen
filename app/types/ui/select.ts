@@ -1,5 +1,6 @@
 import { ButtonJustify, TFieldSize } from '@/types/ui/index'
 import React from 'react'
+import { TSelectedOptions } from '@/types/ui/filter'
 
 export type TOption = {
   name: string
@@ -8,7 +9,7 @@ export type TOption = {
 }
 
 export type TSelect = {
-  id?: string
+  optionName?: string
   options: TOption[]
   isMulti?: boolean
   size?: TFieldSize
@@ -17,6 +18,6 @@ export type TSelect = {
   children?: React.ReactNode
   style?: React.CSSProperties
   placeholder?: string
-  isChecked: (option: TOption, id: string) => boolean
   onClick: (option: TOption, id: string) => void
+  selectedOptions: TSelectedOptions
 }

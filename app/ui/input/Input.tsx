@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { FieldSize, TFieldSize, TInputType } from '@/types/ui'
 
 import styles from './input.module.scss'
-import { ChangeEvent, forwardRef } from 'react'
+import { ChangeEvent, forwardRef, KeyboardEvent } from 'react'
 
 type TInput = {
   inputType?: 'text'
@@ -14,6 +14,7 @@ type TInput = {
   name?: string
   type?: TInputType
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void
 }
 
 const Input = forwardRef<HTMLInputElement, TInput>((props: TInput, ref) => {
@@ -25,6 +26,7 @@ const Input = forwardRef<HTMLInputElement, TInput>((props: TInput, ref) => {
     name,
     type,
     onChange,
+    onKeyDown,
     value
   } = props
 
@@ -43,6 +45,7 @@ const Input = forwardRef<HTMLInputElement, TInput>((props: TInput, ref) => {
       name={name}
       value={value}
       onInput={onChange}
+      onKeyDown={onKeyDown}
       ref={ref}
     />
   )

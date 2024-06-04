@@ -16,9 +16,9 @@ const Select = (props: TSelect): ReactElement => {
     disabled = false,
     justify = ButtonJustify.between,
     placeholder = 'Default text',
-    isChecked,
     onClick,
-    id
+    selectedOptions,
+    optionName
   } = props
 
   const [icon, setIcon] = useState(<ArrowDownIcon />)
@@ -30,10 +30,10 @@ const Select = (props: TSelect): ReactElement => {
     setIsOpened(!isOpened)
   }
 
-  const onOptionClick = (option: TOption, event: MouseEvent) => {
+  const onOptionClick = (option: TOption) => {
     // updateOptions(option.name, option.title)
     setPlaceholderText(option.title)
-    toggleDropdown(event)
+    setIsOpened(!isOpened)
   }
 
   useEffect(() => {
@@ -71,8 +71,10 @@ const Select = (props: TSelect): ReactElement => {
                 <Checkbox
                   id={option.name}
                   text={option.title}
-                  isChecked={isChecked(option, id!)}
-                  onChange={() => onClick(option, id!)}
+                  isChecked={Object.values(selectedOptions).some(el =>
+                    el.some(el => el.title === option.title)
+                  )}
+                  onChange={() => onClick(option, optionName!)}
                 />
               </li>
             ) : (

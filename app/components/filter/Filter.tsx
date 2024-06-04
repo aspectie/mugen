@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useState, ChangeEvent, useRef, MouseEvent, FormEvent } from 'react'
+import { useState, ChangeEvent, MouseEvent, FormEvent } from 'react'
 import classNames from 'classnames'
 
 import {
@@ -40,7 +40,6 @@ const Filter = (props: TFilterProps) => {
   const [isFiltersHidden, setIsFiltersHidden] = useState(
     type === FilterType.detailed
   )
-  const inputRef = useRef(null)
 
   const classes = classNames(styles.filter, {
     [styles[`filter--${type}`]]: type
@@ -58,8 +57,11 @@ const Filter = (props: TFilterProps) => {
     setIsFiltersHidden(!isFiltersHidden)
   }
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFilterParams({
+      ...filterParams,
+      searchOption: searchInputValue
+    })
     setSearchInputValue(event.target.value)
-
     setFilterParams({
       ...filterParams,
       searchOption: searchInputValue
@@ -123,14 +125,8 @@ const Filter = (props: TFilterProps) => {
     })
   }
 
-  const isOptionChecked = (option: TOption, id: string) => {
-    const currentOptions = selectedOptions![id] || []
-    return currentOptions.includes(option)
-  }
-
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log(filterParams)
     setSelectedOptions({})
     setSearchInputValue('')
     setFilterParams({
@@ -155,12 +151,12 @@ const Filter = (props: TFilterProps) => {
                   : FieldSize.medium
               }
               key={item.name}
+              optionName={item.name}
               placeholder={item.title}
               options={item.options}
               isMulti={true}
-              id={item.name}
               onClick={handleSelectClick}
-              isChecked={isOptionChecked}
+              selectedOptions={selectedOptions}
             />
           ))}
         </div>
@@ -193,7 +189,6 @@ const Filter = (props: TFilterProps) => {
         <div className={styles['search-area__search-input']}>
           <Search
             placeholder={t('title')}
-            ref={inputRef}
             value={searchInputValue}
             onInputChange={handleInputChange}
           />
