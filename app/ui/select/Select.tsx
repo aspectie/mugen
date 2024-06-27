@@ -1,33 +1,14 @@
+import { MouseEvent, ReactElement, useEffect, useRef, useState } from 'react'
 import Button from '@/ui/button/Button'
-import React, { useEffect, useRef, useState } from 'react'
 import Checkbox from '@/ui/checkbox/Checkbox'
-import {
-  ButtonJustify,
-  ButtonType,
-  FieldSize,
-  TFieldSize,
-  TOption
-} from '@/types/ui'
+import { ButtonJustify, ButtonType, FieldSize, TOption } from '@/types/ui'
+import { TSelect } from '@/types/ui/select'
 import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
-
-import styles from './select.module.scss'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 
-type TSelect = {
-  options: TOption[]
-  isMulti?: boolean
-  size?: TFieldSize
-  disabled?: boolean
-  justify?: ButtonJustify
-  children?: React.ReactNode
-  style?: React.CSSProperties
-  placeholder?: string
-  onChange?: (options: TOption[]) => void
-  selectedOptions?: TOption[]
-}
-const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
-  props: TSelect
-) => {
+import styles from './select.module.scss'
+
+const Select = (props: TSelect): ReactElement => {
   const {
     options,
     isMulti = false,
@@ -35,47 +16,27 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
     disabled = false,
     justify = ButtonJustify.between,
     placeholder = 'Default text',
-    onChange = () => {},
-    selectedOptions = []
+    value = [],
+    onChange
   } = props
 
   const [icon, setIcon] = useState(<ArrowDownIcon />)
   const [isOpened, setIsOpened] = useState(false)
   const [placeholderText, setPlaceholderText] = useState(placeholder)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-
-  const toggleDropdown = () => {
+  const dropdownRef = useRef<HTMLDivElement | null>(null)
+  const toggleDropdown = (event: MouseEvent) => {
+    event.preventDefault()
     setIsOpened(!isOpened)
   }
 
-  const removeOption = (name: string) => {
-    const newValue: TOption[] = selectedOptions.filter(
-      (option: TOption) => option.name !== name
-    )
-
-    onChange(newValue)
-  }
-
-  const addOption = (name: string, title: string) => {
-    const newValue: TOption[] = [
-      ...selectedOptions,
-      { name: name, title: title }
-    ]
-    onChange(newValue)
-  }
-
-  const updateOptions = (name: string, title: string) => {
-    if (selectedOptions.some((option: TOption) => option.name === name)) {
-      removeOption(name)
-    } else {
-      addOption(name, title)
-    }
-  }
-
   const onOptionClick = (option: TOption) => {
-    updateOptions(option.name, option.title)
-    setPlaceholderText(option.title)
-    toggleDropdown()
+    if (isMulti) {
+      onChange(option)
+    } else {
+      setPlaceholderText(option.title)
+      onChange(option)
+      setIsOpened(!isOpened)
+    }
   }
 
   useEffect(() => {
@@ -102,6 +63,7 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
         onClick={toggleDropdown}
         suffix={icon}
       />
+      {/*TODO: Fix Semantic Problems*/}
       {isOpened && (
         <ul className={styles.options}>
           {options.map(option =>
@@ -113,20 +75,20 @@ const Select: React.ForwardRefRenderFunction<HTMLSelectElement, TSelect> = (
                 <Checkbox
                   id={option.name}
                   text={option.title}
-                  onChange={() => updateOptions(option.name, option.title)}
-                  isChecked={selectedOptions.some(
-                    (selectedOption: TOption) =>
-                      selectedOption.name === option.name
+                  isChecked={value.some(
+                    (el: TOption) => el.name === option.name
                   )}
+                  onChange={() => onOptionClick(option)}
                 />
               </li>
             ) : (
               <li
-                className={styles.option}
                 key={option.name}
-                onClick={() => onOptionClick(option)}
+                className={styles.option}
               >
-                {option.title}
+                <option onClick={() => onOptionClick(option)}>
+                  {option.title}
+                </option>
               </li>
             )
           )}

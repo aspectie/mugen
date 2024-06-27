@@ -4,9 +4,18 @@
 
     .card__image-wrapper {
       flex-shrink: 0;
+      max-height: $card-medium-height;
+      max-width: $card-medium-width;
+      border-radius: $space-xs;
     }
     .card__title {
       margin-bottom: $space-s;
+    }
+
+    &:hover .card__image-wrapper {
+      transition: all 0.2s linear;
+      max-height: $card-large-height;
+      max-width: $card-large-width;
     }
   }
 
@@ -25,6 +34,13 @@
       overflow: hidden;
       word-wrap: break-word;
       text-align: center;
+    }
+
+    &:hover {
+      transition: all 0.1s linear;
+      transform: scale(1.03);
+      // background-color: $gray-60;
+      border-radius: $space-s;
     }
   }
 
@@ -49,10 +65,4 @@
     padding: $space-xs;
   }
 
-  &:hover {
-    transition: all 0.1s linear;
-    transform: scale(1.05);
-    // background-color: $gray-60;
-    border-radius: $space-s;
-  }
 }

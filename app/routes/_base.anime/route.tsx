@@ -20,11 +20,14 @@ export const loader = async ({
   const { getAnime } = useApi(shikiApi)
   console.log(params.id)
   const data = (await getAnime({
-    limit: 10
+    limit: 10,
+    order: 'random',
+    kind: 'tv',
+    score: '8'
   })) as TAnime[] | null
 
   const t = await i18n.getFixedT(request, 'meta')
-  const metaTitle = t('root title')
+  const metaTitle = t('anime page')
 
   if (!data) {
     return null
@@ -48,10 +51,9 @@ export const meta = ({ data }: { data: TLoaderResponse }) => {
 export default function AnimesPage() {
   const data: TLoaderResponse = useLoaderData<typeof loader>()
   const { t } = useTranslation()
-
   return (
     <div className="container mx-auto text-black-100">
-      <div className="grid grid-cols-12 pt-xl">
+      <div className="grid grid-cols-12 pt-xl mb-2xl">
         {data && data.animes && (
           <div className="col-span-8">
             <div className="mb-l">
@@ -61,7 +63,7 @@ export default function AnimesPage() {
               />
             </div>
             <div>
-              <h2 className="font-bold mb-l">{t('winter season')}</h2>
+              {/*<h2 className="font-bold mb-l">{t('anime')}</h2>*/}
               <CardList
                 cards={prepareCardData(data.animes)}
                 type="horizontal"

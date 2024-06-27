@@ -1,6 +1,6 @@
-import classNames from 'classnames';
+import classNames from 'classnames'
 
-import { FieldSize, TFieldSize } from '@/types/ui';
+import { FieldSize, TFieldSize } from '@/types/ui'
 
 import { CloseIcon } from '@/assets/icons'
 import styles from './tag.module.scss'
