@@ -4,6 +4,7 @@ import React from 'react'
 export type TOption = {
   name: string
   title: string
+  id?: number
 }
 
 export type TSelect = {
