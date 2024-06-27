@@ -16,9 +16,8 @@ const Select = (props: TSelect): ReactElement => {
     disabled = false,
     justify = ButtonJustify.between,
     placeholder = 'Default text',
-    onClick,
-    selectedOptions,
-    optionName
+    value = [],
+    onChange
   } = props
 
   const [icon, setIcon] = useState(<ArrowDownIcon />)
@@ -31,8 +30,12 @@ const Select = (props: TSelect): ReactElement => {
   }
 
   const onOptionClick = (option: TOption) => {
-    // updateOptions(option.name, option.title)
-    setPlaceholderText(option.title)
+    if (isMulti) {
+      onChange(option)
+    } else {
+      setPlaceholderText(option.title)
+      onChange(option)
+    }
     setIsOpened(!isOpened)
   }
 
@@ -60,6 +63,7 @@ const Select = (props: TSelect): ReactElement => {
         onClick={toggleDropdown}
         suffix={icon}
       />
+      {/*TODO: Fix Semantic Problems*/}
       {isOpened && (
         <ul className={styles.options}>
           {options.map(option =>
@@ -71,20 +75,20 @@ const Select = (props: TSelect): ReactElement => {
                 <Checkbox
                   id={option.name}
                   text={option.title}
-                  isChecked={Object.values(selectedOptions).some(el =>
-                    el.some(el => el.title === option.title)
+                  isChecked={value.some(
+                    (el: TOption) => el.name === option.name
                   )}
-                  onChange={() => onClick(option, optionName!)}
+                  onChange={() => onOptionClick(option)}
                 />
               </li>
             ) : (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
               <li
-                className={styles.option}
                 key={option.name}
-                onClick={() => onOptionClick(option)}
+                className={styles.option}
               >
-                {option.title}
+                <option onClick={() => onOptionClick(option)}>
+                  {option.title}
+                </option>
               </li>
             )
           )}
