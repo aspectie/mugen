@@ -35,8 +35,8 @@ const Select = (props: TSelect): ReactElement => {
     } else {
       setPlaceholderText(option.title)
       onChange(option)
+      setIsOpened(!isOpened)
     }
-    setIsOpened(!isOpened)
   }
 
   useEffect(() => {
