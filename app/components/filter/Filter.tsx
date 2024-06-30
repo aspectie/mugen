@@ -11,10 +11,12 @@ import {
   TFilterType,
   TOption
 } from '@/types/ui'
-import { TFilterParams, TFilterSelects } from '@/types/ui/filter'
+import { TFilterSelects } from '@/types/ui/filter'
 
 import styles from './filter.module.scss'
 import { FilterIcon } from '@/assets/icons'
+import { useQuery } from '@/hooks/useQuery'
+
 
 import Select from '@/ui/select/Select'
 import Search from '@/ui/search/Search'
@@ -30,12 +32,9 @@ export const Filter = (props: TFilterProps) => {
   const { selects, type = FilterType.small } = props
   const { t } = useTranslation('ui')
 
-  // const [searchInputValue, setSearchInputValue] = useState<string>('')
   const [params, setParams] = useState<TFilterSelects>({})
-  const [filterParams, setFilterParams] = useState<TFilterParams>({
-    params,
-    search: ''
-  })
+  const [search, setSearch] = useState<string>('')
+  const {setQuerySearch, setQueryParams} = useQuery()
 
   const [isFiltersHidden, setIsFiltersHidden] = useState(
     type === FilterType.detailed
@@ -57,67 +56,57 @@ export const Filter = (props: TFilterProps) => {
     setIsFiltersHidden(!isFiltersHidden)
   }
 
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFilterParams({
-      ...filterParams,
-      search: event.target.value
-    })
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value)
   }
 
-  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const onToggleFilterClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     toggleFiltersVisibility()
+  }  
+  
+  const onSearchButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    setQuerySearch(search)
+    setQueryParams(params)
   }
 
-  const handleSelectChange = (option: TOption, selectName: string) => {
-    setParams(prevSelectedOptions => {
-      const currentOptions = prevSelectedOptions[selectName] || []
-      const optionExists = currentOptions.some(
-        existingOption => existingOption === option
-      )
+  const onSelectChange = (option: TOption, selectId: string) => {
+    setParams(prevParams => {
+      const currentOptions = prevParams[selectId] || []
+      const isOptionExists = currentOptions.some(existingOption => existingOption.name === option.name)
 
-      const updatedOptions = optionExists
-        ? currentOptions.filter(existingOption => existingOption !== option)
+      const updatedOptions = isOptionExists
+        ? currentOptions.filter(existingOption => existingOption.name !== option.name)
         : [...currentOptions, option]
 
-      const newSelectedOptions = { ...prevSelectedOptions }
+      const newSelectedOptions = { ...prevParams }
 
       if (updatedOptions.length > 0) {
-        newSelectedOptions[selectName] = updatedOptions
+        newSelectedOptions[selectId] = updatedOptions
       } else {
-        delete newSelectedOptions[selectName]
+        delete newSelectedOptions[selectId]
       }
-
-      setFilterParams(prevFilterParams => ({
-        ...prevFilterParams,
-        params: newSelectedOptions
-      }))
 
       return newSelectedOptions
     })
   }
 
-  const onRemoveTag = (tag: string) => {
-    setParams(prevSelectedOptions => {
-      const newSelectedOptions: TFilterSelects = {}
+  const onTagRemove = (tag: string) => {
+    setParams(prevParams => {
+      const newParams: TFilterSelects = {}
 
-      Object.keys(prevSelectedOptions).forEach((id: string) => {
-        const currentOptions = prevSelectedOptions[id]
+      Object.keys(prevParams).forEach((selectId: string) => {
+        const currentOptions = prevParams[selectId]
         const updatedOptions = currentOptions.filter(
           option => option.name !== tag
         )
 
         if (updatedOptions.length > 0) {
-          newSelectedOptions[id] = updatedOptions
+          newParams[selectId] = updatedOptions
         }
       })
 
-      setFilterParams(prevFilterParams => ({
-        ...prevFilterParams,
-        params: newSelectedOptions
-      }))
-
-      return newSelectedOptions
+      return newParams
     })
   }
 
@@ -132,15 +121,15 @@ export const Filter = (props: TFilterProps) => {
               prefix={<FilterIcon />}
               size={FieldSize.extraSmall}
               justify={ButtonJustify.center}
-              onClick={handleButtonClick}
+              onClick={onToggleFilterClick}
             />
           </div>
         )}
         <div className={styles['search-area__search-input']}>
           <Search
             placeholder={t('title')}
-            value={filterParams.search}
-            onInputChange={handleSearchChange}
+            value={search}
+            onInputChange={onSearchChange}
           />
         </div>
         <div className={styles['search-area__search-button']}>
@@ -148,8 +137,9 @@ export const Filter = (props: TFilterProps) => {
             text={t('search')}
             size={FieldSize.small}
             disabled={
-              filterParams.search === '' && Object.values(params).length === 0
+              search === '' && Object.values(params).length === 0
             }
+            onClick={onSearchButtonClick}
           />
         </div>
       </div>
@@ -166,8 +156,8 @@ export const Filter = (props: TFilterProps) => {
               placeholder={item.title}
               isMulti
               options={item.options}
-              onChange={option => handleSelectChange(option, item.name)}
-              value={filterParams.params![item.name]}
+              onChange={option => onSelectChange(option, item.name)}
+              value={params![item.name]}
             />
           ))}
         </div>
@@ -178,7 +168,7 @@ export const Filter = (props: TFilterProps) => {
                 name={tag.name}
                 text={tag.title}
                 key={tag.name}
-                onClick={onRemoveTag}
+                onClick={onTagRemove}
               />
             ))
           )}

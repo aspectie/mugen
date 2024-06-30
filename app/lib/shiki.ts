@@ -74,8 +74,11 @@ async function getAnime(
       url += `/${params}`
     } else {
       url += '?'
-      Object.entries(params).map(([key, value]) => {
-        url += `${key}=${value}&`
+      Object.entries(params).map(([key, value], index, array) => {
+        url += `${key}=${value}`
+        if (index !== array.length - 1) {
+          url += '&'
+        }
       })
     }
   }

@@ -14,17 +14,28 @@ import Filter from '@/components/filter/Filter'
 export const handle = { i18n: ['default', 'account', 'ui'] }
 
 export const loader = async ({
-  request,
-  params
+  request
 }: LoaderFunctionArgs): Promise<TypedResponse<TLoaderResponse> | null> => {
   const { getAnime } = useApi(shikiApi)
-  console.log(params.id)
-  const data = (await getAnime({
-    limit: 10,
-    order: 'random',
-    kind: 'tv',
-    score: '8'
-  })) as TAnime[] | null
+  const url = new URL(request.url);
+  const limit = 10;
+  const order = 'ranked';
+  const search = url.searchParams.get('search')
+  
+  const requestParams = {
+    limit,
+    order
+  }
+
+  if (search) {
+    requestParams.search = search
+  }
+
+  url.searchParams.forEach((value, key) => {
+    requestParams[key] = value
+  })
+
+  const data = (await getAnime(requestParams)) as TAnime[] | null
 
   const t = await i18n.getFixedT(request, 'meta')
   const metaTitle = t('anime page')

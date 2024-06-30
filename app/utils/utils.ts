@@ -55,3 +55,6 @@ export function urlParamsToObject(params) {
 
   return obj
 }
+
+export const PARSE = (x: string) => JSON.parse(atob(x))
+export const STRINGIFY = (x: unknown) => btoa(JSON.stringify(x))
