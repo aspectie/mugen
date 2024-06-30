@@ -1,18 +1,19 @@
-import { TFilterSelects } from "@/types/ui/filter"
-import { useSearchParams } from "@remix-run/react"
-import { urlParamsToObject } from "@/utils/utils"
-import { useEffect, useState } from "react"
+import { TFilterSelects } from '@/types/ui/filter'
+import { useSearchParams } from '@remix-run/react'
+import { useEffect, useState } from 'react'
 
-export function useQuery(initialValue = {
+export function useQuery(
+  initialValue = {
     search: '',
     filter: {}
-}) {
+  }
+) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const [search, setSearch] = useState(initialValue.search)
   const [filter, setFilter] = useState(initialValue.filter)
 
-  const setQuerySearch = (newSearchData: string) => {  
+  const setQuerySearch = (newSearchData: string) => {
     setSearch(newSearchData)
   }
 
@@ -20,9 +21,9 @@ export function useQuery(initialValue = {
     let res = {}
 
     Object.entries(_params).map(entry => {
-        const key = entry[0]
-        const value = entry[1]
-        res[key] = value.map(v => v.id ? v.id : v.name).toString()
+      const key = entry[0]
+      const value = entry[1]
+      res[key] = value.map(v => (v.id ? v.id : v.name)).toString()
     })
 
     setFilter(res)
@@ -30,10 +31,10 @@ export function useQuery(initialValue = {
 
   useEffect(() => {
     const res = {
-        ...filter
+      ...filter
     }
     if (search.trim() !== '') {
-        res.search = search
+      res.search = search
     }
     setSearchParams(res)
   }, [search, filter])

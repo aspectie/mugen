@@ -153,7 +153,7 @@ export const Filter = (props: TFilterProps) => {
                   : FieldSize.medium
               }
               key={item.name}
-              placeholder={item.title}
+              placeholder={item.name}
               isMulti
               options={item.options}
               onChange={option => onSelectChange(option, item.name)}
@@ -166,7 +166,7 @@ export const Filter = (props: TFilterProps) => {
             option.map(tag => (
               <Tag
                 name={tag.name}
-                text={tag.title}
+                text={t(tag.name.toLocaleLowerCase(), {ns: 'anime'})}
                 key={tag.name}
                 onClick={onTagRemove}
               />
