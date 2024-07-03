@@ -165,27 +165,27 @@ function MainCard({
           }).toLocaleLowerCase()}`}
           options={[
             {
-              title: t('status.completed', { ns: 'anime' }),
+              title: t('completed', { ns: 'anime' }),
               name: UserRateStatus.completed
             },
             {
-              title: t('status.dropped', { ns: 'anime' }),
+              title: t('dropped', { ns: 'anime' }),
               name: UserRateStatus.dropped
             },
             {
-              title: t('status.on hold', { ns: 'anime' }),
+              title: t('on hold', { ns: 'anime' }),
               name: UserRateStatus.on_hold
             },
             {
-              title: t('status.planned', { ns: 'anime' }),
+              title: t('planned', { ns: 'anime' }),
               name: UserRateStatus.planned
             },
             {
-              title: t('status.rewatching', { ns: 'anime' }),
+              title: t('rewatching', { ns: 'anime' }),
               name: UserRateStatus.rewatching
             },
             {
-              title: t('status.watching', { ns: 'anime' }),
+              title: t('watching', { ns: 'anime' }),
               name: UserRateStatus.watching
             }
           ]}

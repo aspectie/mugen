@@ -10,6 +10,7 @@ import {
 import { castToAnother } from '@/utils/api'
 import { clearHTML, groupBy } from '@/utils/utils'
 import { TFilterSelection } from '@/types/ui'
+import { prepareOption } from '@/utils/select'
 
 type TShikiApi = {
   getAnime: (
@@ -25,7 +26,12 @@ type TShikiApi = {
     id: Parameters<typeof getAnimeGroupedRelations>[0],
     limit: Parameters<typeof getAnimeGroupedRelations>[1]
   ) => ReturnType<typeof getAnimeGroupedRelations>
+  getAnimeFilters: () => ReturnType<typeof getAnimeFilters>
 }
+
+const RATING = ['none', 'g', 'pg', 'pg13', 'r', 'r_plus', 'rx']
+const SCORE = ['6', '7', '8', '9']
+const SEASON = ['winter_2024', 'spring_2024', 'summer_2024', 'fall_2024']
 
 const map = {
   id: 'id',
@@ -60,7 +66,8 @@ export function shikiApi(): TShikiApi {
     getAnime,
     getAnimeScreenshots,
     getAnimeVideos,
-    getAnimeGroupedRelations
+    getAnimeGroupedRelations,
+    getAnimeFilters
   }
 }
 
@@ -74,8 +81,11 @@ async function getAnime(
       url += `/${params}`
     } else {
       url += '?'
-      Object.entries(params).map(([key, value]) => {
-        url += `${key}=${value}&`
+      Object.entries(params).map(([key, value], index, array) => {
+        url += `${key}=${value}`
+        if (index !== array.length - 1) {
+          url += '&'
+        }
       })
     }
   }
@@ -161,348 +171,45 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
   return res
 }
 
-/*TODO: remove it when API will be create */
-export const filterSelects: TFilterSelection[] = [
-  {
-    title: 'Тип',
-    name: 'kind',
-    options: [
-      {
-        title: 'ТВ',
-        name: 'tv'
-      },
-      {
-        title: 'Фильм',
-        name: 'movie'
-      },
-      {
-        title: 'OVA',
-        name: 'ova'
-      },
-      {
-        title: 'ONA',
-        name: 'ona'
-      },
-      {
-        title: 'Спешл',
-        name: 'special'
-      }
-    ]
-  },
-  {
-    title: 'Сезон',
-    name: 'season',
-    options: [
-      {
-        title: 'Зима',
-        name: 'winter'
-      },
-      {
-        title: 'Лето',
-        name: 'summer'
-      }
-    ]
-  },
-  {
-    title: 'Статус',
-    name: 'status',
-    options: [
-      {
-        title: 'Анонсированно',
-        name: 'anons'
-      },
-      {
-        title: 'Онгоинг',
-        name: 'ongoing'
-      },
-      {
-        title: 'Вышло',
-        name: 'released'
-      }
-    ]
-  },
-  {
-    title: 'Оценка',
-    name: 'score',
-    options: [
-      {
-        title: '10',
-        name: '10'
-      },
-      {
-        title: '9',
-        name: '9'
-      },
-      {
-        title: '8',
-        name: '8'
-      },
-      {
-        title: '7',
-        name: '7'
-      },
-      {
-        title: '6',
-        name: '6'
-      }
-    ]
-  },
-  {
-    title: 'Рейтинг',
-    name: 'rating',
-    options: [
-      {
-        title: '0+',
-        name: 'g'
-      },
-      {
-        title: '12+',
-        name: 'pg-13'
-      },
-      {
-        title: '16+',
-        name: 'r-17'
-      },
-      {
-        title: '18+',
-        name: 'r+'
-      }
-    ]
-  },
-  {
-    title: 'Жанр',
+export async function getAnimeFilters() {
+  let res = [];
+
+  const genres = await fetch(`${process.env.VITE_SHIKI_URL}/api/genres`)
+  const genresOptions = await genres.json()
+  res.push({
     name: 'genre',
-    options: [
-      {
-        id: 8,
-        name: 'Drama',
-        title: 'Драма'
-      },
-      {
-        id: 11,
-        name: 'Game',
-        title: 'Игры'
-      },
-      {
-        id: 40,
-        name: 'Psychological',
-        title: 'Психологическое'
-      },
-      {
-        id: 19,
-        name: 'Music',
-        title: 'Музыка'
-      },
-      {
-        id: 1,
-        name: 'Action',
-        title: 'Экшен'
-      },
-      {
-        id: 4,
-        name: 'Comedy',
-        title: 'Комедия'
-      },
-      {
-        id: 6,
-        name: 'Demons',
-        title: 'Демоны'
-      },
-      {
-        id: 39,
-        name: 'Police',
-        title: 'Полиция'
-      },
-      {
-        id: 9,
-        name: 'Ecchi',
-        title: 'Этти'
-      },
-      {
-        id: 10,
-        name: 'Fantasy',
-        title: 'Фэнтези'
-      },
-      {
-        id: 12,
-        name: 'Hentai',
-        title: 'Хентай'
-      },
-      {
-        id: 13,
-        name: 'Historical',
-        title: 'Исторический'
-      },
-      {
-        id: 16,
-        name: 'Magic',
-        title: 'Магия'
-      },
-      {
-        id: 18,
-        name: 'Mecha',
-        title: 'Меха'
-      },
-      {
-        id: 20,
-        name: 'Parody',
-        title: 'Пародия'
-      },
-      {
-        id: 21,
-        name: 'Samurai',
-        title: 'Самураи'
-      },
-      {
-        id: 22,
-        name: 'Romance',
-        title: 'Романтика'
-      },
-      {
-        id: 23,
-        name: 'School',
-        title: 'Школа'
-      },
-      {
-        id: 27,
-        name: 'Shounen',
-        title: 'Сёнен'
-      },
-      {
-        id: 32,
-        name: 'Vampire',
-        title: 'Вампиры'
-      },
-      {
-        id: 33,
-        name: 'Yaoi',
-        title: 'Яой'
-      },
-      {
-        id: 34,
-        name: 'Yuri',
-        title: 'Юри'
-      },
-      {
-        id: 35,
-        name: 'Harem',
-        title: 'Гарем'
-      },
-      {
-        id: 36,
-        name: 'Slice of Life',
-        title: 'Повседневность'
-      },
-      {
-        id: 26,
-        name: 'Shoujo Ai',
-        title: 'Сёдзё-ай'
-      },
-      {
-        id: 43,
-        name: 'Josei',
-        title: 'Дзёсей'
-      },
-      {
-        id: 37,
-        name: 'Supernatural',
-        title: 'Сверхъестественное'
-      },
-      {
-        id: 41,
-        name: 'Thriller',
-        title: 'Триллер'
-      },
-      {
-        id: 24,
-        name: 'Sci-Fi',
-        title: 'Фантастика'
-      },
-      {
-        id: 25,
-        name: 'Shoujo',
-        title: 'Сёдзё'
-      },
-      {
-        id: 31,
-        name: 'Super Power',
-        title: 'Супер сила'
-      },
-      {
-        id: 38,
-        name: 'Military',
-        title: 'Военное'
-      },
-      {
-        id: 7,
-        name: 'Mystery',
-        title: 'Детектив'
-      },
-      {
-        id: 15,
-        name: 'Kids',
-        title: 'Детское'
-      },
-      {
-        id: 3,
-        name: 'Cars',
-        title: 'Машины'
-      },
-      {
-        id: 17,
-        name: 'Martial Arts',
-        title: 'Боевые искусства'
-      },
-      {
-        id: 5,
-        name: 'Dementia',
-        title: 'Безумие'
-      },
-      {
-        id: 30,
-        name: 'Sports',
-        title: 'Спорт'
-      },
-      {
-        id: 42,
-        name: 'Seinen',
-        title: 'Сэйнэн'
-      },
-      {
-        id: 28,
-        name: 'Shounen Ai',
-        title: 'Сёнен-ай'
-      },
-      {
-        id: 543,
-        name: 'Gourmet',
-        title: 'Гурман'
-      },
-      {
-        id: 29,
-        name: 'Space',
-        title: 'Космос'
-      },
-      {
-        id: 541,
-        name: 'Work Life',
-        title: 'Работа'
-      },
-      {
-        id: 14,
-        name: 'Horror',
-        title: 'Ужасы'
-      },
-      {
-        id: 2,
-        name: 'Adventure',
-        title: 'Приключения'
-      },
-      {
-        id: 539,
-        name: 'Erotica',
-        title: 'Эротика'
-      }
-    ]
+    options: genresOptions.map(o => prepareOption(o)) // TODO: prepare options
+  })
+
+  const animeConstants = await fetch(`${process.env.VITE_SHIKI_URL}/api/constants/anime`)
+  
+  let animeConstantsData = {}
+  if (animeConstants.ok) {
+    animeConstantsData = await animeConstants.json()
   }
-]
+
+  Object.entries(animeConstantsData).map(([key, value]) => {
+    const options = value.map((v) => prepareOption(v))
+    res.push({
+      name: key,
+      options
+    }) 
+  })
+
+  res.push({
+    name: 'rating',
+    options: RATING.map(v => prepareOption(v))
+  })
+
+  res.push({
+    name: 'score',
+    options: SCORE.map(v => prepareOption(v))
+  })
+
+  res.push({
+    name: 'season',
+    options: SEASON.map(v => prepareOption(v))
+  })
+  
+  return res;
+}

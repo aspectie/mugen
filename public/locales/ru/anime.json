@@ -1,10 +1,20 @@
 {
-  "status": {
-    "completed": "Просмотрено",
-    "planned": "Запланировано",
-    "watching": "Смотрю",
-    "rewatching": "Пересматриваю",
-    "on hold": "На паузе",
-    "dropped": "Заброшено"
-  }
+  "status": "Статус",
+  "completed": "Просмотрено",
+  "planned": "Запланировано",
+  "watching": "Смотрю",
+  "rewatching": "Пересматриваю",
+  "on hold": "На паузе",
+  "dropped": "Заброшено",
+  "genre": "Жанр",
+  "police": "Полиция",
+  "kind": "Тип",
+  "tv": "ТВ",
+  "movie": "Фильм",
+  "ova": "OVA",
+  "ona": "ONA",
+  "special": "Спешл",
+  "anons": "Анонсированно",
+  "ongoing": "Онгоинг",
+  "released": "Вышло"
 }

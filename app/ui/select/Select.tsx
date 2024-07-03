@@ -7,6 +7,7 @@ import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 
 import styles from './select.module.scss'
+import { useTranslation } from 'react-i18next'
 
 const Select = (props: TSelect): ReactElement => {
   const {
@@ -24,6 +25,8 @@ const Select = (props: TSelect): ReactElement => {
   const [isOpened, setIsOpened] = useState(false)
   const [placeholderText, setPlaceholderText] = useState(placeholder)
   const dropdownRef = useRef<HTMLDivElement | null>(null)
+  const { t } = useTranslation(['default', 'anime'])
+  
   const toggleDropdown = (event: MouseEvent) => {
     event.preventDefault()
     setIsOpened(!isOpened)
@@ -57,7 +60,7 @@ const Select = (props: TSelect): ReactElement => {
       <Button
         type={ButtonType.secondary}
         size={size}
-        text={placeholderText}
+        text={t(placeholderText.toLocaleLowerCase(), {ns: 'anime'})}
         justify={justify}
         disabled={disabled}
         onClick={toggleDropdown}
@@ -74,7 +77,7 @@ const Select = (props: TSelect): ReactElement => {
               >
                 <Checkbox
                   id={option.name}
-                  text={option.title}
+                  text={option.title ? option.title : t(option.name.toLocaleLowerCase(), {ns: 'anime'})}
                   isChecked={value.some(
                     (el: TOption) => el.name === option.name
                   )}
