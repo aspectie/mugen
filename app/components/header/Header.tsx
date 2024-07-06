@@ -1,11 +1,11 @@
-import { Link } from '@remix-run/react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Link } from '@remix-run/react'
 
 import { LogoIcon, MobileMenu } from '@/assets/icons'
 import Search from '@/ui/search/Search'
 import Menu, { TLink } from '@/components/menu/Menu'
 import { useQuery } from '@/hooks/useQuery'
-import { useEffect, useRef, useState } from 'react'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 
 const Header = () => {
@@ -80,7 +80,7 @@ const Header = () => {
         <>
           <div
             ref={mobileMenuRef}
-            className="w-2/3 absolute z-[99] bg-black-100 text-black-100 top-[-48] left-[0] py-s px-s h-[100vh] font-black "
+            className="w-2/3 absolute z-[99] bg-black-100 text-black-100 top-[0] left-[0] py-s px-s h-[100vh] font-black"
           >
             <Menu
               links={links}

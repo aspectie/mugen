@@ -20,11 +20,9 @@ export const meta = ({ error }: { error: ErrorResponse }) => {
 export default function BaseLayout() {
   return (
     <>
-      <Header />
       <main className="container py-s sm:py-m md:py-l lg:py-xl text-black-100 min-h-[100vh]">
         <Outlet />
       </main>
-      <Footer />
     </>
   )
 }

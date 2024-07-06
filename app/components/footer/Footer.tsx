@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <footer className="bg-black-100 text-gray-20 py-s sm:py-m md:py-l lg:py-xl">
       <section className="container">
-        <ul className="p-m bg-black-80 rounded min-w-[200px] flex flex-col gap-m sm:min-w-full">
+        <ul className="p-m bg-black-80 rounded min-w-[200px] flex flex-col gap-m sm:min-w-full mb-s">
           <li className="hover:text-accent-100 hover:cursor-pointer w-fit">
             <NavLink to="/anime">{t('anime')}</NavLink>
           </li>
@@ -18,10 +18,13 @@ const Footer = () => {
             <NavLink to="/manga">{t('manga')}</NavLink>
           </li>
         </ul>
-        <NavLink to="/">
+        <NavLink
+          to="/"
+          className="mb-s"
+        >
           <LogoIcon />
         </NavLink>
-        <div className="flex justify-between sm:max-w-xs">
+        <div className="flex justify-between sm:max-w-xs mt-s">
           <div className="sm:max-w-1/2">
             <LanguageToggle />
           </div>
