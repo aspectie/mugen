@@ -80,14 +80,14 @@ const Header = () => {
         <>
           <div
             ref={mobileMenuRef}
-            className="w-2/3 absolute z-[99] bg-gray-80 text-black-100 top-[0] left-[0] py-l px-l h-[100vh] font-black "
+            className="w-2/3 absolute z-[99] bg-black-100 text-black-100 top-[-48] left-[0] py-s px-s h-[100vh] font-black "
           >
             <Menu
               links={links}
               isRow
             />
           </div>
-          <div className="w-full h-[100vh] absolute z-[98] left-[0] top-[0] bg-black-100 opacity-90" />
+          <div className="w-full h-[100vh] absolute z-[98] left-0 top-0 bg-black-100 opacity-90" />
         </>
       )}
     </header>

@@ -25,7 +25,7 @@ export const loader = async ({
   const { getAnime } = useApi(shikiApi)
 
   const seasonAnimePageOne = (await getAnime({
-    limit: 9,
+    limit: 6,
     page: 1,
     season: 'summer_2024',
     status: 'ongoing',
@@ -33,7 +33,7 @@ export const loader = async ({
   })) as TAnime[] | null
 
   const seasonAnimePageTwo = (await getAnime({
-    limit: 9,
+    limit: 6,
     page: 2,
     season: 'summer_2024',
     status: 'ongoing',
@@ -41,7 +41,7 @@ export const loader = async ({
   })) as TAnime[] | null
 
   const seasonAnimePageThree = (await getAnime({
-    limit: 9,
+    limit: 6,
     page: 3,
     season: 'summer_2024',
     status: 'ongoing',
@@ -49,19 +49,19 @@ export const loader = async ({
   })) as TAnime[] | null
 
   const popularPageOne = (await getAnime({
-    limit: 9,
+    limit: 6,
     page: 1,
     order: 'popularity'
   })) as TAnime[] | null
 
   const popularPageTwo = (await getAnime({
-    limit: 9,
+    limit: 6,
     page: 2,
     order: 'popularity'
   })) as TAnime[] | null
 
   const popularPageThree = (await getAnime({
-    limit: 9,
+    limit: 6,
     page: 3,
     order: 'popularity'
   })) as TAnime[] | null
