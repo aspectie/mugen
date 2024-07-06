@@ -42,7 +42,7 @@ const Header = () => {
   useOutsideClick(mobileMenuRef, () => setIsMobileMenuShow(false))
 
   return (
-    <header className="py-xs sticky z-50 top-[0] sm:py-s bg-black-100">
+    <header className="py-xs sticky z-50 top-[0] sm:py-s sm:relative bg-black-100">
       <div className="container flex m-auto items-center justify-between relative">
         <div className="flex items-center">
           <button
