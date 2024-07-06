@@ -5,15 +5,15 @@ export default function Player({ link }: { link: string }) {
 
   return (
     <>
-      <h4 className="font-bold text-black-80">
-        {t('trailer', { ns: 'default' })}
+      <h4 className="font-bold text-black-80 text-center">
+        {t('watch', { ns: 'default' })}
       </h4>
       <iframe
         className="mt-m"
         key="12"
         src={link}
         width="100%"
-        height="588px"
+        height="256px"
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"

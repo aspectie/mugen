@@ -56,7 +56,7 @@ export default function AnimePage() {
   return (
     anime &&
     anime.rawData && (
-      <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">
+      <div className="mx-auto grid grid-cols-12 mb-4xl">
         <div className="xl:col-span-2 lg:col-span-3 md:col-span-4 sm:col-span-5 col-span-12 sm:mb-auto mb-l gap-s">
           <MainCard
             image={anime.imageUrl}
@@ -79,6 +79,14 @@ export default function AnimePage() {
           </div>
           {anime.info && <Information info={anime.info} />}
         </div>
+        {anime.screenshots && anime.screenshots.length > 0 && (
+          <div className="mt-l xl:col-span-9 lg:col-span-12 col-span-12">
+            <Screenshots
+              title={anime.rawData.title}
+              screenshots={anime.screenshots}
+            />
+          </div>
+        )}
         {/* TODO: move out of this container because sections on the left are affected */}
         {anime.related && Object.keys(anime.related).length > 0 && (
           <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex-col justify-between xl:flex hidden">
@@ -91,14 +99,6 @@ export default function AnimePage() {
         {anime.rawData.description && (
           <div className="mt-l pr-l xl:col-span-9 col-span-12">
             <Description description={anime.rawData.description} />
-          </div>
-        )}
-        {anime.screenshots && anime.screenshots.length > 0 && (
-          <div className="mt-l xl:col-span-9 lg:col-span-12 col-span-12">
-            <Screenshots
-              title={anime.rawData.title}
-              screenshots={anime.screenshots}
-            />
           </div>
         )}
         {anime.playerLink && (
@@ -134,17 +134,47 @@ function MainCard({
   return (
     <>
       {image && (
-        <div className="rounded-s mb-m">
-          <img
-            className="rounded block w-full object-center object-cover"
-            src={image}
-            alt={`${t('poster of', { ns: 'default' })} ${
-              Object.keys(title).includes(i18n.language)
-                ? title[i18n.language as keyof typeof title]
-                : ''
-            }`}
+        <>
+          <div className="rounded-s mb-m w-2/3 mx-auto relative">
+            <img
+              className="rounded block w-full object-center object-cover"
+              src={image}
+              alt={`${t('poster of', { ns: 'default' })} ${
+                Object.keys(title).includes(i18n.language)
+                  ? title[i18n.language as keyof typeof title]
+                  : ''
+              }`}
+            />
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              display: 'block',
+              width: '100%',
+              height: '50%',
+              zIndex: -2,
+              backgroundImage: `url(${image})`,
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover'
+            }}
           />
-        </div>
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              display: 'block',
+              width: '100%',
+              height: '50%',
+              zIndex: -1,
+              backgroundColor: 'rgba(0, 0, 0, 0.4)',
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover'
+            }}
+          />
+        </>
       )}
       <div className="flex flex-col gap-s">
         <Button
@@ -210,7 +240,7 @@ function Title({
     <>
       <div className="flex items-start md:flex-nowrap flex-wrap sm:justify-start justify-center">
         {Object.keys(title).includes(i18n.language) && (
-          <h1 className="font-bold w-full sm:text-start text-center text-black-100">
+          <h1 className="text-m font-bold w-full sm:text-start text-center text-black-100">
             {title[i18n.language as keyof typeof title]}
           </h1>
         )}
