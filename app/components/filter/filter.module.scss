@@ -11,15 +11,20 @@
     gap: $space-l;
 
     .filter__selects {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      //display: grid;
+      //grid-template-columns: repeat(7, 1fr);
       row-gap: $space-m;
       column-gap: $space-m;
+      @media screen and (min-width: 375px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
     }
 
     .filter__search-area {
       flex-direction: row;
     }
+
   }
 
   &--small {
@@ -72,12 +77,12 @@
 
 .search-area {
   &__search-input {
-    width: 100%;
+    //width: 100%;
     flex-shrink: 2;
   }
 
   &__button-button {
-    width: 100%;
+    //width: 100%;
     flex-shrink: 10;
   }
 }

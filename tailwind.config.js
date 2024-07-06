@@ -2,19 +2,19 @@ export default {
   content: ['./app/**/*.{tsx,ts}'],
   theme: {
     screens: {
-      sm: '640px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1272px',
-      '2xl': '1440px'
+      sm: '768px',
+      md: '1024px',
+      lg: '1280px',
+      xl: '1440px'
     },
     container: {
+      center: true,
       padding: {
         DEFAULT: '8px',
-        sm: '8px',
-        md: '16px',
-        lg: '24px',
-        xl: '24px'
+        sm: '16px',
+        md: '24px',
+        lg: '32px',
+        xl: '32px'
       }
     },
     spacing: {

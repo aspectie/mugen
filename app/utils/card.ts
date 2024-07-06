@@ -27,13 +27,15 @@ export function prepareCardData(
     const title = Object.keys(item.title).includes(lang)
       ? item.title[lang as keyof typeof item.title]
       : ''
+    const kind = item.type
 
     return {
       id: item.id,
       url,
       imageUrl: item.image,
       title,
-      date: item?.released
+      date: item?.released,
+      kind
     }
   })
 }

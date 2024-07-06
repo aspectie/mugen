@@ -4,7 +4,6 @@
     list-style-type: none;
     gap: $space-l;
 
-
     &-item {
       @include h5;
       transition: all 0.3s ease;
@@ -17,4 +16,8 @@
       }
     }
   }
+}
+
+.nav .col {
+  flex-direction: column;
 }

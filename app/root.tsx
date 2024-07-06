@@ -26,7 +26,6 @@ export const handle = {
 
 export function Layout() {
   const { locale } = useLoaderData<typeof loader>()
-
   const { i18n } = useTranslation()
 
   useChangeLanguage(locale)
@@ -54,5 +53,5 @@ export function Layout() {
 }
 
 export default function App() {
-  return <Outlet/>
+  return <Outlet />
 }
