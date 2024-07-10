@@ -9,8 +9,8 @@ import ArrowDownIcon from './arrow-down.svg?react'
 import ArrowUpIcon from './arrow-up.svg?react'
 import FilterIcon from './filter.svg?react'
 import SortIcon from './sort.svg?react'
-import MobileMenu from './mobileMenu.svg?react'
-
+import MobileMenuIcon from './mobileMenu.svg?react'
+import ThemeToggleIcon from './themeToggle.svg?react'
 export {
   NotFoundIcon,
   LogoIcon,
@@ -23,5 +23,6 @@ export {
   ArrowUpIcon,
   FilterIcon,
   SortIcon,
-  MobileMenu
+  MobileMenuIcon,
+  ThemeToggleIcon
 }

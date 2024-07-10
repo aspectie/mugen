@@ -1,12 +1,9 @@
 import {
   type ErrorResponse,
-  Outlet,
   isRouteErrorResponse,
   useRouteError
 } from '@remix-run/react'
 import NotFound from './NotFound'
-import Header from '@/components/header/Header'
-import Footer from '@/components/footer/Footer'
 
 export const meta = ({ error }: { error: ErrorResponse }) => {
   if (error) {
@@ -15,16 +12,6 @@ export const meta = ({ error }: { error: ErrorResponse }) => {
       { name: 'robots', content: 'noindex, nofollow' }
     ]
   }
-}
-
-export default function BaseLayout() {
-  return (
-    <>
-      <main className="container py-s sm:py-m md:py-l lg:py-xl text-black-100 min-h-[100vh]">
-        <Outlet />
-      </main>
-    </>
-  )
 }
 
 export function ErrorBoundary() {

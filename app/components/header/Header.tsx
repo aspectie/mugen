@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from '@remix-run/react'
 
-import { LogoIcon, MobileMenu } from '@/assets/icons'
+import { LogoIcon, MobileMenuIcon } from '@/assets/icons'
 import Search from '@/ui/search/Search'
 import Menu, { TLink } from '@/components/menu/Menu'
 import { useQuery } from '@/hooks/useQuery'
@@ -49,7 +49,7 @@ const Header = () => {
             className="text-accent-80 p-xs mr-s sm:hidden"
             onClick={() => toggleMobileMenu()}
           >
-            <MobileMenu />
+            <MobileMenuIcon />
           </button>
           <Link
             to="/"

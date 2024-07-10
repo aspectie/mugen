@@ -73,7 +73,8 @@ export default {
       '2xl': ['28px', '36px'],
       '3xl': ['32px', '40px']
     },
-    extend: {}
+    extend: {},
+    darkMode: 'selector'
   },
   plugins: []
 }

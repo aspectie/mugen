@@ -48,8 +48,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 }
 
 export default function AnimePage() {
-  const anime = useLoaderData<typeof loader>()
   const { t } = useTranslation(['anime', 'default', 'actions'])
+  const anime = useLoaderData<typeof loader>()
 
   const playerRef = useRef<null | HTMLDivElement>(null)
 
@@ -146,34 +146,6 @@ function MainCard({
               }`}
             />
           </div>
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              display: 'block',
-              width: '100%',
-              height: '50%',
-              zIndex: -2,
-              backgroundImage: `url(${image})`,
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover'
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              display: 'block',
-              width: '100%',
-              height: '50%',
-              zIndex: -1,
-              backgroundColor: 'rgba(0, 0, 0, 0.4)',
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover'
-            }}
-          />
         </>
       )}
       <div className="flex flex-col gap-s">

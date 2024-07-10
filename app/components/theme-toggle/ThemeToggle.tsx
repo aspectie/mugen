@@ -1,14 +1,11 @@
 import Button from '@/ui/button/Button'
+import { ThemeToggleIcon } from '@/assets/icons'
 
 const ThemeToggle = () => {
   return (
-    <div>
-      <Button
-        type="primary"
-        size="small"
-        text="Сменить Тему"
-      />
-    </div>
+    <Button>
+      <ThemeToggleIcon className="bg-black-100 dark:bg-white" />
+    </Button>
   )
 }
 

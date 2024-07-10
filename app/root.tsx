@@ -12,9 +12,9 @@ import { useChangeLanguage } from 'remix-i18next/react'
 import { useTranslation } from 'react-i18next'
 import i18next from '@/.server/i18n'
 import { LoaderFunctionArgs } from '@remix-run/node'
-import Heading from '@/ui/heading/Heading'
 import Header from '@/components/header/Header'
 import Footer from '@/components/footer/Footer'
+import BaseLayout from '@/views/BaseLayout'
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const locale = await i18next.getLocale(request)
@@ -47,7 +47,7 @@ export function Layout() {
       </head>
       <body>
         <Header />
-        <Outlet />
+        <BaseLayout />
         <Footer />
         <ScrollRestoration />
         <Links />
