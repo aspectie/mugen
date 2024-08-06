@@ -1,3 +1,6 @@
+@import '../mixins/text';
+@import '../variables/spaces';
+
 @mixin field--smallest {
   @include p
 }
