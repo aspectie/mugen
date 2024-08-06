@@ -1,9 +1,15 @@
+@import '../../styles/variables/sizing';
+@import '../../styles/variables/colors';
+@import '../../styles/variables/spaces';
+@import '../../styles/mixins/field';
+
 .input {
   width: 100%;
   outline: 0;
   border: 1px solid $gray-80;
   border-radius: $space-s;
   color: $black-100;
+  font-weight: 700;
 
   /* Sizes */
   &--small {

@@ -16,11 +16,11 @@ export const loader = async ({
   request
 }: LoaderFunctionArgs): Promise<TypedResponse<TLoaderResponse> | null> => {
   const { getAnime, getAnimeFilters } = useApi(shikiApi)
-  const url = new URL(request.url);
-  const limit = 10;
-  const order = 'ranked';
+  const url = new URL(request.url)
+  const limit = 10
+  const order = 'ranked'
   const search = url.searchParams.get('search')
-  
+
   const requestParams = {
     limit,
     order
@@ -43,7 +43,11 @@ export const loader = async ({
     return null
   }
 
-  return json({ animes: data, metaTitle, filterSelects: await getAnimeFilters() })
+  return json({
+    animes: data,
+    metaTitle,
+    filterSelects: await getAnimeFilters()
+  })
 }
 
 type TLoaderResponse = {
@@ -62,10 +66,10 @@ export default function AnimesPage() {
   const data: TLoaderResponse = useLoaderData<typeof loader>()
 
   return (
-    <div className="container mx-auto text-black-100">
-      <div className="grid grid-cols-12 pt-xl mb-2xl">
+    <div className="text-black-100">
+      <div className="grid mb-2xl">
         {data && data.animes && (
-          <div className="col-span-8">
+          <div className="">
             <div className="mb-l">
               <Filter
                 selects={data.filterSelects}

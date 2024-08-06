@@ -55,6 +55,7 @@ const Button = forwardRef<HTMLButtonElement, TButton>((props, ref) => {
       disabled={disabled}
       onClick={onClick}
     >
+      {/*TODO: Maybe remove this prefix, suffix from default button?*/}
       {prefix}
       {text && <span className={styles.button__text}>{text}</span>}
       {children}

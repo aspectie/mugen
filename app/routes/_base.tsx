@@ -1,33 +1,25 @@
-import { type ErrorResponse, Outlet, isRouteErrorResponse, useRouteError } from '@remix-run/react';
-import NotFound from "./NotFound";
-import Header from "@/components/header/Header";
+import {
+  type ErrorResponse,
+  isRouteErrorResponse,
+  useRouteError
+} from '@remix-run/react'
+import NotFound from './NotFound'
 
-export const meta = ({ error }: {
-  error: ErrorResponse
-}) => {
+export const meta = ({ error }: { error: ErrorResponse }) => {
   if (error) {
     return [
-      ...((error).status === 404 ? [{ title: 'Page Not Found' }] : []),
-      { name: 'robots', content: 'noindex, nofollow' },
-    ];
+      ...(error.status === 404 ? [{ title: 'Page Not Found' }] : []),
+      { name: 'robots', content: 'noindex, nofollow' }
+    ]
   }
-};
-
-export default function BaseLayout() {
-  return (
-    <>
-      <Header />
-      <Outlet />
-    </>
-  )
 }
 
 export function ErrorBoundary() {
-  const error = useRouteError();
+  const error = useRouteError()
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 404) {
-      return <NotFound />;
+      return <NotFound />
     }
     return (
       <div>
@@ -47,5 +39,5 @@ export function ErrorBoundary() {
       </div>
     )
   }
-  return <h1>Unknown Error</h1>;
+  return <h1>Unknown Error</h1>
 }
