@@ -1,7 +1,6 @@
 import {
   Links,
   Meta,
-  Outlet,
   Scripts,
   ScrollRestoration,
   json,
@@ -15,6 +14,8 @@ import { LoaderFunctionArgs } from '@remix-run/node'
 import Header from '@/components/header/Header'
 import Footer from '@/components/footer/Footer'
 import BaseLayout from '@/views/BaseLayout'
+import { useTheme } from '@/context/ThemeContext'
+import classNames from 'classnames'
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const locale = await i18next.getLocale(request)
@@ -27,17 +28,21 @@ export const handle = {
   i18n: ['default']
 }
 
-export function Layout() {
+export default function App() {
   const { locale } = useLoaderData<typeof loader>()
   const { i18n } = useTranslation()
+  const { theme } = useTheme()
+  const bodyClasses = classNames('page', theme, 'dark:bg-black-100')
 
   useChangeLanguage(locale)
+
   return (
     <html
       lang={locale}
       dir={i18n.dir()}
     >
       <head>
+        <title>Document</title>
         <meta charSet="utf-8" />
         <meta
           name="viewport"
@@ -45,7 +50,7 @@ export function Layout() {
         />
         <Meta />
       </head>
-      <body>
+      <body className={bodyClasses}>
         <Header />
         <BaseLayout />
         <Footer />
@@ -55,8 +60,4 @@ export function Layout() {
       </body>
     </html>
   )
-}
-
-export default function App() {
-  return <Outlet />
 }

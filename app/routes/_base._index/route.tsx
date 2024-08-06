@@ -14,7 +14,6 @@ import {
   CarouselContent,
   CarouselItem
 } from '@/components/carousel/Carousel'
-import { ArrowRightIcon } from '@/assets/icons'
 import Heading from '@/ui/heading/Heading'
 
 export const handle = { i18n: ['default', 'account'] }
@@ -123,92 +122,97 @@ export default function Index() {
 
   return (
     <>
-      <section className="mx-auto text-black-100 mb-s">
-        {data && data.seasonAnime && (
-          <>
-            <Heading>{t('summer season')}</Heading>
-            <div className="p-s bg-black-100 border-black-20 mt-s mx-[-8px] sm:mx-[0] h-fit">
-              <Carousel>
-                <CarouselContent>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.seasonAnime.pageOne,
-                        i18n.language
-                      )}
-                      className="text-white grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.seasonAnime.pageTwo,
-                        i18n.language
-                      )}
-                      className="text-white grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.seasonAnime.pageThree,
-                        i18n.language
-                      )}
-                      className="text-white grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
-                </CarouselContent>
-              </Carousel>
-            </div>
-          </>
-        )}
-      </section>
-      <section className="mx-auto text-black-100">
-        {data && data.popularAnime && (
-          <>
-            <Heading>{t('popular')}</Heading>
-            <div className="p-s border-black-20 mt-s mx-[-8px] sm:mx-[0] h-fit">
-              <Carousel>
-                <CarouselContent>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.popularAnime.pageOne,
-                        i18n.language
-                      )}
-                      className="grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.popularAnime.pageTwo,
-                        i18n.language
-                      )}
-                      className="grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.popularAnime.pageThree,
-                        i18n.language
-                      )}
-                      className="grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
-                </CarouselContent>
-              </Carousel>
-            </div>
-          </>
-        )}
-      </section>
+      <div className="grid lg:grid-cols-12 lg:grid-rows-2">
+        <section className="mx-auto text-black-100 dark:text-white mb-s sm lg:col-start-1 lg:col-end-9 lg:row-start-1 lg:row-end-1">
+          {data && data.seasonAnime && (
+            <>
+              <Heading size="h3">{t('summer season')}</Heading>
+              <div className="p-s bg-black-100 border-black-20 mt-s mx-[-8px] sm:mx-[-16px] md:mx-[-24px] lg:mx-[0] h-fit">
+                <Carousel>
+                  <CarouselContent>
+                    <CarouselItem>
+                      <CardList
+                        cards={prepareCardData(
+                          data.seasonAnime.pageOne,
+                          i18n.language
+                        )}
+                        className="text-white grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
+                        size="small"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <CardList
+                        cards={prepareCardData(
+                          data.seasonAnime.pageTwo,
+                          i18n.language
+                        )}
+                        className="text-white grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
+                        size="small"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <CardList
+                        cards={prepareCardData(
+                          data.seasonAnime.pageThree,
+                          i18n.language
+                        )}
+                        className="text-white grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
+                        size="small"
+                      />
+                    </CarouselItem>
+                  </CarouselContent>
+                </Carousel>
+              </div>
+            </>
+          )}
+        </section>
+        <div className="hidden lg:block lg:col-start-9 lg:col-end-13 lg:pl-2xl">
+          <Filter selects={[{ name: 'Спорт', title: 'Sport', options: [] }]} />
+        </div>
+        <section className="mx-auto text-black-100 dark:text-white lg:col-start-1 lg:col-end-9 lg:row-start-2 lg:row-end-2">
+          {data && data.popularAnime && (
+            <>
+              <Heading size="h3">{t('popular')}</Heading>
+              <div className="p-s border-black-20 mt-s mx-[-8px] sm:mx-[0] h-fit">
+                <Carousel>
+                  <CarouselContent>
+                    <CarouselItem>
+                      <CardList
+                        cards={prepareCardData(
+                          data.popularAnime.pageOne,
+                          i18n.language
+                        )}
+                        className="grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
+                        size="small"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <CardList
+                        cards={prepareCardData(
+                          data.popularAnime.pageTwo,
+                          i18n.language
+                        )}
+                        className="grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
+                        size="small"
+                      />
+                    </CarouselItem>
+                    <CarouselItem>
+                      <CardList
+                        cards={prepareCardData(
+                          data.popularAnime.pageThree,
+                          i18n.language
+                        )}
+                        className="grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
+                        size="small"
+                      />
+                    </CarouselItem>
+                  </CarouselContent>
+                </Carousel>
+              </div>
+            </>
+          )}
+        </section>
+      </div>
     </>
   )
 }

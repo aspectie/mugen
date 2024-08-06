@@ -1,4 +1,5 @@
-import NotFoundIcon from './404.svg?react'
+import NotFoundDarkIcon from './404dark.svg?react'
+import NotFoundLightIcon from './404light.svg?react'
 import LogoIcon from './logo.svg?react'
 import CloseIcon from './close.svg?react'
 import StarIcon from './star.svg?react'
@@ -12,7 +13,8 @@ import SortIcon from './sort.svg?react'
 import MobileMenuIcon from './mobileMenu.svg?react'
 import ThemeToggleIcon from './themeToggle.svg?react'
 export {
-  NotFoundIcon,
+  NotFoundDarkIcon,
+  NotFoundLightIcon,
   LogoIcon,
   CloseIcon,
   StarIcon,
