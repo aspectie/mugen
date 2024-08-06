@@ -1,9 +1,15 @@
+@import "../../styles/variables/colors";
+@import "../../styles/variables/spaces";
+@import "../../styles/mixins/shadow";
+@import "../../styles/mixins/field";
+@import "../../styles/themes/themes";
+
 .button {
   width: 100%;
   outline: 0;
   border: 0;
   border-radius: $space-xs;
-  color: $gray-40;
+  color: var(--text);
   cursor: pointer;
   transition: all 0.2s ease;
 
@@ -65,7 +71,7 @@
 
   /* type */
   &--primary {
-    background-color: $accent-80;
+    background-color: var(--background);
 
     &:hover {
       background-color: $accent-100;
@@ -96,7 +102,8 @@
   }
 
   &--disabled {
-    background-color: $black-60 !important;
+    color: var(--contrast-text);
+    background-color: var(--background-disabled) !important;
   }
 
   &--transparent {

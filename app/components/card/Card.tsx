@@ -50,7 +50,7 @@ const BaseCard = (props: TCardProps) => {
     style['card__image-wrapper'],
     // TODO: maybe move to media query
     {
-      '2xl:h-[150px] xl:h-[100px] lg:h-[70px] sm:h-[210px] h-[186px]':
+      '2xl:h-[150px] xl:h-[100px] lg:h-[252px] md:h-[252px]s sm:h-[210px] h-[186px]':
         type === CardSize.vertical && size === FieldSize.small,
       '2xl:h-[250px] xl:h-[200px] lg:h-[170px] sm:h-[150px]':
         type === CardSize.vertical && size === FieldSize.medium
