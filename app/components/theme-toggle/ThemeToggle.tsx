@@ -1,10 +1,13 @@
 import Button from '@/ui/button/Button'
 import { ThemeToggleIcon } from '@/assets/icons'
+import { useTheme } from '@/context/ThemeContext'
 
 const ThemeToggle = () => {
+  const { toggleTheme } = useTheme()
+
   return (
-    <Button>
-      <ThemeToggleIcon className="bg-black-100 dark:bg-white" />
+    <Button onClick={toggleTheme}>
+      <ThemeToggleIcon />
     </Button>
   )
 }
