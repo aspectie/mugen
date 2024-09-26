@@ -1,12 +1,13 @@
 import { Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next'
 
-import { useSearch } from '@/hooks/useSearch'
 import { LogoIcon } from '@/assets/icons'
 import Search from '@/ui/search/Search'
 import Menu, { TLink } from '@/components/menu/Menu'
 import LanguageToggle from '@/components/language-toggle/LanguageToggle'
 import ThemeToggle from '@/components/theme-toggle/ThemeToggle'
+import { useQuery } from '@/hooks/useQuery';
+
 
 const Header = () => {
   const { t } = useTranslation(['default', 'account'])
@@ -19,6 +20,10 @@ const Header = () => {
     {
       title: t('manga'),
       route: '/manga'
+    },
+    {
+      title: 'Тест',
+      route: '/test'
     }
   ]
 
@@ -61,11 +66,11 @@ const Header = () => {
 
 function HeaderSearch() {
   const { t } = useTranslation()
-  const { setSearch } = useSearch()
+  const { setQuerySearch } = useQuery()
 
   function onKeyDown(e: KeyboardEvent & { target: HTMLInputElement }) {
     if (e.code === 'Enter' && e.target) {
-      setSearch(e.target.value)
+      setQuerySearch(e.target.value)
     }
   }
 

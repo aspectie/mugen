@@ -10,6 +10,7 @@ import {
 import { castToAnother } from '@/utils/api'
 import { clearHTML, groupBy } from '@/utils/utils'
 import { TFilterSelection } from '@/types/ui'
+import { prepareOption } from '@/utils/select'
 
 type TShikiApi = {
   getAnime: (
@@ -25,7 +26,12 @@ type TShikiApi = {
     id: Parameters<typeof getAnimeGroupedRelations>[0],
     limit: Parameters<typeof getAnimeGroupedRelations>[1]
   ) => ReturnType<typeof getAnimeGroupedRelations>
+  getAnimeFilters: () => ReturnType<typeof getAnimeFilters>
 }
+
+const RATING = ['none', 'g', 'pg', 'pg13', 'r', 'r_plus', 'rx']
+const SCORE = ['6', '7', '8', '9']
+const SEASON = ['winter_2024', 'spring_2024', 'summer_2024', 'fall_2024']
 
 const map = {
   id: 'id',
@@ -60,7 +66,8 @@ export function shikiApi(): TShikiApi {
     getAnime,
     getAnimeScreenshots,
     getAnimeVideos,
-    getAnimeGroupedRelations
+    getAnimeGroupedRelations,
+    getAnimeFilters
   }
 }
 
@@ -74,8 +81,11 @@ async function getAnime(
       url += `/${params}`
     } else {
       url += '?'
-      Object.entries(params).map(([key, value]) => {
-        url += `${key}=${value}&`
+      Object.entries(params).map(([key, value], index, array) => {
+        url += `${key}=${value}`
+        if (index !== array.length - 1) {
+          url += '&'
+        }
       })
     }
   }
@@ -161,48 +171,45 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
   return res
 }
 
-/*TODO: remove it when API will be create */
-export const filterSelects: TFilterSelection[] = [
-  {
-    title: 'Жанр',
+export async function getAnimeFilters() {
+  let res = [];
+
+  const genres = await fetch(`${process.env.VITE_SHIKI_URL}/api/genres`)
+  const genresOptions = await genres.json()
+  res.push({
     name: 'genre',
-    options: [
-      {
-        title: 'Экшен',
-        name: 'action'
-      },
-      {
-        title: 'Приключения',
-        name: 'adventure'
-      }
-    ]
-  },
-  {
-    title: 'Тип',
-    name: 'kind',
-    options: [
-      {
-        title: 'ТВ',
-        name: 'TV'
-      },
-      {
-        title: 'Фильм',
-        name: 'Movie'
-      }
-    ]
-  },
-  {
-    title: 'Сезон',
-    name: 'season',
-    options: [
-      {
-        title: 'Зима',
-        name: 'winter'
-      },
-      {
-        title: 'Лето',
-        name: 'summer'
-      }
-    ]
+    options: genresOptions.map(o => prepareOption(o)) // TODO: prepare options
+  })
+
+  const animeConstants = await fetch(`${process.env.VITE_SHIKI_URL}/api/constants/anime`)
+  
+  let animeConstantsData = {}
+  if (animeConstants.ok) {
+    animeConstantsData = await animeConstants.json()
   }
-]
+
+  Object.entries(animeConstantsData).map(([key, value]) => {
+    const options = value.map((v) => prepareOption(v))
+    res.push({
+      name: key,
+      options
+    }) 
+  })
+
+  res.push({
+    name: 'rating',
+    options: RATING.map(v => prepareOption(v))
+  })
+
+  res.push({
+    name: 'score',
+    options: SCORE.map(v => prepareOption(v))
+  })
+
+  res.push({
+    name: 'season',
+    options: SEASON.map(v => prepareOption(v))
+  })
+  
+  return res;
+}

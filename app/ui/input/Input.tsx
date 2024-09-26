@@ -1,8 +1,9 @@
 import classNames from 'classnames'
 
-import {FieldSize, TFieldSize, TInputType} from '@/types/ui'
+import { FieldSize, TFieldSize, TInputType } from '@/types/ui'
 
 import styles from './input.module.scss'
+import { ChangeEvent, forwardRef, KeyboardEvent } from 'react'
 
 type TInput = {
   inputType?: 'text'
@@ -11,25 +12,22 @@ type TInput = {
   placeholder?: string
   value?: string
   name?: string
-  onChange?: any
   type?: TInputType
-  onKeyDown?: any
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void
 }
 
-const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (
-  props: TInput
-) => {
+const Input = forwardRef<HTMLInputElement, TInput>((props: TInput, ref) => {
   const {
     inputType = 'text',
     size = FieldSize.medium,
     disabled = false,
     placeholder = 'Default placeholder',
-    value,
     name,
+    type,
     onChange,
     onKeyDown,
-    type,
-    ...rest
+    value
   } = props
 
   const classes = classNames(styles.input, {
@@ -44,12 +42,15 @@ const Input: React.ForwardRefRenderFunction<HTMLInputElement, TInput> = (
       className={classes}
       disabled={disabled}
       placeholder={placeholder}
-      value={value}
       name={name}
-      onChange={onChange}
+      value={value}
+      onInput={onChange}
       onKeyDown={onKeyDown}
+      ref={ref}
     />
   )
-}
+})
+
+Input.displayName = 'Input'
 
 export default Input

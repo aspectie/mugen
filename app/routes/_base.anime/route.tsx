@@ -1,36 +1,49 @@
 import { LoaderFunctionArgs, TypedResponse, json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { useTranslation } from 'react-i18next'
 import i18n from '@/.server/i18n'
 
 import { TAnime } from '@/types/api/anime'
 
-import { filterSelects, shikiApi } from '@/lib/shiki'
+import { shikiApi } from '@/lib/shiki'
 import { useApi } from '@/hooks/useApi'
 import { prepareCardData } from '@/utils/card'
 import CardList from '@/components/card/CardList'
 import Filter from '@/components/filter/Filter'
 
-export const handle = { i18n: ['default', 'account', 'ui'] }
+export const handle = { i18n: ['default', 'account', 'ui', 'anime'] }
 
 export const loader = async ({
-  request,
-  params
+  request
 }: LoaderFunctionArgs): Promise<TypedResponse<TLoaderResponse> | null> => {
-  const { getAnime } = useApi(shikiApi)
-  console.log(params.id)
-  const data = (await getAnime({
-    limit: 10
-  })) as TAnime[] | null
+  const { getAnime, getAnimeFilters } = useApi(shikiApi)
+  const url = new URL(request.url);
+  const limit = 10;
+  const order = 'ranked';
+  const search = url.searchParams.get('search')
+  
+  const requestParams = {
+    limit,
+    order
+  }
+
+  if (search) {
+    requestParams.search = search
+  }
+
+  url.searchParams.forEach((value, key) => {
+    requestParams[key] = value
+  })
+
+  const data = (await getAnime(requestParams)) as TAnime[] | null
 
   const t = await i18n.getFixedT(request, 'meta')
-  const metaTitle = t('root title')
+  const metaTitle = t('anime page')
 
   if (!data) {
     return null
   }
 
-  return json({ animes: data, metaTitle })
+  return json({ animes: data, metaTitle, filterSelects: await getAnimeFilters() })
 }
 
 type TLoaderResponse = {
@@ -47,21 +60,20 @@ export const meta = ({ data }: { data: TLoaderResponse }) => {
 
 export default function AnimesPage() {
   const data: TLoaderResponse = useLoaderData<typeof loader>()
-  const { t } = useTranslation()
 
   return (
     <div className="container mx-auto text-black-100">
-      <div className="grid grid-cols-12 pt-xl">
+      <div className="grid grid-cols-12 pt-xl mb-2xl">
         {data && data.animes && (
           <div className="col-span-8">
             <div className="mb-l">
               <Filter
-                selects={filterSelects}
+                selects={data.filterSelects}
                 type="detailed"
               />
             </div>
             <div>
-              <h2 className="font-bold mb-l">{t('winter season')}</h2>
+              {/*<h2 className="font-bold mb-l">{t('anime')}</h2>*/}
               <CardList
                 cards={prepareCardData(data.animes)}
                 type="horizontal"

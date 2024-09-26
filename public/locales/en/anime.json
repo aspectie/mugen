@@ -1,10 +1,20 @@
 {
-  "status": {
-    "completed": "Сompleted",
-    "planned": "Planned",
-    "watching": "Watching",
-    "rewatching": "Rewatching",
-    "on hold": "On hold",
-    "dropped": "Dropped"
-  }
+  "status": "Status",
+  "completed": "Сompleted",
+  "planned": "Planned",
+  "watching": "Watching",
+  "rewatching": "Rewatching",
+  "on hold": "On hold",
+  "dropped": "Dropped",
+  "genre": "Genre",
+  "police": "Police",
+  "kind": "Kind",
+  "tv": "Tv",
+  "movie": "Movie",
+  "ova": "OVA",
+  "ona": "ONA",
+  "special": "Special",
+  "anons": "Anons",
+  "ongoing": "Ongoing",
+  "released": "Released"
 }

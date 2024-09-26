@@ -13,6 +13,11 @@ export type TFilterSelection = {
   options: TOption[]
 }
 
-export type TSelectedOptions = {
-  [key: string]: TOption[]
+export type TFilterSelects = {
+  [selectName: string]: TOption[]
+}
+
+export type TFilterParams = {
+  params?: TFilterSelects
+  search?: string
 }

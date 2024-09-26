@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-
+import { forwardRef, ReactNode, MouseEvent, CSSProperties } from 'react'
 import {
   ButtonType,
   FieldSize,
@@ -15,19 +15,16 @@ type TButton = {
   size?: TFieldSize
   justify?: TButtonJustify
   disabled?: boolean
-  children?: React.ReactNode
-  style?: React.CSSProperties
+  children?: ReactNode
+  style?: CSSProperties
   text?: string
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
-  suffix?: React.ReactNode
-  prefix?: React.ReactNode
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void
+  suffix?: ReactNode
+  prefix?: ReactNode
   gap?: TSpace
 }
 
-const Button: React.ForwardRefRenderFunction<
-  HTMLButtonElement | HTMLAnchorElement,
-  TButton
-> = props => {
+const Button = forwardRef<HTMLButtonElement, TButton>((props, ref) => {
   const {
     type = ButtonType.primary,
     size = FieldSize.extraSmall,
@@ -39,8 +36,7 @@ const Button: React.ForwardRefRenderFunction<
     suffix,
     prefix,
     gap,
-    children,
-    ...rest
+    children
   } = props
 
   const classes = classNames(styles.button, {
@@ -53,6 +49,7 @@ const Button: React.ForwardRefRenderFunction<
 
   return (
     <button
+      ref={ref}
       className={classes}
       style={{ ...style }}
       disabled={disabled}
@@ -64,6 +61,8 @@ const Button: React.ForwardRefRenderFunction<
       {suffix}
     </button>
   )
-}
+})
+
+Button.displayName = 'Button'
 
 export default Button
