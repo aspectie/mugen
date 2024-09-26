@@ -5,7 +5,9 @@ import { LogoIcon } from '@/assets/icons'
 import Search from '@/ui/search/Search'
 import Menu, { TLink } from '@/components/menu/Menu'
 import LanguageToggle from '@/components/language-toggle/LanguageToggle'
+import ThemeToggle from '@/components/theme-toggle/ThemeToggle'
 import { useQuery } from '@/hooks/useQuery';
+
 
 const Header = () => {
   const { t } = useTranslation(['default', 'account'])
@@ -52,8 +54,9 @@ const Header = () => {
               </p>
             </Link>
           </div>
-          <div className="ml-m">
+          <div className="ml-m flex">
             <LanguageToggle />
+            <ThemeToggle />
           </div>
         </div>
       </div>

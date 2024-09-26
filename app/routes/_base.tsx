@@ -17,7 +17,9 @@ export default function BaseLayout() {
   return (
     <>
       <Header />
-      <Outlet />
+      <div className="dark:bg-black-100">
+        <Outlet />
+      </div>
     </>
   )
 }
