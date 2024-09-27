@@ -2,6 +2,7 @@ import { NavLink } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import LanguageToggle from '@/components/language-toggle/LanguageToggle'
 import { LogoIcon } from '@/assets/icons'
+import ThemeToggle from '@/components/theme-toggle/ThemeToggle'
 
 const Footer = () => {
   const { t } = useTranslation(['default'])
@@ -21,9 +22,8 @@ const Footer = () => {
           <LogoIcon />
         </NavLink>
         <div className="flex justify-between sm:max-w-xs">
-          <div className="sm:max-w-1/2">
-            <LanguageToggle />
-          </div>
+          <LanguageToggle />
+          <ThemeToggle />
         </div>
       </section>
     </footer>
