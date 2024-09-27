@@ -1,5 +1,6 @@
 export default {
   content: ['./app/**/*.{tsx,ts}'],
+  darkMode: 'selector',
   theme: {
     screens: {
       sm: '768px',

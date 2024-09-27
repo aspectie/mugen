@@ -1,17 +1,17 @@
-import { Link } from '@remix-run/react'
+import { Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next'
 
-import { LogoIcon, MobileMenu } from '@/assets/icons'
+import { LogoIcon } from '@/assets/icons'
 import Search from '@/ui/search/Search'
 import Menu, { TLink } from '@/components/menu/Menu'
-import { useQuery } from '@/hooks/useQuery'
-import { useEffect, useRef, useState } from 'react'
-import { useOutsideClick } from '@/hooks/useOutsideClick'
+import LanguageToggle from '@/components/language-toggle/LanguageToggle'
+import ThemeToggle from '@/components/theme-toggle/ThemeToggle'
+import { useQuery } from '@/hooks/useQuery';
+
 
 const Header = () => {
   const { t } = useTranslation(['default', 'account'])
-  const mobileMenuRef = useRef(null)
-  const [isMobileMenuShow, setIsMobileMenuShow] = useState(false)
+
   const links: TLink[] = [
     {
       title: t('anime'),
@@ -27,38 +27,18 @@ const Header = () => {
     }
   ]
 
-  useEffect(() => {
-    if (isMobileMenuShow) {
-      document.body.classList.add('no-scroll')
-    } else {
-      document.body.classList.remove('no-scroll')
-    }
-  }, [isMobileMenuShow])
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuShow(!isMobileMenuShow)
-  }
-
-  useOutsideClick(mobileMenuRef, () => setIsMobileMenuShow(false))
-
   return (
-    <header className="py-xs sticky z-50 top-[0] sm:py-s bg-black-100">
-      <div className="container flex m-auto items-center justify-between relative">
+    <header className="sticky z-50 top-[0] w-full py-s bg-black-100">
+      <div className="container flex m-auto items-center justify-between">
         <div className="flex items-center">
-          <button
-            className="text-accent-80 p-xs mr-s sm:hidden"
-            onClick={() => toggleMobileMenu()}
-          >
-            <MobileMenu />
-          </button>
           <Link
             to="/"
-            className="-mt-xs"
+            className="-mt-s"
           >
             <LogoIcon />
           </Link>
           {links.length > 0 && (
-            <div className="ml-xl hidden sm:block">
+            <div className="ml-xl hidden md:block">
               <Menu links={links} />
             </div>
           )}
@@ -69,27 +49,17 @@ const Header = () => {
               <HeaderSearch />
             </div>
             <Link to="/login">
-              <p className="text-white font-bold hover:text-accent-100 pr-s">
+              <p className="text-white font-bold hover:text-accent-100">
                 {t('sign in', { ns: 'account' })}
               </p>
             </Link>
           </div>
+          <div className="ml-m flex">
+            <LanguageToggle />
+            <ThemeToggle />
+          </div>
         </div>
       </div>
-      {isMobileMenuShow && (
-        <>
-          <div
-            ref={mobileMenuRef}
-            className="w-2/3 absolute z-[99] bg-gray-80 text-black-100 top-[0] left-[0] py-l px-l h-[100vh] font-black "
-          >
-            <Menu
-              links={links}
-              isRow
-            />
-          </div>
-          <div className="w-full h-[100vh] absolute z-[98] left-[0] top-[0] bg-black-100 opacity-90" />
-        </>
-      )}
     </header>
   )
 }
