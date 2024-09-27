@@ -9,7 +9,8 @@ import ArrowDownIcon from './arrow-down.svg?react'
 import ArrowUpIcon from './arrow-up.svg?react'
 import FilterIcon from './filter.svg?react'
 import SortIcon from './sort.svg?react'
-import MobileMenu from './mobileMenu.svg?react'
+import MoonIcon from './moon.svg?react'
+import SunIcon from './sun.svg?react'
 
 export {
   NotFoundIcon,
@@ -23,5 +24,7 @@ export {
   ArrowUpIcon,
   FilterIcon,
   SortIcon,
+  MoonIcon,
+  SunIcon,
   MobileMenu
 }
