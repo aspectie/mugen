@@ -7,15 +7,13 @@ import { TAnime } from '@/types/api/anime'
 
 import { shikiApi } from '@/lib/shiki'
 import { useApi } from '@/hooks/useApi'
-import { prepareCardData } from '@/utils/card'
-import CardList from '@/components/card/CardList'
+
 import {
   Carousel,
   CarouselContent,
   CarouselItem
 } from '@/components/carousel/Carousel'
-import { ArrowRightIcon } from '@/assets/icons'
-import Heading from '@/ui/heading/Heading'
+import Card from '@/components/card/Card'
 
 export const handle = { i18n: ['default', 'account'] }
 
@@ -24,89 +22,35 @@ export const loader = async ({
 }: LoaderFunctionArgs): Promise<TypedResponse<TLoaderResponse> | null> => {
   const { getAnime } = useApi(shikiApi)
 
-  const seasonAnimePageOne = (await getAnime({
-    limit: 9,
+  const seasonAnimeRequest = (await getAnime({
+    limit: 36,
+    season: '2024',
+    status: 'ongoing',
+    order: 'popularity'
+  })) as TAnime[] | null
+
+  const popularAnimeRequest = (await getAnime({
+    limit: 26,
     page: 1,
-    season: 'summer_2024',
-    status: 'ongoing',
-    order: 'popularity'
-  })) as TAnime[] | null
-
-  const seasonAnimePageTwo = (await getAnime({
-    limit: 9,
-    page: 2,
-    season: 'summer_2024',
-    status: 'ongoing',
-    order: 'popularity'
-  })) as TAnime[] | null
-
-  const seasonAnimePageThree = (await getAnime({
-    limit: 9,
-    page: 3,
-    season: 'summer_2024',
-    status: 'ongoing',
-    order: 'popularity'
-  })) as TAnime[] | null
-
-  const popularPageOne = (await getAnime({
-    limit: 9,
-    page: 1,
-    order: 'popularity'
-  })) as TAnime[] | null
-
-  const popularPageTwo = (await getAnime({
-    limit: 9,
-    page: 2,
-    order: 'popularity'
-  })) as TAnime[] | null
-
-  const popularPageThree = (await getAnime({
-    limit: 9,
-    page: 3,
     order: 'popularity'
   })) as TAnime[] | null
 
   const t = await i18n.getFixedT(request, 'meta')
   const metaTitle = t('root title')
-  if (!seasonAnimePageOne) {
-    return null
-  }
-  if (!seasonAnimePageTwo) {
-    return null
-  }
-  if (!seasonAnimePageThree) {
-    return null
-  }
-  if (!popularPageOne) return null
-  if (!popularPageTwo) return null
-  if (!popularPageThree) return null
+
+  if (!seasonAnimeRequest) return null
+  if (!popularAnimeRequest) return null
 
   return json({
-    seasonAnime: {
-      pageOne: seasonAnimePageOne,
-      pageTwo: seasonAnimePageTwo,
-      pageThree: seasonAnimePageThree
-    },
-    popularAnime: {
-      pageOne: popularPageOne,
-      pageTwo: popularPageTwo,
-      pageThree: popularPageThree
-    },
+    seasonAnime: seasonAnimeRequest,
+    popularAnime: popularAnimeRequest,
     metaTitle
   })
 }
 
 type TLoaderResponse = {
-  seasonAnime: {
-    pageOne: TAnime[]
-    pageTwo: TAnime[]
-    pageThree: TAnime[]
-  }
-  popularAnime: {
-    pageOne: TAnime[]
-    pageTwo: TAnime[]
-    pageThree: TAnime[]
-  }
+  seasonAnime: TAnime[]
+  popularAnime: TAnime[]
   metaTitle: string
 } | null
 
@@ -126,40 +70,34 @@ export default function Index() {
       <section className="mx-auto text-black-100 mb-s">
         {data && data.seasonAnime && (
           <>
-            <h2 className="font-bold mb-l">{t('summer season')}</h2>
-            <div className="p-s bg-black-100 border-black-20 mt-s mx-[-8px] sm:mx-[0] h-fit">
-              <Carousel>
+            <h2 className="font-semibold text-m sm:text-m md:text-2xl lg:text-xl xl:text-3xl mb-s">
+              {t('summer season')}
+            </h2>
+            <div className="p-s bg-black-100 border-black-20 mx-[-8px] sm:mx-[0] h-fit xl:w-5/6 xl:mb-xl">
+              <Carousel
+                opts={{
+                  align: 'start',
+                  loop: true
+                }}
+              >
                 <CarouselContent>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.seasonAnime.pageOne,
-                        i18n.language
-                      )}
-                      className="text-white grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.seasonAnime.pageTwo,
-                        i18n.language
-                      )}
-                      className="text-white grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.seasonAnime.pageThree,
-                        i18n.language
-                      )}
-                      className="text-white grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
+                  {data.seasonAnime.map(anime => {
+                    return (
+                      <CarouselItem
+                        key={anime.id}
+                        //TODO: Fix bug with basis on super-small displays
+                        className="text-white basis-1/3 sm:basis-1/3 md:basis-1/4 lg:basis-1/6 xl:basis-1/6"
+                      >
+                        <Card
+                          url={`/anime/${anime.id}`}
+                          title={anime.title.ru}
+                          id={anime.id}
+                          imageUrl={anime.image}
+                          size="small"
+                        />
+                      </CarouselItem>
+                    )
+                  })}
                 </CarouselContent>
               </Carousel>
             </div>
@@ -169,40 +107,34 @@ export default function Index() {
       <section className="mx-auto text-black-100">
         {data && data.popularAnime && (
           <>
-            <h2 className="font-bold mb-l">{t('popular')}</h2>
-            <div className="p-s border-black-20 mt-s mx-[-8px] sm:mx-[0] h-fit">
-              <Carousel>
+            <h2 className="font-semibold text-m sm:text-m md:text-2xl lg:text-2xl xl:text-3xl mb-s">
+              {t('popular')}
+            </h2>
+            <div className="p-s border-black-20 mx-[-8px] sm:mx-[0] h-fit xl:w-5/6">
+              <Carousel
+                opts={{
+                  align: 'start',
+                  loop: true
+                }}
+              >
                 <CarouselContent>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.popularAnime.pageOne,
-                        i18n.language
-                      )}
-                      className="grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.popularAnime.pageTwo,
-                        i18n.language
-                      )}
-                      className="grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
-                  <CarouselItem>
-                    <CardList
-                      cards={prepareCardData(
-                        data.popularAnime.pageThree,
-                        i18n.language
-                      )}
-                      className="grid grid-cols-3 items-start gap-s sm:grid sm:grid-cols-5 sm:grid-rows-2 overflow-hidden"
-                      size="small"
-                    />
-                  </CarouselItem>
+                  {data.popularAnime.map(anime => {
+                    return (
+                      <CarouselItem
+                        key={anime.id}
+                        //TODO: Fix bug with basis on super-small displays
+                        className="basis-1/3 sm:basis-1/3 md:basis-1/4 lg:basis-1/6 xl:basis-1/6"
+                      >
+                        <Card
+                          url={`/anime/${anime.id}`}
+                          title={anime.title.ru}
+                          id={anime.id}
+                          imageUrl={anime.image}
+                          size="small"
+                        />
+                      </CarouselItem>
+                    )
+                  })}
                 </CarouselContent>
               </Carousel>
             </div>
