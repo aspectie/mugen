@@ -21,7 +21,7 @@ export default function BaseLayout() {
   return (
     <>
       <Header />
-      <main className="container py-s sm:py-m md:py-l lg:py-xl text-black-100">
+      <main className="container py-s sm:py-s md:py-l lg:py-l text-black-100">
         <Outlet />
       </main>
       <Footer />

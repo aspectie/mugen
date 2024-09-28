@@ -49,10 +49,11 @@ const BaseCard = (props: TCardProps) => {
   const imageWrapperClasses = classNames(
     style['card__image-wrapper'],
     // TODO: maybe move to media query
+    // TODO: maybe remove link with card in index and others cards?
     {
-      '2xl:h-[150px] xl:h-[100px] lg:h-[70px] sm:h-[210px] h-[186px]':
+      'xl:h-[252px] lg:h-[228px] md:h-[252px] sm:h-[172px] h-[172px]':
         type === CardSize.vertical && size === FieldSize.small,
-      '2xl:h-[250px] xl:h-[200px] lg:h-[170px] sm:h-[150px]':
+      'xl:h-[200px] lg:h-[170px] sm:h-[150px]':
         type === CardSize.vertical && size === FieldSize.medium
     },
     {
