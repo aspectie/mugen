@@ -3,18 +3,18 @@ export default {
   darkMode: 'selector',
   theme: {
     screens: {
-      sm: '768px',
-      md: '1024px',
-      lg: '1280px',
+      sm: '428px',
+      md: '768px',
+      lg: '1024px',
       xl: '1440px'
     },
     container: {
       center: true,
       padding: {
         DEFAULT: '8px',
-        sm: '16px',
-        md: '24px',
-        lg: '32px',
+        sm: '8px',
+        md: '16px',
+        lg: '24px',
         xl: '32px'
       }
     },
