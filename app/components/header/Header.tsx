@@ -42,7 +42,7 @@ const Header = () => {
         </div>
         <div className="flex">
           <div className="flex md:gap-4xl gap-m items-center text-white">
-            <div className="hidden sm:block">
+            <div className="hidden md:block">
               <HeaderSearch />
             </div>
             <Link to="/login">
