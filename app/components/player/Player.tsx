@@ -9,16 +9,16 @@ export default function Player({ link }: { link: string }) {
         {t('watch', { ns: 'default' })}
       </h4>
       <iframe
-        className="mt-m"
+        className="mt-m aspect-video"
         key="12"
         src={link}
         width="100%"
-        height="256px"
-        title="YouTube video player"
+        height="100%"
+        title="video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
-      ></iframe>
+      />
     </>
   )
 }
