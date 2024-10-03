@@ -80,11 +80,8 @@ export default function AnimePage() {
           {anime.info && <Information info={anime.info} />}
         </div>
         {anime.screenshots && anime.screenshots.length > 0 && (
-          <div className="mt-l xl:col-span-9 lg:col-span-12 col-span-12 xl:pr-l">
-            <Screenshots
-              title={anime.rawData.title}
-              screenshots={anime.screenshots}
-            />
+          <div className="mt-4xl xl:col-span-9 lg:col-span-12 col-span-12 xl:pr-l">
+            <Description description={anime.rawData.description} />
           </div>
         )}
         {/* TODO: move out of this container because sections on the left are affected */}
@@ -98,7 +95,10 @@ export default function AnimePage() {
         )}
         {anime.rawData.description && (
           <div className="mt-l pr-l xl:col-span-9 col-span-12">
-            <Description description={anime.rawData.description} />
+            <Screenshots
+              title={anime.rawData.title}
+              screenshots={anime.screenshots}
+            />
           </div>
         )}
         {anime.playerLink && (
@@ -264,14 +264,19 @@ function Description({
 }: {
   description: Pick<TAnime, 'description'>['description']
 }) {
-  const { t } = useTranslation(['default'])
+  const { t } = useTranslation(['default', 'anime'])
 
   return (
     <>
       <h4 className="font-bold text-black-80">
         {t('description', { ns: 'default' })}
       </h4>
-      <p className="mt-m text-black-80">{description}</p>
+      <p className="mt-m text-black-80">
+        {
+          //TODO: Add locale empty description
+          description ? description : t('empty description', { ns: 'anime' })
+        }
+      </p>
     </>
   )
 }

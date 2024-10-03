@@ -16,5 +16,6 @@
   "special": "Спешл",
   "anons": "Анонсированно",
   "ongoing": "Онгоинг",
-  "released": "Вышло"
+  "released": "Вышло",
+  "empty description": "Для данного тайтла еще нет описания"
 }
