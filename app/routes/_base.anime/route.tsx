@@ -67,7 +67,7 @@ export default function AnimesPage() {
 
   return (
     <div className="text-black-100">
-      <div className="grid mb-2xl">
+      <div className="grid mb-2xl w-2/3">
         {data && data.animes && (
           <div className="">
             <div className="mb-l">

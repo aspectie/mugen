@@ -15,14 +15,14 @@ const Description = ({ title, date, series, kind }: Partial<TCardData>) => {
     <div className={style.card__description}>
       {title && <h5 className={style.card__title}>{title}</h5>}
       {series && <h5 className="text-black-40 p-s bg-accent-60">{series}</h5>}
-      {date && (
-        <h5 className="text-black-40 py-xs px-s bg-gray-40 inline-block rounded border">
-          {preparedDate}
+      {kind && (
+        <h5 className="text-black-80 mr-s py-xs px-m bg-gray-40 inline-block rounded-lg border border-gray-60">
+          {kind.toUpperCase()}
         </h5>
       )}
-      {kind && (
-        <h5 className="text-black-40 py-xs px-s bg-gray-40 inline-block rounded border">
-          {kind}
+      {date && (
+        <h5 className="text-black-80 py-xs px-m bg-gray-40 inline-block rounded-lg border border-gray-60">
+          {preparedDate}
         </h5>
       )}
     </div>
