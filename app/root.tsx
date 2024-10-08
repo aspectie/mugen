@@ -49,7 +49,7 @@ function App() {
         />
         <Meta />
       </head>
-      <body>
+      <body className="dark:bg-black-100">
         <Outlet />
         <ScrollRestoration />
         <Links />

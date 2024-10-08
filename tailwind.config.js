@@ -3,19 +3,19 @@ export default {
   darkMode: 'selector',
   theme: {
     screens: {
-      sm: '640px',
+      sm: '428px',
       md: '768px',
       lg: '1024px',
-      xl: '1272px',
-      '2xl': '1440px'
+      xl: '1440px'
     },
     container: {
+      center: true,
       padding: {
         DEFAULT: '8px',
         sm: '8px',
         md: '16px',
         lg: '24px',
-        xl: '24px'
+        xl: '32px'
       }
     },
     spacing: {

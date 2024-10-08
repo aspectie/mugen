@@ -2,7 +2,7 @@
   "login": "Войти",
   "header search placeholder": "Аниме, манга, студия...",
   "popular": "Популярное",
-  "winter season": "Зимний сезон",
+  "summer season": "Летний Сезон",
   "anime": "Аниме",
   "manga": "Манга",
   "title": "Название",
@@ -12,6 +12,6 @@
   "info": "Информация",
   "description": "Описание",
   "screenshots": "Кадры",
-  "trailer": "Трейлер",
+  "watch": "Просмотр",
   "your score": "Ваша оценка"
 }

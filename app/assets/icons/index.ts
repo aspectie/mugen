@@ -11,6 +11,7 @@ import FilterIcon from './filter.svg?react'
 import SortIcon from './sort.svg?react'
 import MoonIcon from './moon.svg?react'
 import SunIcon from './sun.svg?react'
+import MobileMenu from './mobileMenu.svg?react'
 
 export {
   NotFoundIcon,
@@ -25,5 +26,6 @@ export {
   FilterIcon,
   SortIcon,
   MoonIcon,
-  SunIcon
+  SunIcon,
+  MobileMenu
 }
