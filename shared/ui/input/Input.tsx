@@ -17,7 +17,7 @@ type TInput = {
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void
 }
 
-const Input = forwardRef<HTMLInputElement, TInput>((props: TInput, ref) => {
+export const Input = forwardRef<HTMLInputElement, TInput>((props: TInput, ref) => {
   const {
     inputType = 'text',
     size = FieldSize.medium,
@@ -50,7 +50,3 @@ const Input = forwardRef<HTMLInputElement, TInput>((props: TInput, ref) => {
     />
   )
 })
-
-Input.displayName = 'Input'
-
-export default Input

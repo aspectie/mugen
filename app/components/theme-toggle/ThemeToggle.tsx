@@ -1,4 +1,4 @@
-import Button from '@/ui/button/Button'
+import { Button } from 'shared/ui'
 import { MoonIcon, SunIcon } from '@/assets/icons'
 import { Theme, useTheme } from '@/hooks/useTheme'
 

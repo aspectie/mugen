@@ -24,7 +24,7 @@ type TButton = {
   gap?: TSpace
 }
 
-const Button = forwardRef<HTMLButtonElement, TButton>((props, ref) => {
+export const Button = forwardRef<HTMLButtonElement, TButton>((props, ref) => {
   const {
     type = ButtonType.primary,
     size = FieldSize.extraSmall,
@@ -62,7 +62,3 @@ const Button = forwardRef<HTMLButtonElement, TButton>((props, ref) => {
     </button>
   )
 })
-
-Button.displayName = 'Button'
-
-export default Button

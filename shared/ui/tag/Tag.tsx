@@ -5,7 +5,7 @@ import { FieldSize, TFieldSize } from '@/types/ui'
 import { CloseIcon } from '@/assets/icons'
 import styles from './tag.module.scss'
 
-const Tag = (props: {
+export const Tag = (props: {
   name: string
   text: string
   size?: TFieldSize
@@ -32,5 +32,3 @@ const Tag = (props: {
     </span>
   )
 }
-
-export default Tag

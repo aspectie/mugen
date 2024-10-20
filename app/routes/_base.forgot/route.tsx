@@ -4,9 +4,9 @@ import { ValidatedForm, validationError } from 'remix-validated-form'
 import { withZod } from '@remix-validated-form/with-zod'
 import { z } from 'zod'
 
-import { FormField } from '@/ui/form/Field'
-import Button from '@/ui/button/Button'
-import Input from '@/ui/input/Input'
+import { FormField } from 'shared/ui'
+import { Button } from 'shared/ui'
+import { Input } from 'shared/ui'
 import { useTranslation } from 'react-i18next'
 
 export const handle = { i18n: 'account' }

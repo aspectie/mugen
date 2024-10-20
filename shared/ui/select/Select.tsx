@@ -1,6 +1,6 @@
 import { MouseEvent, ReactElement, useEffect, useRef, useState } from 'react'
-import Button from '@/ui/button/Button'
-import Checkbox from '@/ui/checkbox/Checkbox'
+import { Button } from 'shared/ui'
+import { Checkbox } from 'shared/ui'
 import { ButtonJustify, ButtonType, FieldSize, TOption } from '@/types/ui'
 import { TSelect } from '@/types/ui/select'
 import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
@@ -9,7 +9,7 @@ import { useOutsideClick } from '@/hooks/useOutsideClick'
 import styles from './select.module.scss'
 import { useTranslation } from 'react-i18next'
 
-const Select = (props: TSelect): ReactElement => {
+export const Select = (props: TSelect): ReactElement => {
   const {
     options,
     isMulti = false,
@@ -26,7 +26,7 @@ const Select = (props: TSelect): ReactElement => {
   const [placeholderText, setPlaceholderText] = useState(placeholder)
   const dropdownRef = useRef<HTMLDivElement | null>(null)
   const { t } = useTranslation(['default', 'anime'])
-  
+
   const toggleDropdown = (event: MouseEvent) => {
     event.preventDefault()
     setIsOpened(!isOpened)
@@ -60,7 +60,7 @@ const Select = (props: TSelect): ReactElement => {
       <Button
         type={ButtonType.secondary}
         size={size}
-        text={t(placeholderText.toLocaleLowerCase(), {ns: 'anime'})}
+        text={t(placeholderText.toLocaleLowerCase(), { ns: 'anime' })}
         justify={justify}
         disabled={disabled}
         onClick={toggleDropdown}
@@ -77,7 +77,11 @@ const Select = (props: TSelect): ReactElement => {
               >
                 <Checkbox
                   id={option.name}
-                  text={option.title ? option.title : t(option.name.toLocaleLowerCase(), {ns: 'anime'})}
+                  text={
+                    option.title
+                      ? option.title
+                      : t(option.name.toLocaleLowerCase(), { ns: 'anime' })
+                  }
                   isChecked={value.some(
                     (el: TOption) => el.name === option.name
                   )}
@@ -100,5 +104,3 @@ const Select = (props: TSelect): ReactElement => {
     </div>
   )
 }
-
-export default Select

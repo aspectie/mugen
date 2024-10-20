@@ -8,10 +8,10 @@ import { TGetAnimeData, getAnimeData } from '@/.server/anime'
 import { UserRateStatus } from '@/types/user'
 
 import { prepareCardData } from '@/utils/card'
-import Button from '@/ui/button/Button'
+import { Button } from 'shared/ui'
 import { StarIcon } from '@/assets/icons'
 import CardList from '@/components/card/CardList'
-import Select from '@/ui/select/Select'
+import { Select } from 'shared/ui'
 import {
   Carousel,
   CarouselContent,

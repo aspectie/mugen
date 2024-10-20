@@ -14,7 +14,7 @@ import { useOutsideClick } from '@/hooks/useOutsideClick'
 import { CloseIcon, StarIcon } from '@/assets/icons'
 import styles from './rating.module.scss'
 
-import Button from '@/ui/button/Button'
+import { Button } from 'shared/ui'
 
 type TDirection = 'toRight' | 'toLeft'
 type TRatingProps = {

@@ -1,6 +1,6 @@
 import style from './checkbox.module.scss'
 
-const Checkbox = ({
+export const Checkbox = ({
   text,
   id,
   onChange,
@@ -28,5 +28,3 @@ const Checkbox = ({
     </label>
   )
 }
-
-export default Checkbox

@@ -1,5 +1,5 @@
 import { ChangeEvent, forwardRef, KeyboardEvent } from 'react'
-import Input from '@/ui/input/Input'
+import { Input } from 'shared/ui'
 import { FieldSize, InputType, TFieldSize } from '@/types/ui'
 import { SearchIcon } from '@/assets/icons'
 import styles from './search.module.scss'
@@ -14,7 +14,7 @@ type TSearch = {
   onKeyDown?: (event: KeyboardEvent) => void
 }
 
-const Search = forwardRef<HTMLInputElement, TSearch>((props, ref) => {
+export const Search = forwardRef<HTMLInputElement, TSearch>((props, ref) => {
   const {
     size = FieldSize.small,
     placeholder = 'default placeholder',
@@ -44,7 +44,3 @@ const Search = forwardRef<HTMLInputElement, TSearch>((props, ref) => {
     </div>
   )
 })
-
-Search.displayName = 'Search'
-
-export default Search
