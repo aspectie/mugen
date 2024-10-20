@@ -1,11 +1,9 @@
 import { LoaderFunctionArgs, TypedResponse, json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { i18next } from 'shared/api'
+import { i18next, getAnime, getAnimeFilters } from 'shared/api'
 
 import { TAnime } from '@/types/api/anime'
 
-import { shikiApi } from '@/lib/shiki'
-import { useApi } from '@/hooks/useApi'
 import { prepareCardData } from '@/utils/card'
 import CardList from '@/components/card/CardList'
 import Filter from '@/components/filter/Filter'
@@ -15,7 +13,6 @@ export const handle = { i18n: ['default', 'account', 'ui', 'anime'] }
 export const loader = async ({
   request
 }: LoaderFunctionArgs): Promise<TypedResponse<TLoaderResponse> | null> => {
-  const { getAnime, getAnimeFilters } = useApi(shikiApi)
   const url = new URL(request.url)
   const limit = 10
   const order = 'ranked'

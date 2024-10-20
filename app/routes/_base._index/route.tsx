@@ -1,12 +1,9 @@
 import { LoaderFunctionArgs, TypedResponse, json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-import { i18next } from 'shared/api'
+import { i18next, getAnime } from 'shared/api'
 
 import { TAnime } from '@/types/api/anime'
-
-import { shikiApi } from '@/lib/shiki'
-import { useApi } from '@/hooks/useApi'
 
 import {
   Carousel,
@@ -20,8 +17,6 @@ export const handle = { i18n: ['default', 'account'] }
 export const loader = async ({
   request
 }: LoaderFunctionArgs): Promise<TypedResponse<TLoaderResponse> | null> => {
-  const { getAnime } = useApi(shikiApi)
-
   const seasonAnimeRequest = (await getAnime({
     limit: 36,
     season: '2024',

@@ -1,7 +1,7 @@
 import { LooseObject } from '@/types'
 import { convertObjectsArrayToList } from '@/utils/utils'
 import { useApi } from '@/hooks/useApi'
-import { shikiApi } from '@/lib/shiki'
+import animeConfig from '@/config/anime'
 import { CONSTANTS } from '@/constants'
 import { TAnime } from '@/types/api/anime'
 import { getPlayerLink } from '@/lib/kodik'
@@ -9,6 +9,15 @@ import { getPlayerLink } from '@/lib/kodik'
 const { COMMA } = CONSTANTS
 
 export type TGetAnimeData = typeof getAnimeData
+
+export const {
+  getAnime,
+  getAnimeGroupedRelations,
+  getAnimeScreenshots,
+  getAnimeVideos,
+  getAnimeFilters
+} = useApi(animeConfig.baseApi)
+
 export async function getAnimeData(id: string) {
   let data: {
     rawData?: TAnime
@@ -20,15 +29,8 @@ export async function getAnimeData(id: string) {
     playerLink?: string
   } = {}
 
-  const {
-    getAnime,
-    getAnimeGroupedRelations,
-    getAnimeScreenshots,
-    getAnimeVideos
-  } = useApi(shikiApi)
-
   await Promise.allSettled([
-    getAnime(id).then((res) => {
+    getAnime(id).then(res => {
       data.rawData = res as TAnime
       if (!process.env.SHIKI_URL) {
         throw new Error('Env var `SHIKI_URL` is not defined')
@@ -61,7 +63,7 @@ export async function getAnimeData(id: string) {
         data.info.push({ title: field, value: String(data.rawData[field]) })
       })
 
-      arrayFields.map((field) => {
+      arrayFields.map(field => {
         if (!data.info) {
           data.info = []
         }
@@ -80,27 +82,27 @@ export async function getAnimeData(id: string) {
       })
     }),
 
-    getAnimeScreenshots(id).then((res) => {
+    getAnimeScreenshots(id).then(res => {
       if (res instanceof Array) {
         data.screenshots = res.map(
-          (item) => process.env.SHIKI_URL + item.original
+          item => process.env.SHIKI_URL + item.original
         )
       }
     }),
 
-    getAnimeVideos(id).then((res) => {
+    getAnimeVideos(id).then(res => {
       if (res instanceof Array) {
-        data.videos = res.slice(0, 1).map((item) => item.player_url)
+        data.videos = res.slice(0, 1).map(item => item.player_url)
       }
     }),
 
-    getAnimeGroupedRelations(id, 3).then((res) => {
+    getAnimeGroupedRelations(id, 3).then(res => {
       if (res) {
         data.related = res
       }
     }),
 
-    getPlayerLink(id).then((res) => {
+    getPlayerLink(id).then(res => {
       if (res) {
         data.playerLink = res
       }
