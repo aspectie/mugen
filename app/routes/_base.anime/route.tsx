@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs, TypedResponse, json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import i18n from '@/.server/i18n'
+import { i18next } from 'shared/api'
 
 import { TAnime } from '@/types/api/anime'
 
@@ -36,7 +36,7 @@ export const loader = async ({
 
   const data = (await getAnime(requestParams)) as TAnime[] | null
 
-  const t = await i18n.getFixedT(request, 'meta')
+  const t = await i18next.getFixedT(request, 'meta')
   const metaTitle = t('anime page')
 
   if (!data) {

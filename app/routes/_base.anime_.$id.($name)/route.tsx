@@ -3,7 +3,7 @@ import { Link, useLoaderData } from '@remix-run/react'
 import { json, LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { useTranslation } from 'react-i18next'
 import invariant from 'tiny-invariant'
-import { TGetAnimeData, getAnimeData } from '@/.server/anime'
+import { TGetAnimeData, getAnimeData } from 'shared/api'
 
 import { UserRateStatus } from '@/types/user'
 

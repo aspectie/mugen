@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, TypedResponse, json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-import i18n from '@/.server/i18n'
+import { i18next } from 'shared/api'
 
 import { TAnime } from '@/types/api/anime'
 
@@ -35,7 +35,7 @@ export const loader = async ({
     order: 'popularity'
   })) as TAnime[] | null
 
-  const t = await i18n.getFixedT(request, 'meta')
+  const t = await i18next.getFixedT(request, 'meta')
   const metaTitle = t('root title')
 
   if (!seasonAnimeRequest) return null
@@ -63,7 +63,7 @@ export const meta = ({ data }: { data: TLoaderResponse }) => {
 
 export default function Index() {
   const data: TLoaderResponse = useLoaderData<typeof loader>()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <>

@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import { RemixI18Next } from 'remix-i18next/server'
 import i18n from '@/config/i18n'
 
-let i18next = new RemixI18Next({
+export const i18next = new RemixI18Next({
   detection: {
     supportedLanguages: i18n.supportedLngs,
     fallbackLanguage: i18n.fallbackLng
@@ -19,5 +19,3 @@ let i18next = new RemixI18Next({
   // Tip: You could pass `resources` to the `i18next` configuration and avoid a backend here
   plugins: [Backend]
 })
-
-export default i18next
