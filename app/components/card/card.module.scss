@@ -10,12 +10,10 @@
     }
     .card__title {
       margin-bottom: $space-s;
+      font-size: 20px;
     }
 
     &:hover .card__image-wrapper {
-      transition: all 0.2s linear;
-      max-height: $card-large-height;
-      max-width: $card-large-width;
     }
   }
 
@@ -24,10 +22,11 @@
 
     .card__image-wrapper {
       width: 100%;
-      margin-bottom: $space-s;
+      //margin-bottom: $space-xs;
     }
 
     .card__title {
+      font-size: 12px;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;

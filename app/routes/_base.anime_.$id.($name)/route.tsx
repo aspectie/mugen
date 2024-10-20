@@ -56,7 +56,7 @@ export default function AnimePage() {
   return (
     anime &&
     anime.rawData && (
-      <div className="container mx-auto mt-xl grid grid-cols-12 mb-4xl">
+      <div className="mx-auto grid grid-cols-12 mb-4xl">
         <div className="xl:col-span-2 lg:col-span-3 md:col-span-4 sm:col-span-5 col-span-12 sm:mb-auto mb-l gap-s">
           <MainCard
             image={anime.imageUrl}
@@ -70,7 +70,7 @@ export default function AnimePage() {
               title={anime.rawData.title}
               score={anime.rawData.score}
             />
-            <h5 className="mt-xs text-black-80 sm:text-start text-center">
+            <h5 className="mt-xs text-black-80 sm:text-start text-center xl:font-semibold hidden xl:block">
               {anime.rawData.title.en}
             </h5>
           </div>
@@ -79,9 +79,14 @@ export default function AnimePage() {
           </div>
           {anime.info && <Information info={anime.info} />}
         </div>
+        {anime.screenshots && anime.screenshots.length > 0 && (
+          <div className="mt-4xl xl:col-span-9 lg:col-span-12 col-span-12 xl:pr-l">
+            <Description description={anime.rawData.description} />
+          </div>
+        )}
         {/* TODO: move out of this container because sections on the left are affected */}
         {anime.related && Object.keys(anime.related).length > 0 && (
-          <div className="row-span-2 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex-col justify-between xl:flex hidden">
+          <div className="row-start-1 row-end-3 h-fit col-start-10 col-span-3 bg-gray-40 p-m rounded-[8px] flex-col justify-between xl:flex hidden">
             <Related
               id={anime.rawData.id}
               related={anime.related}
@@ -90,11 +95,6 @@ export default function AnimePage() {
         )}
         {anime.rawData.description && (
           <div className="mt-l pr-l xl:col-span-9 col-span-12">
-            <Description description={anime.rawData.description} />
-          </div>
-        )}
-        {anime.screenshots && anime.screenshots.length > 0 && (
-          <div className="mt-l xl:col-span-9 lg:col-span-12 col-span-12">
             <Screenshots
               title={anime.rawData.title}
               screenshots={anime.screenshots}
@@ -104,7 +104,7 @@ export default function AnimePage() {
         {anime.playerLink && (
           <div
             ref={playerRef}
-            className="xl:col-span-9 lg:col-span-12 col-span-12 self-end mt-l"
+            className=" xl:col-span-9 lg:col-span-12 xl:h-[573px] col-span-12 mt-l"
           >
             <Player link={anime.playerLink} />
           </div>
@@ -134,17 +134,19 @@ function MainCard({
   return (
     <>
       {image && (
-        <div className="rounded-s mb-m">
-          <img
-            className="rounded block w-full object-center object-cover"
-            src={image}
-            alt={`${t('poster of', { ns: 'default' })} ${
-              Object.keys(title).includes(i18n.language)
-                ? title[i18n.language as keyof typeof title]
-                : ''
-            }`}
-          />
-        </div>
+        <>
+          <div className="rounded-s mb-m w-2/3 mx-auto relative md:w-full">
+            <img
+              className="rounded block w-full object-center object-cover"
+              src={image}
+              alt={`${t('poster of', { ns: 'default' })} ${
+                Object.keys(title).includes(i18n.language)
+                  ? title[i18n.language as keyof typeof title]
+                  : ''
+              }`}
+            />
+          </div>
+        </>
       )}
       <div className="flex flex-col gap-s">
         <Button
@@ -160,6 +162,7 @@ function MainCard({
           size={FieldSize.small}
         />
         <Select
+          onChange={() => {}}
           placeholder={`${t('add to', { ns: 'actions' })} ${t('list', {
             ns: 'default'
           }).toLocaleLowerCase()}`}
@@ -210,13 +213,13 @@ function Title({
     <>
       <div className="flex items-start md:flex-nowrap flex-wrap sm:justify-start justify-center">
         {Object.keys(title).includes(i18n.language) && (
-          <h1 className="font-bold w-full sm:text-start text-center text-black-100">
+          <h1 className="text-2xl font-bold w-full sm:text-start text-center text-black-100 xl:text-2xl">
             {title[i18n.language as keyof typeof title]}
           </h1>
         )}
         <div className="flex items-center">
           <StarIcon className="w-l h-l fill-accent-80" />
-          <h1 className="font-bold text-black-80 ml-s">{score}</h1>
+          <h3 className="font-bold text-black-80 ml-s">{score}</h3>
         </div>
       </div>
     </>
@@ -237,7 +240,7 @@ function Information({
       <h4 className="font-bold mb-m text-black-80">
         {t('info', { ns: 'default' })}
       </h4>
-      <ul>
+      <ul className="lg:w-2/3 xl:w-2/3">
         {info.map((el, index) => (
           <li
             key={index}
@@ -261,14 +264,19 @@ function Description({
 }: {
   description: Pick<TAnime, 'description'>['description']
 }) {
-  const { t } = useTranslation(['default'])
+  const { t } = useTranslation(['default', 'anime'])
 
   return (
     <>
       <h4 className="font-bold text-black-80">
         {t('description', { ns: 'default' })}
       </h4>
-      <p className="mt-m text-black-80">{description}</p>
+      <p className="mt-m text-black-80">
+        {
+          //TODO: Add locale empty description
+          description ? description : t('empty description', { ns: 'anime' })
+        }
+      </p>
     </>
   )
 }
@@ -293,11 +301,16 @@ function Screenshots({
         {t('screenshots', { ns: 'default' })}
       </h4>
       <div className="flex mt-m bg-gray-40 p-s rounded-[8px]">
-        <Carousel>
+        <Carousel
+          opts={{
+            loop: true,
+            align: 'start'
+          }}
+        >
           <CarouselContent>
             {screenshots.map(item => (
               <CarouselItem
-                className="lg:basis-1/2 xl:basis-1/4"
+                className="basis-1/2 sm:basis-1/2 md:basis-1/3 lg:basis-1/3 xl:basis-1/4 "
                 key={item}
               >
                 <img

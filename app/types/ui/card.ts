@@ -18,4 +18,5 @@ export type TCardData = {
   date?: string
   title?: string
   series?: string
+  kind?: string
 }

@@ -11,7 +11,7 @@ type TSearch = {
   value?: string
   name?: string
   onInputChange?: (event: ChangeEvent<HTMLInputElement>) => void
-  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void
+  onKeyDown?: (event: KeyboardEvent) => void
 }
 
 const Search = forwardRef<HTMLInputElement, TSearch>((props, ref) => {
