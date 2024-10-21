@@ -7,7 +7,7 @@ import { FormField } from 'shared/ui'
 import { Button } from 'shared/ui'
 import { Input } from 'shared/ui'
 
-import { validator } from '../api/validator'
+import { validator } from '../validator'
 
 export const handle = { i18n: 'account' }
 

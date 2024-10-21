@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs, TypedResponse, json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { i18next, getAnime, getAnimeFilters } from 'shared/api'
+import { i18next, getAnime, getAnimeFilters } from 'shared/.server'
 
 import { TAnime } from '@/types/api/anime'
 

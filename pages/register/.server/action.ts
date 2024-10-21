@@ -1,6 +1,6 @@
-import { type ActionFunctionArgs } from '@remix-run/node'
+import { redirect, type ActionFunctionArgs } from '@remix-run/node'
 import { validationError } from 'remix-validated-form'
-import { validator } from './validator'
+import { validator } from '../validator'
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const result = await validator.validate(await request.formData())
@@ -9,10 +9,5 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return validationError(result.error)
   }
 
-  return new Response(null, {
-    status: 303,
-    headers: {
-      Location: '/'
-    }
-  })
+  return redirect('/')
 }
