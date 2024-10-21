@@ -17,11 +17,10 @@ import styles from './filter.module.scss'
 import { FilterIcon } from '@/assets/icons'
 import { useQuery } from '@/hooks/useQuery'
 
-
-import Select from '@/ui/select/Select'
-import Search from '@/ui/search/Search'
-import Button from '@/ui/button/Button'
-import Tag from '@/ui/tag/Tag'
+import { Select } from 'shared/ui'
+import { Search } from 'shared/ui'
+import { Button } from 'shared/ui'
+import { Tag } from 'shared/ui'
 
 type TFilterProps = {
   type?: TFilterType
@@ -34,7 +33,7 @@ export const Filter = (props: TFilterProps) => {
 
   const [params, setParams] = useState<TFilterSelects>({})
   const [search, setSearch] = useState<string>('')
-  const {setQuerySearch, setQueryParams} = useQuery()
+  const { setQuerySearch, setQueryParams } = useQuery()
 
   const [isFiltersHidden, setIsFiltersHidden] = useState(
     type === FilterType.detailed
@@ -63,8 +62,8 @@ export const Filter = (props: TFilterProps) => {
   const onToggleFilterClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     toggleFiltersVisibility()
-  }  
-  
+  }
+
   const onSearchButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     setQuerySearch(search)
     setQueryParams(params)
@@ -73,10 +72,14 @@ export const Filter = (props: TFilterProps) => {
   const onSelectChange = (option: TOption, selectId: string) => {
     setParams(prevParams => {
       const currentOptions = prevParams[selectId] || []
-      const isOptionExists = currentOptions.some(existingOption => existingOption.name === option.name)
+      const isOptionExists = currentOptions.some(
+        existingOption => existingOption.name === option.name
+      )
 
       const updatedOptions = isOptionExists
-        ? currentOptions.filter(existingOption => existingOption.name !== option.name)
+        ? currentOptions.filter(
+            existingOption => existingOption.name !== option.name
+          )
         : [...currentOptions, option]
 
       const newSelectedOptions = { ...prevParams }
@@ -136,9 +139,7 @@ export const Filter = (props: TFilterProps) => {
           <Button
             text={t('search')}
             size={FieldSize.small}
-            disabled={
-              search === '' && Object.values(params).length === 0
-            }
+            disabled={search === '' && Object.values(params).length === 0}
             onClick={onSearchButtonClick}
           />
         </div>
@@ -166,7 +167,7 @@ export const Filter = (props: TFilterProps) => {
             option.map(tag => (
               <Tag
                 name={tag.name}
-                text={t(tag.name.toLocaleLowerCase(), {ns: 'anime'})}
+                text={t(tag.name.toLocaleLowerCase(), { ns: 'anime' })}
                 key={tag.name}
                 onClick={onTagRemove}
               />

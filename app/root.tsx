@@ -11,7 +11,7 @@ import { useChangeLanguage } from 'remix-i18next/react'
 import { LoaderFunctionArgs } from '@remix-run/node'
 import { useTranslation } from 'react-i18next'
 
-import i18next from '@/.server/i18n'
+import { i18next } from 'shared/.server'
 
 import { ThemeProvider, useTheme } from '@/hooks/useTheme'
 
