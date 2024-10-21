@@ -1,38 +1,15 @@
 import { Link } from '@remix-run/react'
-import { ActionFunctionArgs, redirect } from '@remix-run/node'
-import { ValidatedForm, validationError } from 'remix-validated-form'
-import { withZod } from '@remix-validated-form/with-zod'
-import { z } from 'zod'
+import { ValidatedForm } from 'remix-validated-form'
 import { useTranslation } from 'react-i18next'
 
 import { FormField } from 'shared/ui'
 import { Button } from 'shared/ui'
 import { Input } from 'shared/ui'
+import { validator } from '../api/validator'
 
 export const handle = { i18n: 'account' }
 
-export const validator = withZod(
-  z.object({
-    email: z
-      .string()
-      .min(1, { message: 'Email is required' })
-      .email('Must be a valid email'),
-    password: z.string().min(1, { message: 'Password is required' })
-  })
-)
-
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const result = await validator.validate(await request.formData())
-
-  if (result.error) {
-    return validationError(result.error)
-  }
-
-  // TODO: check if email exists
-  return redirect('/')
-}
-
-export default function RegisterPage() {
+export function RegisterPage() {
   const { t } = useTranslation('account')
 
   return (
