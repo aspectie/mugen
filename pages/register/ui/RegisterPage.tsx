@@ -7,8 +7,6 @@ import { Button } from 'shared/ui'
 import { Input } from 'shared/ui'
 import { validator } from '../validator'
 
-export const handle = { i18n: 'account' }
-
 export function RegisterPage() {
   const { t } = useTranslation('account')
 

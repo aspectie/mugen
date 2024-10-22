@@ -1,1 +1,2 @@
-export { RegisterPage, handle } from './ui/RegisterPage'
+export { RegisterPage } from './ui/RegisterPage'
+export { handle } from './handle'

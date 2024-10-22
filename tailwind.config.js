@@ -1,5 +1,9 @@
 export default {
-  content: ['./app/**/*.{tsx,ts}'],
+  content: [
+    './app/**/*.{tsx,ts}',
+    './pages/**/*.{tsx,ts}',
+    './shared/**/*.{tsx,ts}'
+  ],
   darkMode: 'selector',
   theme: {
     screens: {

@@ -1,2 +1,3 @@
-export { AnimesPage, handle } from './ui/AnimesPage'
+export { AnimesPage } from './ui/AnimesPage'
 export { meta } from './meta'
+export { handle } from './handle'

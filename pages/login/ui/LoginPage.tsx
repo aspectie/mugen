@@ -9,8 +9,6 @@ import { Input } from 'shared/ui'
 
 import { validator } from '../validator'
 
-export const handle = { i18n: 'account' }
-
 export function LoginPage() {
   // TODO: pass to notification
   // const data = useActionData<typeof action>()

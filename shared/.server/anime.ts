@@ -2,7 +2,7 @@ import { LooseObject } from '@/types'
 import { convertObjectsArrayToList } from '@/utils/utils'
 import { useApi } from '@/hooks/useApi'
 import animeConfig from '@/config/anime'
-import { CONSTANTS } from '@/constants'
+import { CONSTANTS } from 'shared/constants'
 import { TAnime } from '@/types/api/anime'
 import { getPlayerLink } from '@/lib/kodik'
 

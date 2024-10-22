@@ -12,8 +12,6 @@ import { Description } from './Description'
 import { Related } from './Related'
 import { Screenshots } from './Screenshots'
 
-export const handle = { i18n: ['default', 'account', 'anime', 'actions'] }
-
 export function AnimePage() {
   const anime = useLoaderData<typeof loader>()
 

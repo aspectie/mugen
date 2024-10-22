@@ -9,15 +9,6 @@ import {
 import Card from '@/components/card/Card'
 import { loader, TLoaderResponse } from '../.server/loader'
 
-export const handle = { i18n: ['default', 'account'] }
-
-export const meta = ({ data }: { data: TLoaderResponse }) => {
-  return [
-    { title: data ? data.metaTitle : null },
-    { name: 'description', content: 'The best anime project' }
-  ]
-}
-
 export function MainPage() {
   const data: TLoaderResponse = useLoaderData<typeof loader>()
   const { t } = useTranslation()
