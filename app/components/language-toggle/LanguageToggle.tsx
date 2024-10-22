@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from 'shared/ui'
-import { EN, RU } from '@/constants/locales'
+import { EN, RU } from 'shared/constants/locales'
 
 function LanguageToggle() {
   const { i18n } = useTranslation()
