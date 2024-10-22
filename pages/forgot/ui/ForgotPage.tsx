@@ -8,8 +8,6 @@ import { Input } from 'shared/ui'
 
 import { validator } from '../validator'
 
-export const handle = { i18n: 'account' }
-
 export function ForgotPage() {
   const { t } = useTranslation('account')
 

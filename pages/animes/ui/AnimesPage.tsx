@@ -5,8 +5,6 @@ import CardList from '@/components/card/CardList'
 import Filter from '@/components/filter/Filter'
 import { loader, type TLoaderResponse } from '../.server/loader'
 
-export const handle = { i18n: ['default', 'account', 'ui', 'anime'] }
-
 export function AnimesPage() {
   const data: TLoaderResponse = useLoaderData<typeof loader>()
 

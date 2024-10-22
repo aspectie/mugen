@@ -1,1 +1,2 @@
-export { MainPage, handle } from './ui/MainPage'
+export { MainPage } from './ui/MainPage'
+export { handle } from './handle'

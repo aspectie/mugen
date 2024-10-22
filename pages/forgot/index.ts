@@ -1,1 +1,2 @@
-export { ForgotPage, handle } from './ui/ForgotPage'
+export { ForgotPage } from './ui/ForgotPage'
+export { handle } from './handle'
