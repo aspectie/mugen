@@ -27,7 +27,7 @@ const formatValue = (value: number) => {
   return value > 0 && value < 10 ? value.toFixed(1) : value
 }
 
-export default function Rating(props: TRatingProps) {
+export function Rating(props: TRatingProps) {
   const { fractions = 2, totalSymbols = 10, direction = 'toRight' } = props
 
   const [isOpened, setIsOpened] = useState(false)

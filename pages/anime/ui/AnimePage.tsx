@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 import { useLoaderData } from '@remix-run/react'
 
-import Player from '@/components/player/Player'
-import Rating from '@/components/rating/Rating'
+import { Player } from '@entities'
+import { Rating } from '@features'
 
 import { loader } from '../.server/loader'
 import { MainCard } from './MainCard'

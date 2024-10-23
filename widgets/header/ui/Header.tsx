@@ -2,8 +2,8 @@ import { Link } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 
 import { LogoIcon } from '@/assets/icons'
-import Menu, { TLink } from '@/components/menu/Menu'
-import { HeaderSearch } from './HeaderSearch'
+import { Menu, TLink } from './menu/Menu'
+import { HeaderSearch } from './search/HeaderSearch'
 
 export const Header = () => {
   const { t } = useTranslation(['default', 'account'])

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-export default function Player({ link }: { link: string }) {
+export function Player({ link }: { link: string }) {
   const { t } = useTranslation(['default'])
 
   return (

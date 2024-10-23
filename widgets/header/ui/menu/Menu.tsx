@@ -1,13 +1,14 @@
 import { Link } from '@remix-run/react'
-import style from './menu.module.scss'
 import classNames from 'classnames'
+
+import style from './menu.module.scss'
 
 export type TLink = {
   title: string
   route: string
 }
 
-const Menu = ({ links, isRow }: { links: TLink[]; isRow?: boolean }) => {
+export const Menu = ({ links, isRow }: { links: TLink[]; isRow?: boolean }) => {
   const classes = classNames(style.nav__list, { [style.col]: isRow })
 
   return (
@@ -25,5 +26,3 @@ const Menu = ({ links, isRow }: { links: TLink[]; isRow?: boolean }) => {
     </nav>
   )
 }
-
-export default Menu

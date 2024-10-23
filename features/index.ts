@@ -5,3 +5,5 @@ export {
   CarouselPrevious,
   CarouselNext
 } from './carousel'
+
+export { Rating } from './rating'
