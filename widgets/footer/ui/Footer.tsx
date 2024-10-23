@@ -2,8 +2,8 @@ import { NavLink } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 
 import { LogoIcon } from '@/assets/icons'
-import LanguageToggle from '@/components/language-toggle/LanguageToggle'
-import ThemeToggle from '@/components/theme-toggle/ThemeToggle'
+import { LanguageToggle } from '@entities'
+import { ThemeToggle } from '@entities'
 
 export const Footer = () => {
   const { t } = useTranslation(['default'])

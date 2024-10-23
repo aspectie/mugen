@@ -4,7 +4,7 @@ import { loader, type TLoaderResponse } from '../.server/loader'
 import { prepareCardData } from '@/utils/card'
 
 import { CardList } from 'shared/ui'
-import { Filter } from 'widgets/filter'
+import { Filter } from '@widgets'
 
 export function AnimesPage() {
   const data: TLoaderResponse = useLoaderData<typeof loader>()

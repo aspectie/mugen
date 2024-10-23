@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 
 import { i18next } from 'shared/.server'
 
-import { ThemeProvider, useTheme } from '@/hooks/useTheme'
+import { ThemeProvider, useTheme } from '@entities'
 
 import '@/styles/main.scss'
 

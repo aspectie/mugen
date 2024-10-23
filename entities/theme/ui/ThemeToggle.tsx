@@ -1,8 +1,8 @@
 import { Button } from 'shared/ui'
 import { MoonIcon, SunIcon } from '@/assets/icons'
-import { Theme, useTheme } from '@/hooks/useTheme'
+import { Theme, useTheme } from '../lib/useTheme'
 
-function ThemeToggle() {
+export function ThemeToggle() {
   const [theme, setTheme] = useTheme()
 
   const toggleTheme = () => {
@@ -24,5 +24,3 @@ function ThemeToggle() {
     </Button>
   )
 }
-
-export default ThemeToggle

@@ -248,7 +248,6 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, { className: string }>(
 CarouselNext.displayName = 'CarouselNext'
 
 export {
-  type CarouselApi,
   Carousel,
   CarouselContent,
   CarouselItem,

@@ -1,11 +1,7 @@
 import { useLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem
-} from '@/components/carousel/Carousel'
+import { Carousel, CarouselContent, CarouselItem } from '@features'
 import { Card } from 'shared/ui'
 import { loader, TLoaderResponse } from '../.server/loader'
 
