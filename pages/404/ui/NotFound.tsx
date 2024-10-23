@@ -1,11 +1,11 @@
-import { Link } from "@remix-run/react"
-import {NotFoundIcon} from '@/assets/icons'
+import { Link } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 
-export const handle = { i18n: ['404'] }
+import { NotFoundIcon } from '@/assets/icons'
 
-export default function NotFound() {
+export function NotFoundPage() {
   const { t } = useTranslation('404')
+
   return (
     <div className="h-screen relative">
       <div className="lg:h-3/5 h-full text-center lg:block flex items-center">

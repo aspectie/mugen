@@ -4,7 +4,7 @@ import {
   isRouteErrorResponse,
   useRouteError
 } from '@remix-run/react'
-import NotFound from './NotFound'
+import { NotFoundPage } from 'pages/404/'
 import Header from '@/components/header/Header'
 import Footer from '@/components/footer/Footer'
 
@@ -34,25 +34,33 @@ export function ErrorBoundary() {
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 404) {
-      return <NotFound />
+      return <NotFoundPage />
     }
-    return (
-      <div>
-        <h1>
-          {error.status} {error.statusText}
-        </h1>
-        <p>{error.data}</p>
-      </div>
-    )
+    return <RouteError error={error} />
   } else if (error instanceof Error) {
-    return (
-      <div>
-        <h1>Error</h1>
-        <p>{error.message}</p>
-        <p>The stack trace is:</p>
-        <pre>{error.stack}</pre>
-      </div>
-    )
+    return <OtherError error={error} />
   }
   return <h1>Unknown Error</h1>
+}
+
+function RouteError({ error }: { error: ErrorResponse }) {
+  return (
+    <div>
+      <h1>
+        {error.status} {error.statusText}
+      </h1>
+      <p>{error.data}</p>
+    </div>
+  )
+}
+
+function OtherError({ error }: { error: Error }) {
+  return (
+    <div>
+      <h1>Error</h1>
+      <p>{error.message}</p>
+      <p>The stack trace is:</p>
+      <pre>{error.stack}</pre>
+    </div>
+  )
 }
