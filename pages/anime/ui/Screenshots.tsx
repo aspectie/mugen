@@ -1,10 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { getAnimeData } from 'shared/.server'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem
-} from '@/components/carousel/Carousel'
+import { Carousel, CarouselContent, CarouselItem } from '@features'
 import { TAnime } from '@/types/api/anime'
 
 export function Screenshots({

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { getAnimeData } from 'shared/.server'
 
 import { prepareCardData } from '@/utils/card'
-import CardList from '@/components/card/CardList'
+import { CardList } from 'shared/ui'
 import { TAnime } from '@/types/api/anime'
 
 export function Related({
