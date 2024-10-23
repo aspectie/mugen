@@ -12,8 +12,8 @@ export function ForgotPage() {
   const { t } = useTranslation('account')
 
   return (
-    <div className="container mx-auto h-screen flex items-center justify-center">
-      <div className="p-l bg-gray-20 xl:w-3/5 rounded-lg shadow-md">
+    <div className="h-full flex items-center justify-center">
+      <section className="flex flex-col p-l m-auto bg-gray-20 w-full sm:w-4/5 lg:w-3/5 xl:w-2/5 rounded-lg shadow-md">
         <div className="flex justify-between items-end mb-2xl">
           <h1 className="font-bold text-black-80">{t('recover password')}</h1>
           <Link to="/register">
@@ -39,7 +39,7 @@ export function ForgotPage() {
             </div>
           </div>
         </ValidatedForm>
-      </div>
+      </section>
     </div>
   )
 }
