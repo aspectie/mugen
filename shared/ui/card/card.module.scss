@@ -12,9 +12,6 @@
       margin-bottom: $space-s;
       font-size: 20px;
     }
-
-    &:hover .card__image-wrapper {
-    }
   }
 
   &--vertical {
@@ -22,7 +19,6 @@
 
     .card__image-wrapper {
       width: 100%;
-      //margin-bottom: $space-xs;
     }
 
     .card__title {
@@ -38,7 +34,6 @@
     &:hover {
       transition: all 0.1s linear;
       transform: scale(1.03);
-      // background-color: $gray-60;
       border-radius: $space-s;
     }
   }
@@ -50,7 +45,7 @@
     object-fit: cover;
     object-position: center;
     border-radius: inherit;
-    
+
     @include shadow-xs;
 
     &-wrapper {
@@ -63,5 +58,4 @@
     margin-left: $space-s;
     padding: $space-xs;
   }
-
 }

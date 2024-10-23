@@ -5,8 +5,8 @@ import {
   useRouteError
 } from '@remix-run/react'
 import { NotFoundPage } from 'pages/404/'
-import Header from '@/components/header/Header'
-import Footer from '@/components/footer/Footer'
+import { Header } from 'widgets/header'
+import { Footer } from 'widgets/footer'
 
 export const meta = ({ error }: { error: ErrorResponse }) => {
   if (error) {

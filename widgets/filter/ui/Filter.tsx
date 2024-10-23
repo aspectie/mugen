@@ -178,4 +178,3 @@ export const Filter = (props: TFilterProps) => {
     </div>
   )
 }
-export default Filter

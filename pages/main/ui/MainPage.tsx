@@ -6,7 +6,7 @@ import {
   CarouselContent,
   CarouselItem
 } from '@/components/carousel/Carousel'
-import Card from '@/components/card/Card'
+import { Card } from 'shared/ui'
 import { loader, TLoaderResponse } from '../.server/loader'
 
 export function MainPage() {

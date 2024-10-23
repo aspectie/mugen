@@ -2,7 +2,8 @@ export default {
   content: [
     './app/**/*.{tsx,ts}',
     './pages/**/*.{tsx,ts}',
-    './shared/**/*.{tsx,ts}'
+    './shared/**/*.{tsx,ts}',
+    './widgets/**/*.{tsx,ts}'
   ],
   darkMode: 'selector',
   theme: {

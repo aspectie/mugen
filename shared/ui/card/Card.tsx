@@ -97,7 +97,7 @@ const CardWithLink = (props: TCardProps & { url: string }) => {
   )
 }
 
-const Card = (props: TCardProps) => {
+export const Card = (props: TCardProps) => {
   return (
     <>
       {props.url ? (
@@ -111,5 +111,3 @@ const Card = (props: TCardProps) => {
     </>
   )
 }
-
-export default Card

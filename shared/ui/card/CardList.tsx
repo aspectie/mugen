@@ -2,9 +2,9 @@ import { TCardData, TCardPreferences } from '@/types/ui'
 
 import classNames from 'classnames'
 
-import Card from './Card'
+import { Card } from './Card'
 
-const CardList = (
+export const CardList = (
   props: {
     cards: TCardData[]
     className?: string
@@ -47,5 +47,3 @@ const CardList = (
     )
   )
 }
-
-export default CardList

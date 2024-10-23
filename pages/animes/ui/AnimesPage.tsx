@@ -1,9 +1,10 @@
 import { useLoaderData } from '@remix-run/react'
 
-import { prepareCardData } from '@/utils/card'
-import CardList from '@/components/card/CardList'
-import Filter from '@/components/filter/Filter'
 import { loader, type TLoaderResponse } from '../.server/loader'
+import { prepareCardData } from '@/utils/card'
+
+import { CardList } from 'shared/ui'
+import { Filter } from 'widgets/filter'
 
 export function AnimesPage() {
   const data: TLoaderResponse = useLoaderData<typeof loader>()

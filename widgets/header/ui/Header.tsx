@@ -2,11 +2,10 @@ import { Link } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 
 import { LogoIcon } from '@/assets/icons'
-import { Search } from 'shared/ui'
 import Menu, { TLink } from '@/components/menu/Menu'
-import { useQuery } from '@/hooks/useQuery'
+import { HeaderSearch } from './HeaderSearch'
 
-const Header = () => {
+export const Header = () => {
   const { t } = useTranslation(['default', 'account'])
 
   const links: TLink[] = [
@@ -56,23 +55,3 @@ const Header = () => {
     </header>
   )
 }
-
-function HeaderSearch() {
-  const { t } = useTranslation()
-  const { setQuerySearch } = useQuery()
-
-  function onKeyDown(e: KeyboardEvent & { target: HTMLInputElement }) {
-    if (e.code === 'Enter' && e.target) {
-      setQuerySearch(e.target.value)
-    }
-  }
-
-  return (
-    <Search
-      placeholder={t('header search placeholder')}
-      onKeyDown={onKeyDown}
-    />
-  )
-}
-
-export default Header
