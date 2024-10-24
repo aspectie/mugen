@@ -1,9 +1,8 @@
+import { ChangeEvent, forwardRef, KeyboardEvent } from 'react'
 import classNames from 'classnames'
 
-import { FieldSize, TFieldSize } from '@/types/ui'
-
 import styles from './input.module.scss'
-import { ChangeEvent, forwardRef, KeyboardEvent } from 'react'
+import { FieldSize, TFieldSize } from '../form'
 
 export const enum InputType {
   transparent = 'transparent'

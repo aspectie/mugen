@@ -2,8 +2,6 @@ import { useTranslation } from 'react-i18next'
 import { useState, ChangeEvent, MouseEvent } from 'react'
 import classNames from 'classnames'
 
-import { FieldSize } from '@/types/ui'
-
 import styles from './filter.module.scss'
 import { FilterIcon } from '@/assets/icons'
 import { useQuery } from '@shared/lib'
@@ -15,7 +13,8 @@ import {
   TOption,
   Search,
   Button,
-  Tag
+  Tag,
+  FieldSize
 } from '@shared/ui'
 
 enum FilterType {

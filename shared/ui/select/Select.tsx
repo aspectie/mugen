@@ -1,14 +1,19 @@
 import { MouseEvent, ReactElement, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Button, Checkbox } from '@shared/ui'
-
-import { ButtonJustify, ButtonType } from '@shared/ui'
-import { FieldSize, TFieldSize } from '@/types/ui'
 import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
-import { useOutsideClick } from '@shared/lib'
-
 import styles from './select.module.scss'
+
+import {
+  Button,
+  ButtonJustify,
+  ButtonType,
+  Checkbox,
+  FieldSize,
+  TFieldSize
+} from '@shared/ui'
+
+import { useOutsideClick } from '@shared/lib'
 
 export type TOption = {
   name: string

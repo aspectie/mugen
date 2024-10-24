@@ -2,7 +2,8 @@ import { Link } from '@remix-run/react'
 
 import classNames from 'classnames'
 
-import { FieldSize, TFieldSize } from '@/types/ui'
+import style from './card.module.scss'
+import { FieldSize, TFieldSize } from '../form'
 
 const enum CardSize {
   vertical = 'vertical',
@@ -26,8 +27,6 @@ export type TCardData = {
 }
 
 type TCardProps = TCardData & TCardPreferences
-
-import style from './card.module.scss'
 
 const Description = ({ title, date, series, kind }: Partial<TCardData>) => {
   const preparedDate = date?.slice(0, 4)
