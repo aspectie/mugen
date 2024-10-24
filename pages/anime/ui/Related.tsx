@@ -1,10 +1,10 @@
 import { Link } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-import { getAnimeData } from 'shared/.server'
 
+import { getAnimeData } from 'shared/.server'
 import { prepareCard } from '@shared/lib'
 import { CardList } from '@shared/ui'
-import { TAnime } from '@/types/api/anime'
+import { TAnime } from '@entities'
 
 export function Related({
   id,

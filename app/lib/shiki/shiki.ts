@@ -1,15 +1,19 @@
-import { LooseObject } from '@/types'
-import { TAnime } from '@/types/api/anime'
+import { TAnime } from '@entities'
 import {
   TShikiAnime,
   TShikiAnimeRelation,
   TShikiAnimeScreenshot,
   TShikiAnimeVideo,
   TShikiManga
-} from '@/types/api/shiki/anime'
-import { toAnotherObject } from '@shared/lib'
-import { clearHTML, groupBy } from 'shared/lib'
-import { prepareOption } from '@shared/lib'
+} from './types'
+
+import {
+  toAnotherObject,
+  clearHTML,
+  groupBy,
+  prepareOption,
+  LooseObject
+} from '@shared/lib'
 
 type TShikiApi = {
   getAnime: (
@@ -170,7 +174,7 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
   return res
 }
 
-export async function getAnimeFilters() {
+async function getAnimeFilters() {
   let res = []
 
   const genres = await fetch(`${process.env.VITE_SHIKI_URL}/api/genres`)

@@ -13,3 +13,7 @@ export function groupBy(array, key) {
       }, {})
     : array
 }
+
+export type LooseObject = {
+  [key: string]: any
+}

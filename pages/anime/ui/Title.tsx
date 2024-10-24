@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { StarIcon } from '@/assets/icons'
-import { TAnime } from '@/types/api/anime'
+import { TAnime } from '@entities'
 
 export function Title({
   title,

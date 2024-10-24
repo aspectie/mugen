@@ -1,4 +1,4 @@
-import { shikiApi } from '@/lib/shiki'
+import { shikiApi } from '@/lib'
 
 export default {
   baseApi: shikiApi

@@ -1,10 +1,8 @@
-import { LooseObject } from '@/types'
-import { toList } from '@shared/lib'
-import { useApi } from '@shared/lib'
+import { LooseObject, toList, useApi } from '@shared/lib'
+
 import animeConfig from '@/config/anime'
 import { CONSTANTS } from '@shared/constants'
-import { TAnime } from '@/types/api/anime'
-import { getPlayerLink } from '@entities'
+import { getPlayerLink, TAnime } from '@entities'
 
 const { COMMA } = CONSTANTS
 
