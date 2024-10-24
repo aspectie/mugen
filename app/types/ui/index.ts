@@ -1,5 +1,4 @@
 import { TOption } from './select'
-import { FilterType, TFilterType, TFilterSelection } from './filter'
 import { InputType, TInputType } from './input'
 
 enum FieldSize {
@@ -20,13 +19,6 @@ enum Space {
 }
 type TSpace = `${Space}`
 
-export { FieldSize, FilterType, InputType, Space }
+export { FieldSize, InputType, Space }
 
-export type {
-  TFieldSize,
-  TOption,
-  TFilterType,
-  TFilterSelection,
-  TInputType,
-  TSpace
-}
+export type { TFieldSize, TOption, TInputType, TSpace }

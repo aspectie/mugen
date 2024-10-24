@@ -2,15 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useState, ChangeEvent, MouseEvent } from 'react'
 import classNames from 'classnames'
 
-import {
-  FieldSize,
-  FilterType,
-  TFilterSelection,
-  TFilterType,
-  TOption
-} from '@/types/ui'
-
-import { TFilterSelects } from '@/types/ui/filter'
+import { FieldSize, TOption } from '@/types/ui'
 
 import styles from './filter.module.scss'
 import { FilterIcon } from '@/assets/icons'
@@ -20,6 +12,23 @@ import { ButtonJustify, ButtonType, Select } from '@shared/ui'
 import { Search } from '@shared/ui'
 import { Button } from '@shared/ui'
 import { Tag } from '@shared/ui'
+
+enum FilterType {
+  detailed = 'detailed',
+  small = 'small'
+}
+
+type TFilterType = `${FilterType}`
+
+type TFilterSelection = {
+  title: string
+  name: string
+  options: TOption[]
+}
+
+export type TFilterSelects = {
+  [selectName: string]: TOption[]
+}
 
 type TFilterProps = {
   type?: TFilterType
