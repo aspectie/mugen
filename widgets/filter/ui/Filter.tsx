@@ -2,16 +2,21 @@ import { useTranslation } from 'react-i18next'
 import { useState, ChangeEvent, MouseEvent } from 'react'
 import classNames from 'classnames'
 
-import { FieldSize, TOption } from '@/types/ui'
+import { FieldSize } from '@/types/ui'
 
 import styles from './filter.module.scss'
 import { FilterIcon } from '@/assets/icons'
 import { useQuery } from '@shared/lib'
 
-import { ButtonJustify, ButtonType, Select } from '@shared/ui'
-import { Search } from '@shared/ui'
-import { Button } from '@shared/ui'
-import { Tag } from '@shared/ui'
+import {
+  ButtonJustify,
+  ButtonType,
+  Select,
+  TOption,
+  Search,
+  Button,
+  Tag
+} from '@shared/ui'
 
 enum FilterType {
   detailed = 'detailed',

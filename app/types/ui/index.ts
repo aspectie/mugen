@@ -1,6 +1,3 @@
-import { TOption } from './select'
-import { InputType, TInputType } from './input'
-
 enum FieldSize {
   smallest = 'smallest',
   extraSmall = 'extra-small',
@@ -19,6 +16,6 @@ enum Space {
 }
 type TSpace = `${Space}`
 
-export { FieldSize, InputType, Space }
+export { FieldSize, Space }
 
-export type { TFieldSize, TOption, TInputType, TSpace }
+export type { TFieldSize, TSpace }

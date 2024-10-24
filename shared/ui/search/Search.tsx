@@ -1,8 +1,9 @@
 import { ChangeEvent, forwardRef, KeyboardEvent } from 'react'
-import { Input } from 'shared/ui'
-import { FieldSize, InputType, TFieldSize } from '@/types/ui'
+
+import { FieldSize, TFieldSize } from '@/types/ui'
 import { SearchIcon } from '@/assets/icons'
 import styles from './search.module.scss'
+import { Input, InputType } from '@shared/ui'
 
 type TSearch = {
   size?: TFieldSize
