@@ -15,12 +15,12 @@ import { TFilterSelects } from '@/types/ui/filter'
 
 import styles from './filter.module.scss'
 import { FilterIcon } from '@/assets/icons'
-import { useQuery } from '@/hooks/useQuery'
+import { useQuery } from '@shared/lib'
 
-import { Select } from 'shared/ui'
-import { Search } from 'shared/ui'
-import { Button } from 'shared/ui'
-import { Tag } from 'shared/ui'
+import { Select } from '@shared/ui'
+import { Search } from '@shared/ui'
+import { Button } from '@shared/ui'
+import { Tag } from '@shared/ui'
 
 type TFilterProps = {
   type?: TFilterType

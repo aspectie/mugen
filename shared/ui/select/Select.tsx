@@ -1,10 +1,10 @@
 import { MouseEvent, ReactElement, useEffect, useRef, useState } from 'react'
-import { Button } from 'shared/ui'
-import { Checkbox } from 'shared/ui'
+import { Button } from '@shared/ui'
+import { Checkbox } from '@shared/ui'
 import { ButtonJustify, ButtonType, FieldSize, TOption } from '@/types/ui'
 import { TSelect } from '@/types/ui/select'
 import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
-import { useOutsideClick } from '@/hooks/useOutsideClick'
+import { useOutsideClick } from '@shared/lib'
 
 import styles from './select.module.scss'
 import { useTranslation } from 'react-i18next'
