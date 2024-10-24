@@ -8,9 +8,9 @@ import {
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 
-import { ButtonJustify, ButtonType, FieldSize, Space } from '@/types/ui'
+import { ButtonJustify, ButtonType, FieldSize, Space } from '@shared/ui'
 
-import { useOutsideClick } from '@/hooks/useOutsideClick'
+import { useOutsideClick } from '@shared/lib'
 import { CloseIcon, StarIcon } from '@/assets/icons'
 import styles from './rating.module.scss'
 

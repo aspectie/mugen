@@ -1,8 +1,6 @@
-import { TCardData, TCardPreferences } from '@/types/ui'
-
 import classNames from 'classnames'
 
-import { Card } from './Card'
+import { Card, TCardData, TCardPreferences } from './Card'
 
 export const CardList = (
   props: {

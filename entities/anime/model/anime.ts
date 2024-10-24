@@ -28,12 +28,12 @@ export type TManga = {
   released: string
 }
 
-export type TAnimeGenre = {
+type TAnimeGenre = {
   id: number
   name: string
 }
 
-export type TAnimeStudio = {
+type TAnimeStudio = {
   id: number
   name: string
 }

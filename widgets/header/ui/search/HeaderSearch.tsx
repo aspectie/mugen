@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
-import { Search } from 'shared/ui'
-import { useQuery } from '@/hooks/useQuery'
+import { Search } from '@shared/ui'
+import { useQuery } from '@shared/lib'
 
 export function HeaderSearch() {
   const { t } = useTranslation()

@@ -1,10 +1,10 @@
 import { Link } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-import { getAnimeData } from 'shared/.server'
 
-import { prepareCardData } from '@/utils/card'
-import { CardList } from 'shared/ui'
-import { TAnime } from '@/types/api/anime'
+import { getAnimeData } from 'shared/.server'
+import { prepareCard } from '@shared/lib'
+import { CardList } from '@shared/ui'
+import { TAnime } from '@entities'
 
 export function Related({
   id,
@@ -33,7 +33,7 @@ export function Related({
               type="horizontal"
               size="small"
               isHighlight={true}
-              cards={prepareCardData(entry[1], i18n.language)}
+              cards={prepareCard(entry[1], i18n.language)}
             />
           </div>
         ))}

@@ -1,12 +1,8 @@
-import { LooseObject } from '@/types'
-import { convertObjectsArrayToList } from '@/utils/utils'
-import { useApi } from '@/hooks/useApi'
-import animeConfig from '@/config/anime'
-import { CONSTANTS } from 'shared/constants'
-import { TAnime } from '@/types/api/anime'
-import { getPlayerLink } from '@/lib/kodik'
+import { LooseObject, toList, useApi } from '@shared/lib'
 
-const { COMMA } = CONSTANTS
+import animeConfig from '@/config/anime'
+import { COMMA } from '@shared/constants'
+import { getPlayerLink, TAnime } from '@entities'
 
 export type TGetAnimeData = typeof getAnimeData
 
@@ -73,11 +69,7 @@ export async function getAnimeData(id: string) {
 
         data.info.push({
           title: field.name,
-          value: convertObjectsArrayToList(
-            data.rawData[field.name],
-            field.value,
-            COMMA
-          )
+          value: toList(data.rawData[field.name], field.value, COMMA)
         })
       })
     }),

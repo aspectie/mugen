@@ -1,9 +1,9 @@
 import { useLoaderData } from '@remix-run/react'
 
 import { loader, type TLoaderResponse } from '../.server/loader'
-import { prepareCardData } from '@/utils/card'
+import { prepareCard } from '@shared/lib'
 
-import { CardList } from 'shared/ui'
+import { CardList } from '@shared/ui'
 import { Filter } from '@widgets'
 
 export function AnimesPage() {
@@ -23,7 +23,7 @@ export function AnimesPage() {
             <div>
               {/*<h2 className="font-bold mb-l">{t('anime')}</h2>*/}
               <CardList
-                cards={prepareCardData(data.animes)}
+                cards={prepareCard(data.animes)}
                 type="horizontal"
                 size="large"
               />

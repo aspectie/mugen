@@ -2,25 +2,37 @@ import { useTranslation } from 'react-i18next'
 import { useState, ChangeEvent, MouseEvent } from 'react'
 import classNames from 'classnames'
 
+import styles from './filter.module.scss'
+import { FilterIcon } from '@/assets/icons'
+import { useQuery } from '@shared/lib'
+
 import {
   ButtonJustify,
   ButtonType,
-  FieldSize,
-  FilterType,
-  TFilterSelection,
-  TFilterType,
-  TOption
-} from '@/types/ui'
-import { TFilterSelects } from '@/types/ui/filter'
+  Select,
+  TOption,
+  Search,
+  Button,
+  Tag,
+  FieldSize
+} from '@shared/ui'
 
-import styles from './filter.module.scss'
-import { FilterIcon } from '@/assets/icons'
-import { useQuery } from '@/hooks/useQuery'
+enum FilterType {
+  detailed = 'detailed',
+  small = 'small'
+}
 
-import { Select } from 'shared/ui'
-import { Search } from 'shared/ui'
-import { Button } from 'shared/ui'
-import { Tag } from 'shared/ui'
+type TFilterType = `${FilterType}`
+
+type TFilterSelection = {
+  title: string
+  name: string
+  options: TOption[]
+}
+
+export type TFilterSelects = {
+  [selectName: string]: TOption[]
+}
 
 type TFilterProps = {
   type?: TFilterType

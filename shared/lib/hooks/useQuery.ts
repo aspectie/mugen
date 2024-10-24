@@ -1,6 +1,7 @@
-import { TFilterSelects } from '@/types/ui/filter'
 import { useSearchParams } from '@remix-run/react'
 import { useEffect, useState } from 'react'
+
+import { TFilterSelects } from '@widgets'
 
 export function useQuery(
   initialValue = {

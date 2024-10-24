@@ -1,13 +1,38 @@
 import { MouseEvent, ReactElement, useEffect, useRef, useState } from 'react'
-import { Button } from 'shared/ui'
-import { Checkbox } from 'shared/ui'
-import { ButtonJustify, ButtonType, FieldSize, TOption } from '@/types/ui'
-import { TSelect } from '@/types/ui/select'
-import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
-import { useOutsideClick } from '@/hooks/useOutsideClick'
-
-import styles from './select.module.scss'
 import { useTranslation } from 'react-i18next'
+
+import { ArrowDownIcon, ArrowUpIcon } from '@/assets/icons'
+import styles from './select.module.scss'
+
+import {
+  Button,
+  ButtonJustify,
+  ButtonType,
+  Checkbox,
+  FieldSize,
+  TFieldSize
+} from '@shared/ui'
+
+import { useOutsideClick } from '@shared/lib'
+
+export type TOption = {
+  name: string
+  title: string
+  id?: number
+}
+
+type TSelect = {
+  value?: TOption[]
+  isMulti?: boolean
+  options: TOption[]
+  size?: TFieldSize
+  disabled?: boolean
+  justify?: ButtonJustify
+  children?: React.ReactNode
+  onChange: (option: TOption) => void
+  style?: React.CSSProperties
+  placeholder?: string
+}
 
 export const Select = (props: TSelect): ReactElement => {
   const {

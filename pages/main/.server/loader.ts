@@ -1,8 +1,7 @@
 import { LoaderFunctionArgs, TypedResponse, json } from '@remix-run/node'
-
 import { i18next, getAnime } from 'shared/.server'
 
-import { TAnime } from '@/types/api/anime'
+import { TAnime } from '@entities'
 
 export type TLoaderResponse = {
   seasonAnime: TAnime[]

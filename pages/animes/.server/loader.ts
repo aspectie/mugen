@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, TypedResponse, json } from '@remix-run/node'
 import { i18next, getAnime, getAnimeFilters } from 'shared/.server'
 
-import { TAnime } from '@/types/api/anime'
+import { TAnime } from '@entities'
 
 export const loader = async ({
   request

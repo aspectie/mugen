@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import { TAnime } from '@/types/api/anime'
+
+import { TAnime } from '@entities'
 
 export function Description({
   description

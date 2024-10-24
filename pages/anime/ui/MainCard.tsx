@@ -1,12 +1,15 @@
 import { MutableRefObject } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { UserRateStatus } from '@/types/user'
+import { TAnime, UserRateStatus } from '@entities'
 
-import { Button } from 'shared/ui'
-import { Select } from 'shared/ui'
-import { ButtonJustify, ButtonType, FieldSize } from '@/types/ui'
-import { TAnime } from '@/types/api/anime'
+import {
+  Button,
+  FieldSize,
+  Select,
+  ButtonJustify,
+  ButtonType
+} from '@shared/ui'
 
 export function MainCard({
   playerRef,
