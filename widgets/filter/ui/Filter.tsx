@@ -3,21 +3,20 @@ import { useState, ChangeEvent, MouseEvent } from 'react'
 import classNames from 'classnames'
 
 import {
-  ButtonJustify,
-  ButtonType,
   FieldSize,
   FilterType,
   TFilterSelection,
   TFilterType,
   TOption
 } from '@/types/ui'
+
 import { TFilterSelects } from '@/types/ui/filter'
 
 import styles from './filter.module.scss'
 import { FilterIcon } from '@/assets/icons'
 import { useQuery } from '@shared/lib'
 
-import { Select } from '@shared/ui'
+import { ButtonJustify, ButtonType, Select } from '@shared/ui'
 import { Search } from '@shared/ui'
 import { Button } from '@shared/ui'
 import { Tag } from '@shared/ui'

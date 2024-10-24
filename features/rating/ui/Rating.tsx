@@ -8,7 +8,8 @@ import {
 import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 
-import { ButtonJustify, ButtonType, FieldSize, Space } from '@/types/ui'
+import { FieldSize, Space } from '@/types/ui'
+import { ButtonJustify, ButtonType } from '@shared/ui'
 
 import { useOutsideClick } from '@shared/lib'
 import { CloseIcon, StarIcon } from '@/assets/icons'

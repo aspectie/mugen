@@ -1,14 +1,22 @@
 import classNames from 'classnames'
 import { forwardRef, ReactNode, MouseEvent, CSSProperties } from 'react'
-import {
-  ButtonType,
-  FieldSize,
-  TButtonJustify,
-  TButtonType,
-  TFieldSize,
-  TSpace
-} from '@/types/ui'
+import { FieldSize, TFieldSize, TSpace } from '@/types/ui'
 import styles from './button.module.scss'
+
+export const enum ButtonType {
+  primary = 'primary',
+  secondary = 'secondary',
+  ghost = 'ghost',
+  transparent = 'transparent'
+}
+export type TButtonType = `${ButtonType}`
+
+export const enum ButtonJustify {
+  start = 'start',
+  center = 'center',
+  between = 'between'
+}
+export type TButtonJustify = `${ButtonJustify}`
 
 type TButton = {
   type?: TButtonType
