@@ -7,10 +7,9 @@ import {
   TShikiAnimeVideo,
   TShikiManga
 } from '@/types/api/shiki/anime'
-import { castToAnother } from '@/utils/api'
-import { clearHTML, groupBy } from '@/utils/utils'
-import { TFilterSelection } from '@/types/ui'
-import { prepareOption } from '@/utils/select'
+import { toAnotherObject } from '@shared/lib'
+import { clearHTML, groupBy } from 'shared/lib'
+import { prepareOption } from '@shared/lib'
 
 type TShikiApi = {
   getAnime: (
@@ -53,7 +52,7 @@ const map = {
 }
 
 function prepareAnimeData(item: TShikiAnime | TShikiManga): TAnime {
-  const res = castToAnother(item, map) as TAnime
+  const res = toAnotherObject(item, map) as TAnime
 
   res.image = `${import.meta.env.VITE_SHIKI_URL}/${item.image.original}`
   res.description = item.description ? clearHTML(item.description) : ''
@@ -172,7 +171,7 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
 }
 
 export async function getAnimeFilters() {
-  let res = [];
+  let res = []
 
   const genres = await fetch(`${process.env.VITE_SHIKI_URL}/api/genres`)
   const genresOptions = await genres.json()
@@ -181,19 +180,21 @@ export async function getAnimeFilters() {
     options: genresOptions.map(o => prepareOption(o)) // TODO: prepare options
   })
 
-  const animeConstants = await fetch(`${process.env.VITE_SHIKI_URL}/api/constants/anime`)
-  
+  const animeConstants = await fetch(
+    `${process.env.VITE_SHIKI_URL}/api/constants/anime`
+  )
+
   let animeConstantsData = {}
   if (animeConstants.ok) {
     animeConstantsData = await animeConstants.json()
   }
 
   Object.entries(animeConstantsData).map(([key, value]) => {
-    const options = value.map((v) => prepareOption(v))
+    const options = value.map(v => prepareOption(v))
     res.push({
       name: key,
       options
-    }) 
+    })
   })
 
   res.push({
@@ -210,6 +211,6 @@ export async function getAnimeFilters() {
     name: 'season',
     options: SEASON.map(v => prepareOption(v))
   })
-  
-  return res;
+
+  return res
 }
