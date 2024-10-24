@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next'
 
 import { UserRateStatus } from '@entities'
 
-import { Button } from '@shared/ui'
+import { Button, FieldSize } from '@shared/ui'
 import { Select } from '@shared/ui'
 import { ButtonJustify, ButtonType } from '@shared/ui'
-import { FieldSize } from '@/types/ui'
 import { TAnime } from '@/types/api/anime'
 
 export function MainCard({

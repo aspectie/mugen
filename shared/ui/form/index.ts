@@ -1,1 +1,1 @@
-export { FormField } from './Field';
+export { FormField, FieldSize, type TFieldSize } from './Field'

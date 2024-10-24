@@ -1,12 +1,3 @@
-enum FieldSize {
-  smallest = 'smallest',
-  extraSmall = 'extra-small',
-  small = 'small',
-  medium = 'medium',
-  large = 'large'
-}
-type TFieldSize = `${FieldSize}`
-
 enum Space {
   xs = 'xs',
   s = 's',
@@ -16,6 +7,6 @@ enum Space {
 }
 type TSpace = `${Space}`
 
-export { FieldSize, Space }
+export { Space }
 
-export type { TFieldSize, TSpace }
+export type { TSpace }

@@ -1,7 +1,8 @@
 import classNames from 'classnames'
 import { forwardRef, ReactNode, MouseEvent, CSSProperties } from 'react'
-import { FieldSize, TFieldSize, TSpace } from '@/types/ui'
+import { TSpace } from '@/types/ui'
 import styles from './button.module.scss'
+import { FieldSize, TFieldSize } from '../form'
 
 export const enum ButtonType {
   primary = 'primary',
