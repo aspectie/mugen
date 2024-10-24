@@ -15,6 +15,8 @@ import { i18next } from 'shared/.server'
 
 import { ThemeProvider, useTheme } from '@entities'
 
+import { Footer, Header } from '@widgets'
+
 import '@/styles/main.scss'
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -50,7 +52,9 @@ function App() {
         <Meta />
       </head>
       <body className="dark:bg-black-100 grid grid-rows-layout min-h-[100vh]">
+        <Header />
         <Outlet />
+        <Footer />
         <ScrollRestoration />
         <Links />
         <Scripts />

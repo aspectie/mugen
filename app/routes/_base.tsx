@@ -5,8 +5,6 @@ import {
   useRouteError
 } from '@remix-run/react'
 import { NotFoundPage } from 'pages/404/'
-import { Header } from '@widgets'
-import { Footer } from '@widgets'
 
 export const meta = ({ error }: { error: ErrorResponse }) => {
   if (error) {
@@ -20,11 +18,9 @@ export const meta = ({ error }: { error: ErrorResponse }) => {
 export default function BaseLayout() {
   return (
     <>
-      <Header />
       <main className="container py-s sm:py-s md:py-l lg:py-l text-black-100">
         <Outlet />
       </main>
-      <Footer />
     </>
   )
 }
