@@ -1,11 +1,11 @@
-import { TAnime, TManga } from '@/types/api/anime'
-
+import { TAnime, TManga } from '@entities'
 import { toDashed } from '../convert'
 import { TCardData } from '@shared/ui'
+import { RU } from '@shared/constants'
 
 export function prepareCard(
   data: TAnime[] | TManga[],
-  lang: string = 'ru'
+  lang: string = RU
 ): TCardData[] {
   // TODO: get by endpoint
   const mangaTypes = [

@@ -1,10 +1,8 @@
 import { LooseObject, toList, useApi } from '@shared/lib'
 
 import animeConfig from '@/config/anime'
-import { CONSTANTS } from '@shared/constants'
+import { COMMA } from '@shared/constants'
 import { getPlayerLink, TAnime } from '@entities'
-
-const { COMMA } = CONSTANTS
 
 export type TGetAnimeData = typeof getAnimeData
 

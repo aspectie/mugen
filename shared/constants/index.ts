@@ -1,7 +1,2 @@
-import * as separators from './separators'
-import * as locales from './locales'
-
-export const CONSTANTS = {
-  ...separators,
-  ...locales
-}
+export { DOT, COMMA } from './separators'
+export { EN, RU } from './locales'
