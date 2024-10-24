@@ -14,7 +14,9 @@ export function RegisterPage() {
     <div className="h-full flex items-center justify-center">
       <section className="flex flex-col p-l m-auto bg-gray-20 w-full sm:w-4/5 lg:w-3/5 xl:w-2/5 rounded-lg shadow-md">
         <div className="flex justify-between items-end mb-2xl">
-          <h1 className="font-bold text-black-80">{t('registration')}</h1>
+          <h1 className="font-bold text-black-80 text-m md:text-3xl">
+            {t('registration')}
+          </h1>
           <Link to="/login">
             <h5 className="hover:text-accent-100">{t('login')}</h5>
           </Link>
@@ -40,7 +42,7 @@ export function RegisterPage() {
             </FormField>
           </div>
           <div className="w-full flex justify-center">
-            <div className="w-1/3">
+            <div className="w-fit">
               <Button text={t('sign up')} />
             </div>
           </div>

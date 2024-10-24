@@ -10,7 +10,7 @@ export default {
   darkMode: 'selector',
   theme: {
     screens: {
-      sm: '428px',
+      sm: '425px',
       md: '768px',
       lg: '1024px',
       xl: '1440px'
