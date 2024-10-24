@@ -49,7 +49,7 @@ function App() {
         />
         <Meta />
       </head>
-      <body className="dark:bg-black-100">
+      <body className="dark:bg-black-100 grid grid-rows-layout min-h-[100vh]">
         <Outlet />
         <ScrollRestoration />
         <Links />
