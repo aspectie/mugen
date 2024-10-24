@@ -15,7 +15,7 @@ export function ForgotPage() {
     <div className="h-full flex items-center justify-center">
       <section className="flex flex-col p-l m-auto bg-gray-20 w-full sm:w-4/5 lg:w-3/5 xl:w-2/5 rounded-lg shadow-md">
         <div className="flex justify-between mb-2xl">
-          <h1 className="font-bold text-black-80 text-m">
+          <h1 className="font-bold text-black-80 text-m md:text-3xl">
             {t('recover password')}
           </h1>
         </div>
