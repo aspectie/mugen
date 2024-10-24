@@ -5,7 +5,7 @@ export {
   type TButtonType,
   type TButtonJustify
 } from './button'
-export { Card, CardList } from './card'
+export { Card, CardList, type TCardData } from './card'
 export { Checkbox } from './checkbox'
 export { FormField } from './form'
 export { Input } from './input'

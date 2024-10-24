@@ -1,2 +1,2 @@
-export { Card } from './Card'
+export { Card, type TCardData } from './Card'
 export { CardList } from './CardList'

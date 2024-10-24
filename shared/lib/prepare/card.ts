@@ -1,7 +1,7 @@
-import { TCardData } from '@/types/ui'
 import { TAnime, TManga } from '@/types/api/anime'
 
 import { toDashed } from '../convert'
+import { TCardData } from '@shared/ui'
 
 export function prepareCard(
   data: TAnime[] | TManga[],

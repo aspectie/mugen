@@ -2,7 +2,28 @@ import { Link } from '@remix-run/react'
 
 import classNames from 'classnames'
 
-import { CardSize, FieldSize, TCardData, TCardPreferences } from '@/types/ui'
+import { FieldSize, TFieldSize } from '@/types/ui'
+
+const enum CardSize {
+  vertical = 'vertical',
+  horizontal = 'horizontal'
+}
+
+export type TCardPreferences = {
+  type?: `${CardSize}`
+  size?: TFieldSize
+  isHighlight?: boolean
+}
+
+export type TCardData = {
+  id: number
+  url?: string
+  imageUrl: string
+  date?: string
+  title?: string
+  series?: string
+  kind?: string
+}
 
 type TCardProps = TCardData & TCardPreferences
 
