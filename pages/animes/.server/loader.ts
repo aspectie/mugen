@@ -12,7 +12,7 @@ export const loader = async ({
   const order = 'ranked'
   const search = url.searchParams.get('search')
 
-  const requestParams = {
+  const requestParams: Record<string, string | number> = {
     limit,
     order
   }
