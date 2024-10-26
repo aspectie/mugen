@@ -90,8 +90,8 @@ export type TShikiAnimeGenre = {
   id: number
   name: string
   russian: string
-  kind: string
-  entry_type: string
+  kind: 'genre'
+  entry_type: 'Manga' | 'Anime'
 }
 
 export type TShikiAnimeStudio = {
@@ -123,3 +123,15 @@ export type TShikiAnimeRelation = {
   anime?: TShikiAnime
   manga?: TShikiManga
 }
+
+export type TShikiAnimeStatus = 'anons' | 'ongoing' | 'released'
+export type TShikiAnimeKind =
+  | 'tv'
+  | 'movie'
+  | 'ova'
+  | 'ona'
+  | 'special'
+  | 'tv_special'
+  | 'music'
+  | 'pv'
+  | 'cm'

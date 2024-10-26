@@ -1,7 +1,5 @@
 import { Link } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-
-import { getAnimeData } from 'shared/.server'
 import { prepareCard } from '@shared/lib'
 import { CardList } from '@shared/ui'
 import { TAnime } from '@entities'
@@ -10,30 +8,25 @@ export function Related({
   id,
   related
 }: {
-  id: Pick<TAnime, 'id'>['id']
-  related: NonNullable<
-    Pick<
-      NonNullable<Awaited<ReturnType<typeof getAnimeData>>>,
-      'related'
-    >['related']
-  >
+  id: number
+  related: Record<string, TAnime[]>
 }) {
   const { i18n } = useTranslation()
 
   return (
     <>
       <div>
-        {Object.entries(related).map(entry => (
+        {Object.entries(related).map(([key, value]) => (
           <div
-            key={entry[0]}
+            key={key}
             className="[&:not(:last-child)]:mb-l "
           >
-            <h4 className="font-bold mb-l">{entry[0]}</h4>
+            <h4 className="font-bold mb-l">{key}</h4>
             <CardList
               type="horizontal"
               size="small"
               isHighlight={true}
-              cards={prepareCard(entry[1], i18n.language)}
+              cards={prepareCard(value, i18n.language)}
             />
           </div>
         ))}
