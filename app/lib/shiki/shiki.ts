@@ -7,12 +7,7 @@ import {
   TShikiManga
 } from './types'
 
-import {
-  clearHTML,
-  LooseObject,
-  prepareOption,
-  toAnotherObject
-} from '@shared/lib'
+import { clearHTML, prepareOption, toAnotherObject } from '@shared/lib'
 
 type TShikiApi = {
   getAnime: (
@@ -150,21 +145,22 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
 
   const groupedData = Object.groupBy(data, ({ relation }) => relation)
 
-  const res: LooseObject = {}
+  const res: Record<string, TAnime[]> = {}
 
-  Object.entries(groupedData).map(entries => {
-    const key = entries[0]
-    const value = entries[1]
-
-    res[key] = value.map(item => {
-      if (item.anime) {
-        return prepareAnimeData(item.anime)
-      }
-      if (item.manga) {
-        return prepareAnimeData(item.manga)
-      }
-      return item
-    })
+  Object.entries(groupedData).forEach(([key, value]) => {
+    if (value && value.length > 0) {
+      value.forEach(item => {
+        if (!res[key]) {
+          res[key] = []
+        }
+        if (item.anime) {
+          res[key].push(prepareAnimeData(item.anime))
+        }
+        if (item.manga) {
+          res[key].push(prepareAnimeData(item.manga))
+        }
+      })
+    }
   })
 
   return res
