@@ -8,11 +8,10 @@ import {
 } from './types'
 
 import {
-  toAnotherObject,
   clearHTML,
-  groupBy,
+  LooseObject,
   prepareOption,
-  LooseObject
+  toAnotherObject
 } from '@shared/lib'
 
 type TShikiApi = {
@@ -149,10 +148,7 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
     data = data.slice(0, limit)
   }
 
-  const groupedData: Record<string, TShikiAnimeRelation[]> = groupBy(
-    data,
-    'relation'
-  )
+  const groupedData = Object.groupBy(data, ({ relation }) => relation)
 
   const res: LooseObject = {}
 
