@@ -1,13 +1,18 @@
 import { TAnime } from '@entities'
 import {
   TShikiAnime,
+  TShikiAnimeGenre,
+  TShikiAnimeKind,
   TShikiAnimeRelation,
   TShikiAnimeScreenshot,
+  TShikiAnimeStatus,
   TShikiAnimeVideo,
   TShikiManga
 } from './types'
 
 import { clearHTML, prepareOption, toAnotherObject } from '@shared/lib'
+import { TFilterSelection } from '@widgets'
+import { EmptyObject } from 'type-fest'
 
 type TShikiApi = {
   getAnime: (
@@ -105,7 +110,7 @@ async function getAnimeWithNestedRoute({
   id: string
   route: string
 }) {
-  let url = `${process.env.VITE_SHIKI_URL}/api/animes/${id}/${route}`
+  const url = `${process.env.VITE_SHIKI_URL}/api/animes/${id}/${route}`
 
   const res = await fetch(url)
 
@@ -166,11 +171,11 @@ async function getAnimeGroupedRelations(id: string, limit?: number) {
   return res
 }
 
-async function getAnimeFilters() {
-  let res = []
+async function getAnimeFilters(): Promise<TFilterSelection[]> {
+  const res: TFilterSelection[] = []
 
   const genres = await fetch(`${process.env.VITE_SHIKI_URL}/api/genres`)
-  const genresOptions = await genres.json()
+  const genresOptions: TShikiAnimeGenre[] = await genres.json()
   res.push({
     name: 'genre',
     options: genresOptions.map(o => prepareOption(o)) // TODO: prepare options
@@ -179,8 +184,11 @@ async function getAnimeFilters() {
   const animeConstants = await fetch(
     `${process.env.VITE_SHIKI_URL}/api/constants/anime`
   )
-
-  let animeConstantsData = {}
+  type animeConstantsType = {
+    kind: TShikiAnimeKind[]
+    status: TShikiAnimeStatus[]
+  }
+  let animeConstantsData: animeConstantsType | EmptyObject = {}
   if (animeConstants.ok) {
     animeConstantsData = await animeConstants.json()
   }

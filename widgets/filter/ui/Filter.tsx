@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useState, ChangeEvent, MouseEvent } from 'react'
+import { ChangeEvent, MouseEvent, useState } from 'react'
 import classNames from 'classnames'
 
 import styles from './filter.module.scss'
@@ -7,14 +7,14 @@ import { FilterIcon } from '@/assets/icons'
 import { useQuery } from '@shared/lib'
 
 import {
+  Button,
   ButtonJustify,
   ButtonType,
-  Select,
-  TOption,
+  FieldSize,
   Search,
-  Button,
+  Select,
   Tag,
-  FieldSize
+  TOption
 } from '@shared/ui'
 
 enum FilterType {
@@ -24,8 +24,8 @@ enum FilterType {
 
 type TFilterType = `${FilterType}`
 
-type TFilterSelection = {
-  title: string
+export type TFilterSelection = {
+  title?: string
   name: string
   options: TOption[]
 }
