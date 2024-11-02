@@ -1,4 +1,4 @@
-import { LooseObject, toList, useApi } from '@shared/lib'
+import { toList, useApi } from '@shared/lib'
 
 import animeConfig from '@/config/anime'
 import { COMMA } from '@shared/constants'
@@ -21,7 +21,7 @@ export async function getAnimeData(id: string) {
     imageUrl?: string
     videos?: string[]
     info?: Record<string, string>[]
-    related?: LooseObject
+    related?: Record<string, TAnime[]>
     playerLink?: string
   } = {}
 

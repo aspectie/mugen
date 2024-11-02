@@ -1,7 +1,8 @@
-import { LoaderFunctionArgs, TypedResponse, json } from '@remix-run/node'
-import { i18next, getAnime, getAnimeFilters } from 'shared/.server'
+import { json, LoaderFunctionArgs, TypedResponse } from '@remix-run/node'
+import { getAnime, getAnimeFilters, i18next } from 'shared/.server'
 
 import { TAnime } from '@entities'
+import { TFilterSelection } from '@widgets'
 
 export const loader = async ({
   request
@@ -11,7 +12,7 @@ export const loader = async ({
   const order = 'ranked'
   const search = url.searchParams.get('search')
 
-  const requestParams = {
+  const requestParams: Record<string, string | number> = {
     limit,
     order
   }
@@ -43,4 +44,5 @@ export const loader = async ({
 export type TLoaderResponse = {
   animes: TAnime[]
   metaTitle: string
+  filterSelects: TFilterSelection[]
 } | null

@@ -1,1 +1,1 @@
-export { Filter, type TFilterSelects } from './ui/Filter'
+export { Filter, type TFilterSelects, type TFilterSelection } from './ui/Filter'

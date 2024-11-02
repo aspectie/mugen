@@ -43,7 +43,7 @@ export function AnimePage() {
           </div>
           {anime.info && <Information info={anime.info} />}
         </div>
-        {anime.screenshots && anime.screenshots.length > 0 && (
+        {anime.rawData.description && (
           <div className="mt-4xl xl:col-span-9 lg:col-span-12 col-span-12 xl:pr-l">
             <Description description={anime.rawData.description} />
           </div>
@@ -57,7 +57,7 @@ export function AnimePage() {
             />
           </div>
         )}
-        {anime.rawData.description && (
+        {anime.screenshots && anime.screenshots.length > 0 && (
           <div className="mt-l pr-l xl:col-span-9 col-span-12">
             <Screenshots
               title={anime.rawData.title}
