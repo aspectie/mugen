@@ -1,10 +1,10 @@
 import {
+  json,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  json,
   useLoaderData
 } from '@remix-run/react'
 import { useChangeLanguage } from 'remix-i18next/react'
@@ -14,8 +14,6 @@ import { useTranslation } from 'react-i18next'
 import { i18next } from 'shared/.server'
 
 import { ThemeProvider, useTheme } from '@entities'
-
-import { Footer, Header } from '@widgets'
 
 import '@/styles/main.scss'
 
@@ -51,10 +49,8 @@ function App() {
         />
         <Meta />
       </head>
-      <body className="dark:bg-black-100 grid grid-rows-layout min-h-[100vh]">
-        <Header />
+      <body className="dark:bg-black-100">
         <Outlet />
-        <Footer />
         <ScrollRestoration />
         <Links />
         <Scripts />

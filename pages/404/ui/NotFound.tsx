@@ -7,7 +7,7 @@ export function NotFoundPage() {
   const { t } = useTranslation('404')
 
   return (
-    <main className="container py-s sm:py-s md:py-l lg:py-l text-black-100 flex flex-col justify-center items-center">
+    <main className="container h-screen py-s sm:py-s md:py-l lg:py-l text-black-100 flex flex-col justify-center items-center">
       <div className="text-center flex justify-center items-center">
         <div className="flex flex-col items-center gap-s">
           <h1 className="text-xl text-black-80 md:text-3xl font-semibold">

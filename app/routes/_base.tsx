@@ -1,10 +1,11 @@
 import {
   type ErrorResponse,
-  Outlet,
   isRouteErrorResponse,
+  Outlet,
   useRouteError
 } from '@remix-run/react'
 import { NotFoundPage } from 'pages/404/'
+import { Footer, Header } from '@widgets'
 
 export const meta = ({ error }: { error: ErrorResponse }) => {
   if (error) {
@@ -18,9 +19,13 @@ export const meta = ({ error }: { error: ErrorResponse }) => {
 export default function BaseLayout() {
   return (
     <>
-      <main className="container py-s sm:py-s md:py-l lg:py-l text-black-100">
-        <Outlet />
-      </main>
+      <div className="grid grid-rows-layout min-h-[100vh]">
+        <Header />
+        <main className="container py-s sm:py-s md:py-l lg:py-l text-black-100">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
     </>
   )
 }
