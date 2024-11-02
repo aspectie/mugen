@@ -1,10 +1,10 @@
 import {
+  json,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  json,
   useLoaderData
 } from '@remix-run/react'
 import { useChangeLanguage } from 'remix-i18next/react'
@@ -49,7 +49,7 @@ function App() {
         />
         <Meta />
       </head>
-      <body className="dark:bg-black-100 grid grid-rows-layout min-h-[100vh]">
+      <body className="dark:bg-black-100">
         <Outlet />
         <ScrollRestoration />
         <Links />

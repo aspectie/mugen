@@ -50,7 +50,7 @@ export function LoginPage() {
             >
               {t('forgot password')}
             </Link>
-            <div className="w-1/5">
+            <div className="w-2/5 md:w-1/5">
               <Button text={t('sign in')} />
             </div>
           </div>
